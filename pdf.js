@@ -31,6 +31,23 @@ await new Promise((resolve) => {
 
     doc.setFillColor(...verde);
     doc.rect(0, 0, 210, 28, "F");
+    // Logo
+
+doc.addImage(
+
+    logo,
+
+    "PNG",
+
+    150,
+
+    4,
+
+    40,
+
+    20
+
+);
 
     doc.setTextColor(255,255,255);
 

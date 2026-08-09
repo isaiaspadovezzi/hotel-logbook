@@ -1,0 +1,287 @@
+/* ==================================================
+   LOGBOOK - IBIS STYLES
+   style.css
+================================================== */
+
+/* Fonte */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root{
+
+    --verde:#63C132;
+    --verde-escuro:#4E9D28;
+    --verde-claro:#EAF8E2;
+
+    --cinza:#6c757d;
+    --cinza-claro:#f5f7f8;
+    --branco:#ffffff;
+
+    --sombra:0 8px 25px rgba(0,0,0,.08);
+
+    --radius:18px;
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:var(--cinza-claro);
+
+    color:#333;
+
+}
+
+/* ===========================
+   Cabeçalho
+=========================== */
+
+.topo{
+
+    background:white;
+
+    border-bottom:5px solid var(--verde);
+
+}
+
+.logo{
+
+    width:180px;
+
+    max-width:100%;
+
+}
+
+h2{
+
+    color:var(--verde-escuro);
+
+    font-weight:700;
+
+    margin-bottom:5px;
+
+}
+
+p{
+
+    color:var(--cinza);
+
+}
+
+/* ===========================
+   Cards
+=========================== */
+
+.card{
+
+    border:none !important;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--sombra);
+
+}
+
+/* ===========================
+   Inputs
+=========================== */
+
+.form-control,
+.form-select{
+
+    border-radius:12px;
+
+    border:1px solid #d8d8d8;
+
+    min-height:48px;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:var(--verde);
+
+    box-shadow:0 0 0 .2rem rgba(99,193,50,.20);
+
+}
+
+/* ===========================
+   Botões
+=========================== */
+
+.btn-success{
+
+    background:var(--verde);
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px 22px;
+
+    font-weight:600;
+
+}
+
+.btn-success:hover{
+
+    background:var(--verde-escuro);
+
+}
+
+.btn-outline-success{
+
+    border:2px solid var(--verde);
+
+    color:var(--verde);
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+.btn-outline-success:hover{
+
+    background:var(--verde);
+
+    color:white;
+
+}
+
+/* ===========================
+   Pesquisa
+=========================== */
+
+input::placeholder{
+
+    color:#999;
+
+}
+
+/* ===========================
+   Tabela
+=========================== */
+
+.table{
+
+    margin:0;
+
+}
+
+.table thead{
+
+    background:var(--verde-claro);
+
+}
+
+.table-success{
+
+    background:var(--verde-claro)!important;
+
+}
+
+.table th{
+
+    color:#444;
+
+    font-weight:600;
+
+    border:none;
+
+}
+
+.table td{
+
+    vertical-align:middle;
+
+}
+
+tbody tr{
+
+    transition:.2s;
+
+}
+
+tbody tr:hover{
+
+    background:#f7fff4;
+
+}
+
+/* ===========================
+   Ações
+=========================== */
+
+.acao{
+
+    cursor:pointer;
+
+    font-size:18px;
+
+    margin-right:10px;
+
+    transition:.2s;
+
+}
+
+.acao:hover{
+
+    transform:scale(1.2);
+
+}
+
+/* ===========================
+   Rodapé
+=========================== */
+
+footer{
+
+    margin-top:40px;
+
+    text-align:center;
+
+    color:#999;
+
+}
+
+/* ===========================
+   Responsivo
+=========================== */
+
+@media(max-width:768px){
+
+    .logo{
+
+        width:150px;
+
+    }
+
+    h2{
+
+        font-size:28px;
+
+    }
+
+    .btn{
+
+        width:100%;
+
+        margin-bottom:10px;
+
+    }
+
+    .d-flex{
+
+        flex-direction:column;
+
+    }
+
+}

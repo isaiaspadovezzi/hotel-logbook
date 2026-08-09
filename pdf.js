@@ -54,30 +54,38 @@ await new Promise((resolve) => {
     // CABEÇALHO
     // ============================
 
-    doc.setFillColor(...verde);
-    doc.rect(0, 0, 210, 28, "F");
+    // Fundo branco
+doc.setFillColor(255, 255, 255);
+doc.rect(0, 0, 210, 35, "F");
+
+// Linha verde inferior
+doc.setFillColor(99, 193, 50);
+doc.rect(0, 30, 210, 3, "F");
     // Logo
 
 doc.addImage(
     logo,
     "PNG",
-    145,
-    4,
-    45,
-    18
+    150,
+    6,
+    35,
+    17
 );
 
-    doc.setTextColor(255,255,255);
-
+ doc.setTextColor(80,80,80);
+    
     doc.setFont("helvetica","bold");
-    doc.setFontSize(20);
+  doc.setFontSize(22);
 
-    doc.text("LOGBOOK",15,15);
+doc.setTextColor(99,193,50);
 
-    doc.setFontSize(10);
+doc.text("LOGBOOK",15,18);
 
-    doc.text("Registro de Ocorrências",15,22);
+doc.setFontSize(11);
 
+doc.setTextColor(120);
+
+doc.text("Registro de Ocorrências",15,26);
     // ============================
     // Dados
     // ============================

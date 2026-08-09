@@ -2,11 +2,22 @@
 // PDF - LOGBOOK
 // =======================================
 
-function exportarPDF() {
+async function exportarPDF() {
 
     const { jsPDF } = window.jspdf;
 
     const doc = new jsPDF("p", "mm", "a4");
+    // ============================
+// Carregar Logo
+// ============================
+
+const logo = new Image();
+
+logo.src = "img/logo.png";
+
+await new Promise((resolve) => {
+    logo.onload = resolve;
+});
 
     // ============================
     // CORES

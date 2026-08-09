@@ -1,12 +1,37 @@
 // =======================================
 // PDF - LOGBOOK
 // =======================================
+function carregarLogo() {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
 
+        img.src = "img/logo.png";
+
+        img.onload = function () {
+
+            const canvas = document.createElement("canvas");
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            const ctx = canvas.getContext("2d");
+
+            ctx.drawImage(img, 0, 0);
+
+            resolve(canvas.toDataURL("image/png"));
+
+        };
+
+        img.onerror = reject;
+
+    });
+}
 async function exportarPDF() {
 
     const { jsPDF } = window.jspdf;
 
     const doc = new jsPDF("p", "mm", "a4");
+    const logo = await carregarLogo();
     // ============================
 // Carregar Logo
 // ============================
@@ -34,19 +59,12 @@ await new Promise((resolve) => {
     // Logo
 
 doc.addImage(
-
     logo,
-
     "PNG",
-
-    150,
-
+    145,
     4,
-
-    40,
-
-    20
-
+    45,
+    18
 );
 
     doc.setTextColor(255,255,255);

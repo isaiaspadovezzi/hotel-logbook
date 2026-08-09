@@ -90,27 +90,77 @@ doc.text("Registro de Ocorrências",15,26);
     // Dados
     // ============================
 
-    doc.setTextColor(0,0,0);
+// ============================================
+// Cartão de Informações
+// ============================================
 
-    doc.setFontSize(11);
+// Fundo verde claro
+doc.setFillColor(236, 248, 230);
 
-    doc.text(
-        "Data: " + document.getElementById("data").value,
-        15,
-        40
-    );
+// Caixa
+doc.roundedRect(
+    15,
+    40,
+    180,
+    30,
+    3,
+    3,
+    "F"
+);
 
-    doc.text(
-        "Funcionário: " + document.getElementById("funcionario").value,
-        15,
-        47
-    );
+// Título
+doc.setFontSize(11);
+doc.setTextColor(70,70,70);
+doc.setFont("helvetica","bold");
 
-    doc.text(
-        "Turno: " + document.getElementById("turno").value,
-        15,
-        54
-    );
+doc.text(
+    "Informações do Turno",
+    20,
+    48
+);
+
+// Linha
+doc.setDrawColor(180);
+doc.line(20,51,190,51);
+
+// Conteúdo
+doc.setFont("helvetica","normal");
+
+doc.text(
+    "📅 Data:",
+    20,
+    58
+);
+
+doc.text(
+    document.getElementById("data").value,
+    55,
+    58
+);
+
+doc.text(
+    "👤 Funcionário:",
+    20,
+    64
+);
+
+doc.text(
+    document.getElementById("funcionario").value,
+    55,
+    64
+);
+
+doc.text(
+    "🕒 Turno:",
+    110,
+    58
+);
+
+doc.text(
+    document.getElementById("turno").value,
+    140,
+    58
+);
 
     // ============================
     // Monta tabela
@@ -140,7 +190,7 @@ doc.text("Registro de Ocorrências",15,26);
 
     doc.autoTable({
 
-        startY:65,
+        startY:80,
 
         head:[[
             "Hora",

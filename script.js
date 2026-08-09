@@ -230,3 +230,63 @@ function limparFormulario(){
     document.getElementById("descricao").value="";
 
 }
+// ==========================================
+// Exportar PDF
+// ==========================================
+
+function exportarPDF() {
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("LogBook - ibis Styles", 14, 18);
+
+    doc.setFontSize(11);
+
+    doc.text(
+        "Data: " + document.getElementById("data").value,
+        14,
+        28
+    );
+
+    doc.text(
+        "Funcionário: " + document.getElementById("funcionario").value,
+        14,
+        35
+    );
+
+    doc.text(
+        "Turno: " + document.getElementById("turno").value,
+        14,
+        42
+    );
+
+    const linhas = registros.map(registro => [
+
+        registro.hora,
+        registro.atividade,
+        registro.quarto,
+        registro.descricao
+
+    ]);
+
+    doc.autoTable({
+
+        startY: 50,
+
+        head: [[
+            "Hora",
+            "Atividade",
+            "Quarto",
+            "Descrição"
+        ]],
+
+        body: linhas
+
+    });
+
+    doc.save("LogBook.pdf");
+
+}

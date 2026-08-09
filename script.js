@@ -92,6 +92,8 @@ function salvarRegistro() {
     atualizarTabela();
 
     limparFormulario();
+    
+    console.log("Registro salvo");
 
     bootstrap.Modal
         .getInstance(document.getElementById("modalRegistro"))

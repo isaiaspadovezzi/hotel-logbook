@@ -105,7 +105,7 @@ async function exportarPDF(){
 
     // Linha verde
 
-    doc.setFillColor(...COR_PRINCIPAL);
+fillColor:[99,193,50],
 
     doc.rect(0,31,210,3,"F");
 

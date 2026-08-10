@@ -127,7 +127,7 @@ fillColor:[99,193,50],
 // LOGO COM PROPORÇÃO ORIGINAL
 // ------------------------------------
 
-const larguraLogo = 34;
+const larguraLogo = 20;
 
 const alturaLogo =
     larguraLogo * logo.height / logo.width;

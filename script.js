@@ -20,6 +20,11 @@ window.onload = function () {
     document
         .getElementById("btnSalvar")
         .addEventListener("click", salvarRegistro);
+    document
+    .getElementById("atividade")
+    .addEventListener("change", atualizarCamposExtras);
+
+atualizarCamposExtras();
 
 };
 
@@ -288,5 +293,51 @@ function exportarPDF() {
     });
 
     doc.save("LogBook.pdf");
+
+}
+// ==========================================
+// Campos extras conforme atividade
+// ==========================================
+
+function atualizarCamposExtras() {
+
+    const atividade =
+        document.getElementById("atividade").value;
+
+    const extras =
+        document.getElementById("camposExtras");
+
+    extras.innerHTML = "";
+
+    if (
+        atividade === "Check-in" ||
+        atividade === "Check-out" ||
+        atividade === "Walk-in"
+    ) {
+
+        extras.innerHTML = `
+
+        <label class="form-label mt-2">
+
+            Forma de Pagamento
+
+        </label>
+
+        <select
+            id="pagamento"
+            class="form-select">
+
+            <option>Direto</option>
+            <option>Cartão</option>
+            <option>PIX</option>
+            <option>Dinheiro</option>
+            <option>Faturado</option>
+            <option>Cortesia</option>
+
+        </select>
+
+        `;
+
+    }
 
 }

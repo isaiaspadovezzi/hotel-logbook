@@ -300,7 +300,16 @@ function exportarPDF() {
 // ==========================================
 
 function atualizarCamposExtras() {
-    alert("Função executada");
+
+    const extras = document.getElementById("camposExtras");
+
+    extras.innerHTML = `
+        <div class="alert alert-success mt-3">
+            TESTE FUNCIONOU!
+        </div>
+    `;
+
+}
 
     const atividade =
         document.getElementById("atividade").value;

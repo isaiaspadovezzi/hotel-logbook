@@ -333,9 +333,50 @@ doc.autoTable({
 
     },
 
-    alternateRowStyles:{
+ headStyles:{
 
-        fillColor:[249,252,248]
+    fillColor:COR_PRINCIPAL,
+
+    textColor:[255,255,255],
+
+    fontStyle:"bold",
+
+    halign:"center",
+
+    valign:"middle",
+
+    fontSize:10
+
+},
+
+bodyStyles:{
+
+    textColor:[50,50,50],
+
+    fontSize:9,
+
+    cellPadding:3,
+
+    lineColor:[220,220,220],
+
+    lineWidth:0.2
+
+},
+
+alternateRowStyles:{
+
+    fillColor:[232,240,228]
+
+
+},
+
+styles:{
+
+    overflow:"linebreak",
+
+    valign:"middle"
+
+},
 
     },
 

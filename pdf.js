@@ -138,9 +138,9 @@ doc.addImage(
 
     "PNG",
 
-    152,
+    168,
 
-    6,
+    7,
 
     larguraLogo,
 

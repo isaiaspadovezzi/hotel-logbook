@@ -154,7 +154,19 @@ function esconderTodosCampos() {
 
 function mostrar(id) {
 
-    document.getElementById(id).style.display = "block";
+    console.log("Mostrando:", id);
+
+    const elemento = document.getElementById(id);
+
+    if (!elemento) {
+
+        console.error("Elemento não encontrado:", id);
+
+        return;
+
+    }
+
+    elemento.style.display = "block";
 
 }
 

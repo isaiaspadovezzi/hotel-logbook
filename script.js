@@ -100,46 +100,35 @@ function atualizarCampos() {
 
     esconderTodosCampos();
 
-    const atividade =
-        document.getElementById("atividade").value;
+    const atividade = document.getElementById("atividade").value;
 
-    switch (atividade) {
+    const config = CONFIG.atividades[atividade];
 
-        case "Check-in":
+    if (!config) return;
 
-        case "Check-out":
+    config.campos.forEach(function(campo){
 
-        case "Walk-in":
+        switch(campo){
 
-        case "Pagamento":
+            case "pagamento":
+                mostrar("grupoPagamento");
+                break;
 
-            mostrar("grupoPagamento");
+            case "valor":
+                mostrar("grupoValor");
+                break;
 
-            break;
+            case "reserva":
+                mostrar("grupoReserva");
+                break;
 
-        case "Estorno":
+            case "despertar":
+                mostrar("grupoDespertar");
+                break;
 
-            mostrar("grupoPagamento");
+        }
 
-            mostrar("grupoValor");
-
-            break;
-
-        case "Cancelamento":
-
-        case "No Show":
-
-            mostrar("grupoReserva");
-
-            break;
-
-        case "Despertar":
-
-            mostrar("grupoDespertar");
-
-            break;
-
-    }
+    });
 
 }
 

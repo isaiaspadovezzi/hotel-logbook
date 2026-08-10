@@ -69,3 +69,4 @@ const CONFIG = {
     }
 
 };
+console.log("CONFIG carregado!");

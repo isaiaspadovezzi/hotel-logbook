@@ -37,7 +37,15 @@ function carregarLogo() {
 
             ctx.drawImage(img, 0, 0);
 
-            resolve(canvas.toDataURL("image/png"));
+           resolve({
+
+    data: canvas.toDataURL("image/png"),
+
+    width: img.width,
+
+    height: img.height
+
+});
 
         };
 
@@ -115,22 +123,30 @@ fillColor:[99,193,50],
 
     if(logo){
 
-        doc.addImage(
+       // ------------------------------------
+// LOGO COM PROPORÇÃO ORIGINAL
+// ------------------------------------
 
-            logo,
+const larguraLogo = 34;
 
-            "PNG",
+const alturaLogo =
+    larguraLogo * logo.height / logo.width;
 
-            152,
+doc.addImage(
 
-            6,
+    logo.data,
 
-            34,
+    "PNG",
 
-            17
+    152,
 
-        );
+    6,
 
+    larguraLogo,
+
+    alturaLogo
+
+);
     }
 
     // --------------------------------------------

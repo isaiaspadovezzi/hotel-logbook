@@ -1,38 +1,70 @@
-// ==========================================
-// LOGBOOK - IBIS STYLES
-// Versão 0.2
-// ==========================================
+// =====================================================
+// LOGBOOK - ibis Styles
+// Versão 2.0
+// Parte 1
+// =====================================================
+
+// ================================================
+// DADOS
+// ================================================
 
 let registros = [];
 
-// -------------------------------
-// Inicialização
-// -------------------------------
+let registroEditando = -1;
 
-window.onload = function () {
+// ================================================
+// INICIALIZAÇÃO
+// ================================================
 
-    preencherData();
+document.addEventListener("DOMContentLoaded", iniciarSistema);
 
-    preencherHora();
+// ================================================
+// INICIAR SISTEMA
+// ================================================
 
-    carregarRegistros();
+function iniciarSistema() {
+
+    preencherDataAtual();
+
+    preencherHoraAtual();
+
+    carregarLocalStorage();
+
+    configurarEventos();
+
+    atualizarTabela();
+
+    atualizarContador();
+
+    atualizarCampos();
+
+}
+
+// ================================================
+// EVENTOS
+// ================================================
+
+function configurarEventos() {
+
+    document
+        .getElementById("atividade")
+        .addEventListener("change", atualizarCampos);
 
     document
         .getElementById("btnSalvar")
         .addEventListener("click", salvarRegistro);
+
     document
-    .getElementById("atividade")
-    .addEventListener("change", atualizarCamposExtras);
+        .getElementById("pesquisa")
+        .addEventListener("input", pesquisarRegistros);
 
-atualizarCamposExtras();
+}
 
-};
+// ================================================
+// DATA
+// ================================================
 
-// -------------------------------
-// Data atual
-// -------------------------------
-
-function preencherData() {
+function preencherDataAtual() {
 
     const hoje = new Date();
 
@@ -41,41 +73,139 @@ function preencherData() {
 
 }
 
-// -------------------------------
-// Hora atual
-// -------------------------------
+// ================================================
+// HORA
+// ================================================
 
-function preencherHora() {
+function preencherHoraAtual() {
 
     const agora = new Date();
 
-    let hora = String(agora.getHours()).padStart(2, "0");
-    let minuto = String(agora.getMinutes()).padStart(2, "0");
+    const hora =
+        String(agora.getHours()).padStart(2, "0");
+
+    const minuto =
+        String(agora.getMinutes()).padStart(2, "0");
 
     document.getElementById("hora").value =
         hora + ":" + minuto;
 
 }
 
-// -------------------------------
-// Salvar Registro
-// -------------------------------
+// ================================================
+// MOSTRAR / ESCONDER CAMPOS
+// ================================================
 
-function salvarRegistro() {
+function atualizarCampos() {
 
-    const hora =
-        document.getElementById("hora").value;
+    esconderTodosCampos();
 
     const atividade =
         document.getElementById("atividade").value;
 
-    const quarto =
-        document.getElementById("quarto").value;
+    switch (atividade) {
 
-    const descricao =
-        document.getElementById("descricao").value;
+        case "Check-in":
 
-    if (descricao.trim() == "") {
+        case "Check-out":
+
+        case "Walk-in":
+
+        case "Pagamento":
+
+            mostrar("grupoPagamento");
+
+            break;
+
+        case "Estorno":
+
+            mostrar("grupoPagamento");
+
+            mostrar("grupoValor");
+
+            break;
+
+        case "Cancelamento":
+
+        case "No Show":
+
+            mostrar("grupoReserva");
+
+            break;
+
+        case "Despertar":
+
+            mostrar("grupoDespertar");
+
+            break;
+
+    }
+
+}
+
+// ================================================
+// ESCONDER CAMPOS
+// ================================================
+
+function esconderTodosCampos() {
+
+    esconder("grupoPagamento");
+
+    esconder("grupoValor");
+
+    esconder("grupoReserva");
+
+    esconder("grupoDespertar");
+
+}
+
+// ================================================
+// MOSTRAR
+// ================================================
+
+function mostrar(id) {
+
+    document.getElementById(id).style.display = "block";
+
+}
+
+// ================================================
+// ESCONDER
+// ================================================
+
+function esconder(id) {
+
+    document.getElementById(id).style.display = "none";
+
+}
+// =====================================================
+// PARTE 2
+// SALVAR REGISTRO
+// =====================================================
+
+function salvarRegistro() {
+
+    const registro = {
+
+        hora: document.getElementById("hora").value,
+
+        atividade: document.getElementById("atividade").value,
+
+        quarto: document.getElementById("quarto").value,
+
+        pagamento: document.getElementById("pagamento").value,
+
+        valor: document.getElementById("valor").value,
+
+        reserva: document.getElementById("reserva").value,
+
+        despertar: document.getElementById("horaDespertar").value,
+
+        descricao: document.getElementById("descricao").value
+
+    };
+
+    if (registro.descricao.trim() === "") {
 
         alert("Digite uma descrição.");
 
@@ -83,22 +213,25 @@ function salvarRegistro() {
 
     }
 
-    registros.push({
+    if (registroEditando === -1) {
 
-        hora,
-        atividade,
-        quarto,
-        descricao
+        registros.push(registro);
 
-    });
+    } else {
 
-    salvarLocal();
+        registros[registroEditando] = registro;
+
+        registroEditando = -1;
+
+    }
+
+    salvarLocalStorage();
 
     atualizarTabela();
 
+    atualizarContador();
+
     limparFormulario();
-    
-    console.log("Registro salvo");
 
     bootstrap.Modal
         .getInstance(document.getElementById("modalRegistro"))
@@ -106,20 +239,46 @@ function salvarRegistro() {
 
 }
 
-// -------------------------------
-// Atualizar tabela
-// -------------------------------
+// =====================================================
+// LIMPAR FORMULÁRIO
+// =====================================================
 
-function atualizarTabela() {
+function limparFormulario() {
 
-    const tabela =
+    preencherHoraAtual();
+
+    document.getElementById("atividade").selectedIndex = 0;
+
+    document.getElementById("quarto").value = "";
+
+    document.getElementById("pagamento").selectedIndex = 0;
+
+    document.getElementById("valor").value = "";
+
+    document.getElementById("reserva").value = "";
+
+    document.getElementById("horaDespertar").value = "";
+
+    document.getElementById("descricao").value = "";
+
+    atualizarCampos();
+
+}
+
+// =====================================================
+// ATUALIZAR TABELA
+// =====================================================
+
+function atualizarTabela(lista = registros) {
+
+    const tbody =
         document.getElementById("listaRegistros");
 
-    tabela.innerHTML = "";
+    tbody.innerHTML = "";
 
-    if (registros.length == 0) {
+    if (lista.length === 0) {
 
-        tabela.innerHTML = `
+        tbody.innerHTML = `
 
         <tr>
 
@@ -138,9 +297,26 @@ function atualizarTabela() {
 
     }
 
-    registros.forEach(function (registro, indice) {
+    lista.forEach((registro, indice) => {
 
-        tabela.innerHTML += `
+        let resumo = "";
+
+        if (registro.pagamento)
+            resumo += "💳 " + registro.pagamento + " ";
+
+        if (registro.valor)
+            resumo += "R$ " + registro.valor + " ";
+
+        if (registro.reserva)
+            resumo += "Reserva: " + registro.reserva + " ";
+
+        if (registro.despertar)
+            resumo += "Despertar: " + registro.despertar + " ";
+
+        if (resumo === "")
+            resumo = registro.descricao;
+
+        tbody.innerHTML += `
 
         <tr>
 
@@ -150,15 +326,23 @@ function atualizarTabela() {
 
             <td>${registro.quarto}</td>
 
-            <td>${registro.descricao}</td>
+            <td>${resumo}</td>
 
             <td>
 
                 <button
-                    class="btn btn-sm btn-danger"
+                    class="btn btn-sm btn-outline-primary"
+                    onclick="editarRegistro(${indice})">
+
+                    <i class="bi bi-pencil"></i>
+
+                </button>
+
+                <button
+                    class="btn btn-sm btn-outline-danger"
                     onclick="excluirRegistro(${indice})">
 
-                    🗑
+                    <i class="bi bi-trash"></i>
 
                 </button>
 
@@ -171,30 +355,62 @@ function atualizarTabela() {
     });
 
 }
+// =====================================================
+// PARTE 3
+// EDITAR REGISTRO
+// =====================================================
 
-// -------------------------------
-// Excluir
-// -------------------------------
+function editarRegistro(indice) {
 
-function excluirRegistro(indice){
+    const registro = registros[indice];
 
-    if(confirm("Excluir este registro?")){
+    registroEditando = indice;
 
-        registros.splice(indice,1);
+    document.getElementById("hora").value = registro.hora;
+    document.getElementById("atividade").value = registro.atividade;
+    document.getElementById("quarto").value = registro.quarto;
 
-        salvarLocal();
+    atualizarCampos();
 
-        atualizarTabela();
+    document.getElementById("pagamento").value = registro.pagamento || "";
+    document.getElementById("valor").value = registro.valor || "";
+    document.getElementById("reserva").value = registro.reserva || "";
+    document.getElementById("horaDespertar").value = registro.despertar || "";
 
-    }
+    document.getElementById("descricao").value = registro.descricao;
+
+    const modal = new bootstrap.Modal(
+        document.getElementById("modalRegistro")
+    );
+
+    modal.show();
 
 }
 
-// -------------------------------
-// Local Storage
-// -------------------------------
+// =====================================================
+// EXCLUIR
+// =====================================================
 
-function salvarLocal(){
+function excluirRegistro(indice) {
+
+    if (!confirm("Deseja excluir este registro?"))
+        return;
+
+    registros.splice(indice, 1);
+
+    salvarLocalStorage();
+
+    atualizarTabela();
+
+    atualizarContador();
+
+}
+
+// =====================================================
+// LOCAL STORAGE
+// =====================================================
+
+function salvarLocalStorage() {
 
     localStorage.setItem(
 
@@ -206,148 +422,173 @@ function salvarLocal(){
 
 }
 
-function carregarRegistros(){
+function carregarLocalStorage() {
 
-    let dados =
+    const dados = localStorage.getItem("logbook");
 
-        localStorage.getItem("logbook");
-
-    if(dados){
+    if (dados) {
 
         registros = JSON.parse(dados);
 
     }
 
-    atualizarTabela();
+}
+
+// =====================================================
+// CONTADOR
+// =====================================================
+
+function atualizarContador() {
+
+    document.getElementById("contadorRegistros").innerHTML =
+
+        registros.length +
+
+        (registros.length === 1
+
+            ? " registro"
+
+            : " registros");
 
 }
 
-// -------------------------------
-// Limpar formulário
-// -------------------------------
+// =====================================================
+// PESQUISA
+// =====================================================
 
-function limparFormulario(){
+function pesquisarRegistros() {
 
-    preencherHora();
+    const texto =
 
-    document.getElementById("quarto").value="";
+        document
+            .getElementById("pesquisa")
+            .value
+            .toLowerCase();
 
-    document.getElementById("descricao").value="";
+    if (texto === "") {
 
-}
-// ==========================================
-// Exportar PDF
-// ==========================================
+        atualizarTabela();
 
-function exportarPDF() {
+        return;
 
-    const { jsPDF } = window.jspdf;
+    }
 
-    const doc = new jsPDF();
+    const filtrados = registros.filter(function(registro){
 
-    doc.setFontSize(18);
-    doc.text("LogBook - ibis Styles", 14, 18);
+        return (
 
-    doc.setFontSize(11);
+            registro.hora.toLowerCase().includes(texto) ||
 
-    doc.text(
-        "Data: " + document.getElementById("data").value,
-        14,
-        28
-    );
+            registro.atividade.toLowerCase().includes(texto) ||
 
-    doc.text(
-        "Funcionário: " + document.getElementById("funcionario").value,
-        14,
-        35
-    );
+            registro.quarto.toString().includes(texto) ||
 
-    doc.text(
-        "Turno: " + document.getElementById("turno").value,
-        14,
-        42
-    );
+            registro.descricao.toLowerCase().includes(texto) ||
 
-    const linhas = registros.map(registro => [
+            (registro.pagamento || "").toLowerCase().includes(texto) ||
 
-        registro.hora,
-        registro.atividade,
-        registro.quarto,
-        registro.descricao
+            (registro.reserva || "").toLowerCase().includes(texto)
 
-    ]);
-
-    doc.autoTable({
-
-        startY: 50,
-
-        head: [[
-            "Hora",
-            "Atividade",
-            "Quarto",
-            "Descrição"
-        ]],
-
-        body: linhas
+        );
 
     });
 
-    doc.save("LogBook.pdf");
+    atualizarTabela(filtrados);
 
 }
-// ==========================================
-// Campos extras conforme atividade
-// ==========================================
+// =====================================================
+// PARTE 4
+// UTILITÁRIOS
+// =====================================================
 
-function atualizarCamposExtras() {
+// -------------------------------------
+// Retorna um resumo do registro
+// -------------------------------------
 
-    const extras = document.getElementById("camposExtras");
+function gerarResumo(registro){
 
-    extras.innerHTML = `
-        <div class="alert alert-success mt-3">
-            TESTE FUNCIONOU!
-        </div>
-    `;
+    switch(registro.atividade){
 
-}
+        case "Check-in":
 
-    const atividade =
-        document.getElementById("atividade").value;
+        case "Check-out":
 
-    const extras =
-        document.getElementById("camposExtras");
+        case "Walk-in":
 
-    extras.innerHTML = "";
+        case "Pagamento":
 
-    if (
-        atividade === "Check-in" ||
-        atividade === "Check-out" ||
-        atividade === "Walk-in"
-    ) {
+            return registro.pagamento
+                ? "💳 " + registro.pagamento
+                : registro.descricao;
 
-        extras.innerHTML = `
+        case "Estorno":
 
-        <label class="form-label mt-2">
+            return "💳 " +
+                (registro.pagamento || "-") +
+                " | 💲 " +
+                (registro.valor || "-");
 
-            Forma de Pagamento
+        case "Cancelamento":
 
-        </label>
+        case "No Show":
 
-        <select
-            id="pagamento"
-            class="form-select">
+            return registro.reserva
+                ? "Reserva: " + registro.reserva
+                : registro.descricao;
 
-            <option>Direto</option>
-            <option>Cartão</option>
-            <option>PIX</option>
-            <option>Dinheiro</option>
-            <option>Faturado</option>
-            <option>Cortesia</option>
+        case "Despertar":
 
-        </select>
+            return registro.despertar
+                ? "⏰ " + registro.despertar
+                : registro.descricao;
 
-        `;
+        default:
+
+            return registro.descricao;
 
     }
 
 }
+
+// =====================================================
+// ABRIR MODAL PARA NOVO REGISTRO
+// =====================================================
+
+const modalRegistro = document.getElementById("modalRegistro");
+
+modalRegistro.addEventListener("shown.bs.modal", function(){
+
+    if(registroEditando === -1){
+
+        limparFormulario();
+
+    }
+
+});
+
+// =====================================================
+// FECHAR MODAL
+// =====================================================
+
+modalRegistro.addEventListener("hidden.bs.modal", function(){
+
+    registroEditando = -1;
+
+});
+
+// =====================================================
+// EXPORTAÇÃO PDF
+// (pdf.js utilizará o vetor registros)
+// =====================================================
+
+window.getRegistros = function(){
+
+    return registros;
+
+}
+
+// =====================================================
+// VERSÃO
+// =====================================================
+
+console.log("LogBook v2.0 carregado com sucesso.");

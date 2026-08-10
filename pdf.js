@@ -113,9 +113,9 @@ async function exportarPDF(){
 
     // Linha verde
 
-fillColor:[99,193,50],
+doc.setFillColor(...COR_PRINCIPAL);
 
-    doc.rect(0,31,210,3,"F");
+doc.rect(0,31,210,3,"F");
 
     // --------------------------------------------
     // LOGO
@@ -325,66 +325,59 @@ doc.autoTable({
 
         textColor:[255,255,255],
 
+        fontStyle:"bold",
+
         halign:"center",
 
-        fontStyle:"bold",
+        valign:"middle",
 
         fontSize:10
 
     },
 
- headStyles:{
-
-    fillColor:COR_PRINCIPAL,
-
-    textColor:[255,255,255],
-
-    fontStyle:"bold",
-
-    halign:"center",
-
-    valign:"middle",
-
-    fontSize:10
-
-},
-
-bodyStyles:{
-
-    textColor:[50,50,50],
-
-    fontSize:9,
-
-    cellPadding:3,
-
-    lineColor:[220,220,220],
-
-    lineWidth:0.2
-
-},
-
-alternateRowStyles:{
-
-    fillColor:[232,240,228]
-
-
-},
-
-styles:{
-
-    overflow:"linebreak",
-
-    valign:"middle"
-
-},
-
-    },
-
     bodyStyles:{
 
-        textColor:[60,60,60]
+        textColor:[50,50,50],
+
+        fontSize:9,
+
+        cellPadding:3,
+
+        lineColor:[220,220,220],
+
+        lineWidth:0.2
 
     },
+
+    alternateRowStyles:{
+
+        fillColor:[232,240,228]
+
+    },
+
+    styles:{
+
+        overflow:"linebreak",
+
+        valign:"middle"
+
+    },
+
+    columnStyles:{
+
+        0:{cellWidth:22},
+
+        1:{cellWidth:40},
+
+        2:{cellWidth:24},
+
+        3:{cellWidth:104}
+
+    }
+
+});
+
+
 
     styles:{
 

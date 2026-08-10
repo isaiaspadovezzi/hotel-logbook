@@ -300,6 +300,7 @@ function exportarPDF() {
 // ==========================================
 
 function atualizarCamposExtras() {
+    alert("Função executada");
 
     const atividade =
         document.getElementById("atividade").value;

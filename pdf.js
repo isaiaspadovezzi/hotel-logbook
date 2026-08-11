@@ -375,14 +375,21 @@ async function exportarPDF() {
                 document.getElementById("data")?.value
             );
 
-        const funcionario =
-            document.getElementById("funcionario")?.value ||
-            "";
+        const funcionarioElemento =
+    document.getElementById("funcionario");
 
-        const turno =
-            document.getElementById("turno")?.value ||
-            "";
+const funcionario =
+    funcionarioElemento
+        ? funcionarioElemento.value
+        : "";
 
+const turnoElemento =
+    document.getElementById("turno");
+
+const turno =
+    turnoElemento
+        ? turnoElemento.value
+        : "";
 
         // ---------------------------------------------
         // CARTÃO DE INFORMAÇÕES

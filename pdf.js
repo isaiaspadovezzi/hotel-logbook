@@ -1,23 +1,28 @@
 // =====================================================
 // PDF.JS
-// Sistema LogBook - ibis Styles
-// Parte 1
+// LogBook - ibis Styles
+// Versão 3.0
 // =====================================================
 
-// -----------------------------------------------------
+
+// =====================================================
 // CORES
-// -----------------------------------------------------
+// =====================================================
 
-const COR_PRINCIPAL = [99, 193, 50];
-const COR_VERDE_CLARO = [241, 248, 239];
-const COR_TEXTO = [60, 60, 60];
-const COR_CINZA = [150, 150, 150];
+const PDF_COR_PRINCIPAL = [99, 193, 50];
 
-// -----------------------------------------------------
-// CARREGA A LOGO
-// -----------------------------------------------------
+const PDF_COR_VERDE_CLARO = [241, 248, 239];
 
-function carregarLogo() {
+const PDF_COR_TEXTO = [60, 60, 60];
+
+const PDF_COR_CINZA = [150, 150, 150];
+
+
+// =====================================================
+// CARREGAR LOGO
+// =====================================================
+
+function carregarLogoPDF() {
 
     return new Promise((resolve, reject) => {
 
@@ -27,480 +32,811 @@ function carregarLogo() {
 
         img.onload = function () {
 
-            const canvas = document.createElement("canvas");
+            const canvas =
+                document.createElement("canvas");
 
-            canvas.width = img.width;
+            canvas.width = img.naturalWidth;
 
-            canvas.height = img.height;
+            canvas.height = img.naturalHeight;
 
-            const ctx = canvas.getContext("2d");
+            const ctx =
+                canvas.getContext("2d");
 
-            ctx.drawImage(img, 0, 0);
+            ctx.drawImage(
+                img,
+                0,
+                0
+            );
 
-           resolve({
+            resolve({
 
-    data: canvas.toDataURL("image/png"),
+                data: canvas.toDataURL("image/png"),
 
-    width: img.width,
+                width: img.naturalWidth,
 
-    height: img.height
+                height: img.naturalHeight
 
-});
+            });
 
         };
 
-        img.onerror = reject;
+        img.onerror = function () {
+
+            reject(
+                new Error("Não foi possível carregar a logo.")
+            );
+
+        };
 
     });
 
 }
 
-// -----------------------------------------------------
-// FORMATA DATA
-// -----------------------------------------------------
 
-function formatarData(dataISO){
+// =====================================================
+// FORMATAR DATA
+// =====================================================
 
-    if(!dataISO) return "";
+function formatarDataPDF(dataISO) {
 
-    const partes = dataISO.split("-");
+    if (!dataISO) {
 
-    return partes[2] + "/" + partes[1] + "/" + partes[0];
+        return "";
+
+    }
+
+    const partes =
+        dataISO.split("-");
+
+    if (partes.length !== 3) {
+
+        return dataISO;
+
+    }
+
+    return (
+        partes[2] +
+        "/" +
+        partes[1] +
+        "/" +
+        partes[0]
+    );
 
 }
 
-// -----------------------------------------------------
+
+// =====================================================
+// OBTER REGISTROS
+// =====================================================
+
+function obterRegistrosPDF() {
+
+    if (
+        typeof registros !== "undefined" &&
+        Array.isArray(registros)
+    ) {
+
+        return registros;
+
+    }
+
+    return [];
+
+}
+
+
+// =====================================================
+// CRIAR TEXTO DO RESUMO
+// =====================================================
+
+function resumoRegistroPDF(registro) {
+
+    let resumo = "";
+
+    if (registro.descricao) {
+
+        resumo = registro.descricao;
+
+    }
+
+    const extras = [];
+
+    if (registro.pagamento) {
+
+        extras.push(
+            "Pagamento: " +
+            registro.pagamento
+        );
+
+    }
+
+    if (registro.valor) {
+
+        extras.push(
+            "Valor: R$ " +
+            registro.valor
+        );
+
+    }
+
+    if (registro.reserva) {
+
+        extras.push(
+            "Reserva: " +
+            registro.reserva
+        );
+
+    }
+
+    if (registro.despertar) {
+
+        extras.push(
+            "Despertar: " +
+            registro.despertar
+        );
+
+    }
+
+    if (extras.length > 0) {
+
+        if (resumo) {
+
+            resumo += "\n";
+
+        }
+
+        resumo += extras.join(" • ");
+
+    }
+
+    return resumo || "-";
+
+}
+
+
+// =====================================================
 // EXPORTAR PDF
-// -----------------------------------------------------
+// =====================================================
 
-async function exportarPDF(){
+async function exportarPDF() {
 
-    const { jsPDF } = window.jspdf;
+    try {
 
-    const doc = new jsPDF({
+        // ---------------------------------------------
+        // VERIFICAR jsPDF
+        // ---------------------------------------------
 
-        orientation:"portrait",
+        if (!window.jspdf) {
 
-        unit:"mm",
+            alert(
+                "A biblioteca do PDF não foi carregada. " +
+                "Atualize a página e tente novamente."
+            );
 
-        format:"a4"
+            return;
 
-    });
+        }
 
-    // --------------------------------------------
-    // CARREGA LOGO
-    // --------------------------------------------
 
-    let logo = null;
+        const { jsPDF } =
+            window.jspdf;
 
-    try{
 
-        logo = await carregarLogo();
+        // ---------------------------------------------
+        // CRIAR DOCUMENTO
+        // ---------------------------------------------
 
-    }catch(e){
+        const doc = new jsPDF({
 
-        console.log("Logo não encontrada.");
+            orientation: "portrait",
+
+            unit: "mm",
+
+            format: "a4"
+
+        });
+
+
+        // ---------------------------------------------
+        // LOGO
+        // ---------------------------------------------
+
+        let logo = null;
+
+        try {
+
+            logo =
+                await carregarLogoPDF();
+
+        } catch (erroLogo) {
+
+            console.warn(
+                "Logo não encontrada.",
+                erroLogo
+            );
+
+        }
+
+
+        // ---------------------------------------------
+        // CABEÇALHO
+        // ---------------------------------------------
+
+        doc.setFillColor(
+            255,
+            255,
+            255
+        );
+
+        doc.rect(
+            0,
+            0,
+            210,
+            35,
+            "F"
+        );
+
+
+        // Linha verde
+
+        doc.setFillColor(
+            ...PDF_COR_PRINCIPAL
+        );
+
+        doc.rect(
+            0,
+            31,
+            210,
+            3,
+            "F"
+        );
+
+
+        // ---------------------------------------------
+        // LOGO
+        // ---------------------------------------------
+
+        if (logo) {
+
+            const larguraLogo = 17;
+
+            const alturaLogo =
+                larguraLogo *
+                logo.height /
+                logo.width;
+
+            doc.addImage(
+
+                logo.data,
+
+                "PNG",
+
+                168,
+
+                7,
+
+                larguraLogo,
+
+                alturaLogo
+
+            );
+
+        }
+
+
+        // ---------------------------------------------
+        // TÍTULO
+        // ---------------------------------------------
+
+        doc.setTextColor(
+            ...PDF_COR_PRINCIPAL
+        );
+
+        doc.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        doc.setFontSize(22);
+
+        doc.text(
+            "LOGBOOK",
+            15,
+            16
+        );
+
+
+        doc.setFontSize(10);
+
+        doc.setTextColor(
+            120,
+            120,
+            120
+        );
+
+        doc.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        doc.text(
+            "Registro de Ocorrências",
+            15,
+            23
+        );
+
+
+        // ---------------------------------------------
+        // DADOS DO TURNO
+        // ---------------------------------------------
+
+        const data =
+            formatarDataPDF(
+                document.getElementById("data")?.value
+            );
+
+        const funcionario =
+            document.getElementById("funcionario")?.value ||
+            "";
+
+        const turno =
+            document.getElementById("turno")?.value ||
+            "";
+
+
+        // ---------------------------------------------
+        // CARTÃO DE INFORMAÇÕES
+        // ---------------------------------------------
+
+        doc.setFillColor(
+            ...PDF_COR_VERDE_CLARO
+        );
+
+        doc.roundedRect(
+            15,
+            40,
+            180,
+            28,
+            3,
+            3,
+            "F"
+        );
+
+
+        doc.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        doc.setFontSize(11);
+
+        doc.setTextColor(
+            ...PDF_COR_TEXTO
+        );
+
+        doc.text(
+            "Informações do Turno",
+            20,
+            48
+        );
+
+
+        // Linha
+
+        doc.setDrawColor(
+            220,
+            220,
+            220
+        );
+
+        doc.line(
+            20,
+            51,
+            190,
+            51
+        );
+
+
+        doc.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        doc.setFontSize(10);
+
+
+        // Data
+
+        doc.text(
+            "Data:",
+            20,
+            58
+        );
+
+        doc.text(
+            data,
+            40,
+            58
+        );
+
+
+        // Funcionário
+
+        doc.text(
+            "Funcionário:",
+            20,
+            64
+        );
+
+        doc.text(
+            funcionario,
+            48,
+            64
+        );
+
+
+        // Turno
+
+        doc.text(
+            "Turno:",
+            120,
+            58
+        );
+
+        doc.text(
+            turno,
+            140,
+            58
+        );
+
+
+        // ---------------------------------------------
+        // REGISTROS
+        // ---------------------------------------------
+
+        const registrosPDF =
+            obterRegistrosPDF();
+
+
+        const linhas =
+            registrosPDF.map(
+                function (registro) {
+
+                    return [
+
+                        registro.hora || "",
+
+                        registro.atividade || "",
+
+                        registro.quarto || "",
+
+                        resumoRegistroPDF(
+                            registro
+                        )
+
+                    ];
+
+                }
+            );
+
+
+        // Nenhum registro
+
+        if (linhas.length === 0) {
+
+            linhas.push([
+
+                "-",
+
+                "-",
+
+                "-",
+
+                "Nenhum registro encontrado."
+
+            ]);
+
+        }
+
+
+        // ---------------------------------------------
+        // TABELA
+        // ---------------------------------------------
+
+        doc.autoTable({
+
+            startY: 78,
+
+            head: [[
+
+                "Hora",
+
+                "Atividade",
+
+                "Quarto",
+
+                "Descrição"
+
+            ]],
+
+            body: linhas,
+
+            theme: "grid",
+
+
+            headStyles: {
+
+                fillColor:
+                    PDF_COR_PRINCIPAL,
+
+                textColor:
+                    [255, 255, 255],
+
+                fontStyle:
+                    "bold",
+
+                halign:
+                    "center",
+
+                valign:
+                    "middle",
+
+                fontSize:
+                    10
+
+            },
+
+
+            bodyStyles: {
+
+                textColor:
+                    PDF_COR_TEXTO,
+
+                fontSize:
+                    9,
+
+                cellPadding:
+                    3,
+
+                valign:
+                    "middle"
+
+            },
+
+
+            alternateRowStyles: {
+
+                fillColor:
+                    [232, 240, 228]
+
+            },
+
+
+            styles: {
+
+                lineColor:
+                    [220, 220, 220],
+
+                lineWidth:
+                    0.2,
+
+                overflow:
+                    "linebreak"
+
+            },
+
+
+            columnStyles: {
+
+                0: {
+                    cellWidth: 22,
+                    halign: "center"
+                },
+
+                1: {
+                    cellWidth: 40
+                },
+
+                2: {
+                    cellWidth: 24,
+                    halign: "center"
+                },
+
+                3: {
+                    cellWidth: 94
+                }
+
+            }
+
+        });
+
+
+        // ---------------------------------------------
+        // POSIÇÃO FINAL
+        // ---------------------------------------------
+
+        const finalY =
+            doc.lastAutoTable.finalY;
+
+
+        // ---------------------------------------------
+        // TOTAL
+        // ---------------------------------------------
+
+        doc.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        doc.setFontSize(10);
+
+        doc.setTextColor(
+            ...PDF_COR_TEXTO
+        );
+
+        doc.text(
+
+            "Total de registros: " +
+            registrosPDF.length,
+
+            15,
+
+            finalY + 10
+
+        );
+
+
+        // ---------------------------------------------
+        // DATA DE EMISSÃO
+        // ---------------------------------------------
+
+        const agora =
+            new Date();
+
+
+        const dataHora =
+
+            agora.toLocaleDateString(
+                "pt-BR"
+            ) +
+
+            " às " +
+
+            agora.toLocaleTimeString(
+                "pt-BR",
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+
+
+        // ---------------------------------------------
+        // RODAPÉ
+        // ---------------------------------------------
+
+        const paginas =
+            doc.internal.getNumberOfPages();
+
+
+        for (
+            let i = 1;
+            i <= paginas;
+            i++
+        ) {
+
+            doc.setPage(i);
+
+
+            // Linha verde
+
+            doc.setDrawColor(
+                ...PDF_COR_PRINCIPAL
+            );
+
+            doc.setLineWidth(0.5);
+
+            doc.line(
+                15,
+                285,
+                195,
+                285
+            );
+
+
+            // Texto
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setFontSize(8);
+
+            doc.setTextColor(
+                ...PDF_COR_CINZA
+            );
+
+
+            doc.text(
+                "ibis Styles • LogBook",
+                15,
+                290
+            );
+
+
+            doc.text(
+                "Emitido em " + dataHora,
+                70,
+                290
+            );
+
+
+            doc.text(
+                "Página " +
+                i +
+                " de " +
+                paginas,
+                165,
+                290
+            );
+
+        }
+
+
+        // ---------------------------------------------
+        // NOME DO ARQUIVO
+        // ---------------------------------------------
+
+        const nomeArquivo =
+
+            "LogBook_" +
+
+            (
+                data ||
+                "registro"
+            ).replace(
+                /\//g,
+                "-"
+            ) +
+
+            ".pdf";
+
+
+        // ---------------------------------------------
+        // SALVAR
+        // ---------------------------------------------
+
+        doc.save(
+            nomeArquivo
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao gerar PDF:",
+            erro
+        );
+
+        alert(
+            "Não foi possível gerar o PDF. " +
+            "Verifique o Console (F12) para mais detalhes."
+        );
 
     }
 
-    // --------------------------------------------
-    // CABEÇALHO BRANCO
-    // --------------------------------------------
-
-    doc.setFillColor(255,255,255);
-
-    doc.rect(0,0,210,35,"F");
-
-    // Linha verde
-
-doc.setFillColor(...COR_PRINCIPAL);
-
-doc.rect(0,31,210,3,"F");
-
-    // --------------------------------------------
-    // LOGO
-    // --------------------------------------------
-
-    if(logo){
-
-       // ------------------------------------
-// LOGO COM PROPORÇÃO ORIGINAL
-// ------------------------------------
-
-const larguraLogo = 17;
-
-const alturaLogo =
-    larguraLogo * logo.height / logo.width;
-
-doc.addImage(
-
-    logo.data,
-
-    "PNG",
-
-    168,
-
-    7,
-
-    larguraLogo,
-
-    alturaLogo
-
-);
-    }
-
-    // --------------------------------------------
-    // TÍTULO
-    // --------------------------------------------
-
-    doc.setTextColor(...COR_PRINCIPAL);
-
-    doc.setFont("helvetica","bold");
-
-    doc.setFontSize(22);
-
-    doc.text(
-
-        "LOGBOOK",
-
-        15,
-
-        16
-
-    );
-
-    doc.setFontSize(10);
-
-    doc.setTextColor(120);
-
-    doc.setFont("helvetica","normal");
-
-    doc.text(
-
-        "Registro de Ocorrências",
-
-        15,
-
-        23
-
-    );
-
-    // --------------------------------------------
-    // DADOS DA TELA
-    // --------------------------------------------
-
-    const data = formatarData(
-
-        document.getElementById("data").value
-
-    );
-
-    const funcionario =
-
-        document.getElementById("funcionario").value;
-
-    const turno =
-
-        document.getElementById("turno").value;
-
- // ============================================
-// CARTÃO DE INFORMAÇÕES
-// ============================================
-
-// Fundo verde claro
-doc.setFillColor(...COR_VERDE_CLARO);
-
-doc.roundedRect(
-    15,
-    40,
-    180,
-    28,
-    3,
-    3,
-    "F"
-);
-
-// Título do cartão
-doc.setFont("helvetica","bold");
-doc.setFontSize(11);
-doc.setTextColor(...COR_TEXTO);
-
-doc.text(
-    "Informações do Turno",
-    20,
-    48
-);
-
-// Linha divisória
-doc.setDrawColor(220);
-
-doc.line(
-    20,
-    51,
-    190,
-    51
-);
-
-// Conteúdo
-doc.setFont("helvetica","normal");
-doc.setFontSize(10);
-
-// Coluna esquerda
-doc.text("Data:",20,58);
-doc.text(data,40,58);
-
-doc.text("Funcionário:",20,64);
-doc.text(funcionario,40,64);
-
-// Coluna direita
-doc.text("Turno:",120,58);
-doc.text(turno,140,58);
-
-// ============================================
-// TABELA
-// ============================================
-
-let linhas = [];
-
-if(typeof registros !== "undefined"){
-
-    registros.forEach(registro=>{
-
-        linhas.push([
-
-            registro.hora || "",
-
-            registro.atividade || "",
-
-            registro.quarto || "",
-
-            registro.descricao || ""
-
-        ]);
-
-    });
-
 }
 
-// Caso não exista nenhum registro
 
-if(linhas.length===0){
+// =====================================================
+// DISPONIBILIZAR FUNÇÃO PARA O HTML
+// =====================================================
 
-    linhas.push([
+window.exportarPDF =
+    exportarPDF;
 
-        "-",
 
-        "-",
-
-        "-",
-
-        "Nenhum registro encontrado."
-
-    ]);
-
-}
-
-// ============================================
-// TABELA PRINCIPAL
-// ============================================
-
-doc.autoTable({
-
-    startY:78,
-
-    head:[[
-        "Hora",
-        "Atividade",
-        "Quarto",
-        "Descrição"
-    ]],
-
-    body:linhas,
-
-    theme:"grid",
-
-    headStyles:{
-
-        fillColor:COR_PRINCIPAL,
-
-        textColor:[255,255,255],
-
-        fontStyle:"bold",
-
-        halign:"center",
-
-        valign:"middle",
-
-        fontSize:10
-
-    },
-
-    bodyStyles:{
-
-        textColor:[50,50,50],
-
-        fontSize:9,
-
-        cellPadding:3,
-
-        lineColor:[220,220,220],
-
-        lineWidth:0.2
-
-    },
-
-    alternateRowStyles:{
-
-        fillColor:[232,240,228]
-
-    },
-
-    styles:{
-
-        overflow:"linebreak",
-
-        valign:"middle"
-
-    },
-
-    columnStyles:{
-
-        0:{cellWidth:22},
-
-        1:{cellWidth:40},
-
-        2:{cellWidth:24},
-
-        3:{cellWidth:104}
-
-    }
-
-});
-
-
-
-    styles:{
-
-        lineColor:[220,220,220],
-
-        lineWidth:0.2,
-
-        cellPadding:3,
-
-        fontSize:9,
-
-        valign:"middle"
-
-    },
-
-    columnStyles:{
-
-        0:{cellWidth:22},
-
-        1:{cellWidth:40},
-
-        2:{cellWidth:24},
-
-        3:{cellWidth:104}
-
-    }
-
-});
-
-// ============================================
-// POSIÇÃO FINAL DA TABELA
-// ============================================
-
-const finalY = doc.lastAutoTable.finalY;
-
-// ============================================
-// TOTAL DE REGISTROS
-// ============================================
-
-doc.setFont("helvetica", "bold");
-doc.setFontSize(10);
-doc.setTextColor(...COR_TEXTO);
-
-doc.text(
-    "Total de registros: " + registros.length,
-    15,
-    finalY + 10
+console.log(
+    "PDF.js carregado com sucesso."
 );
-
-// ============================================
-// DATA E HORA DE EMISSÃO
-// ============================================
-
-const agora = new Date();
-
-const dataHora =
-    agora.toLocaleDateString("pt-BR") +
-    " às " +
-    agora.toLocaleTimeString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-
-// ============================================
-// RODAPÉ DE TODAS AS PÁGINAS
-// ============================================
-
-const paginas = doc.internal.getNumberOfPages();
-
-for (let i = 1; i <= paginas; i++) {
-
-    doc.setPage(i);
-
-    // Linha verde
-    doc.setDrawColor(...COR_PRINCIPAL);
-    doc.setLineWidth(0.5);
-
-    doc.line(
-        15,
-        285,
-        195,
-        285
-    );
-
-    // Texto esquerdo
-    doc.setFontSize(8);
-    doc.setTextColor(...COR_CINZA);
-
-    doc.text(
-        "ibis Styles • LogBook",
-        15,
-        290
-    );
-
-    // Data de emissão
-    doc.text(
-        "Emitido em " + dataHora,
-        70,
-        290
-    );
-
-    // Página
-    doc.text(
-        "Página " + i + " de " + paginas,
-        165,
-        290
-    );
-
-}
-
-// ============================================
-// NOME DO ARQUIVO
-// ============================================
-
-const nomeArquivo =
-    "LogBook_" +
-    data.replace(/\//g, "-") +
-    ".pdf";
-
-// ============================================
-// EXPORTAR
-// ============================================
-
-doc.save(nomeArquivo);
-
-}

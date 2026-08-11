@@ -1,0 +1,242 @@
+/* =====================================================
+   LOGBOOK - REPORTS
+   Estilo dos cards de ocorrências
+   ===================================================== */
+
+.report-card {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    background: #ffffff;
+
+    border: 1px solid #dcebd7;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    font-family: Arial, sans-serif;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+}
+
+/* -----------------------------------------------------
+   CABEÇALHO
+----------------------------------------------------- */
+
+.report-header {
+
+    background: #63c132;
+
+    color: #ffffff;
+
+    padding: 18px 22px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+.report-header-title {
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.5px;
+
+}
+
+.report-logo {
+
+    height: 35px;
+
+    width: auto;
+
+}
+
+/* -----------------------------------------------------
+   CONTEÚDO
+----------------------------------------------------- */
+
+.report-body {
+
+    padding: 25px;
+
+}
+
+/* -----------------------------------------------------
+   TIPO DE OCORRÊNCIA
+----------------------------------------------------- */
+
+.report-type {
+
+    color: #4f9d2b;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 12px;
+
+}
+
+/* -----------------------------------------------------
+   QUARTO
+----------------------------------------------------- */
+
+.report-room-label {
+
+    color: #777777;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+.report-room {
+
+    color: #333333;
+
+    font-size: 38px;
+
+    font-weight: bold;
+
+    margin-bottom: 20px;
+
+}
+
+/* -----------------------------------------------------
+   DESCRIÇÃO
+----------------------------------------------------- */
+
+.report-description {
+
+    background: #f1f8ef;
+
+    border-left: 4px solid #63c132;
+
+    border-radius: 8px;
+
+    padding: 15px;
+
+    color: #444444;
+
+    font-size: 17px;
+
+    line-height: 1.5;
+
+}
+
+/* -----------------------------------------------------
+   INFORMAÇÕES
+----------------------------------------------------- */
+
+.report-info {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 22px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid #e5e5e5;
+
+}
+
+.report-info-item {
+
+    font-size: 13px;
+
+    color: #555555;
+
+}
+
+.report-info-label {
+
+    display: block;
+
+    color: #888888;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    margin-bottom: 3px;
+
+}
+
+/* -----------------------------------------------------
+   RODAPÉ
+----------------------------------------------------- */
+
+.report-footer {
+
+    background: #f8fbf6;
+
+    padding: 12px 22px;
+
+    color: #888888;
+
+    font-size: 11px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+}
+
+/* -----------------------------------------------------
+   MOBILE
+----------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .report-card {
+
+        border-radius: 12px;
+
+    }
+
+    .report-body {
+
+        padding: 20px;
+
+    }
+
+    .report-room {
+
+        font-size: 32px;
+
+    }
+
+    .report-description {
+
+        font-size: 15px;
+
+    }
+
+    .report-info {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

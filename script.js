@@ -466,9 +466,7 @@ function salvarLocalStorage() {
 
 }
 
-// =====================================================
-// CARREGAR LOGBOOK DA DATA SELECIONADA
-// =====================================================
+
 
 // =====================================================
 // CARREGAR LOGBOOK DA DATA SELECIONADA

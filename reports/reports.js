@@ -267,7 +267,7 @@ function abrirPreviewReport(registro) {
 
             <div class="report-preview-content">
 
-                <div class="report-card">
+              <div class="report-card report-card-${classeAtividadeReport(registro.atividade)}">
 
                     <div class="report-header">
 

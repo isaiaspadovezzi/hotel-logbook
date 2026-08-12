@@ -393,15 +393,14 @@ function abrirPreviewReport(registro) {
 
                 </button>
 
-
-              <button
+<button
     type="button"
     class="btn btn-success"
-    onclick="gerarCardReport()">
+    onclick="compartilharReport()">
 
-    <i class="bi bi-image"></i>
+    <i class="bi bi-share"></i>
 
-    Gerar Card
+    Compartilhar Report
 
 </button>
 

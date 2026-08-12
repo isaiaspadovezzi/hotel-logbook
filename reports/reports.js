@@ -420,27 +420,27 @@ function abrirPreviewReport(registro) {
 
             <div class="report-preview-footer">
 
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    onclick="fecharPreviewReport()">
+    <button
+        type="button"
+        class="btn btn-secondary"
+        onclick="fecharPreviewReport()">
 
-                    Cancelar
+        Cancelar
 
-                </button>
+    </button>
 
-<button
-    class="btn btn-sm btn-outline-success"
-    onclick="reportarRegistro(${indice})">
+    <button
+        type="button"
+        class="btn btn-success"
+        onclick="gerarCardReport()">
 
-    <i class="bi bi-save"></i>
+        <i class="bi bi-save"></i>
 
-</button>
+        Gerar Card
 
-            </div>
+    </button>
 
-        </div>
-
+</div>
     `;
 
 

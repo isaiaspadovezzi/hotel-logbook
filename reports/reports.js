@@ -504,7 +504,7 @@ async function gerarCardReport() {
 
                 scale: 2,
 
-                backgroundColor: "#ffffff",
+             backgroundColor: null,
 
                 useCORS: true,
 

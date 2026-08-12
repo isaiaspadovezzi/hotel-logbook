@@ -180,17 +180,11 @@
    ===================================================== */
 
 .report-main {
-
     display: grid;
-
     grid-template-columns: 115px 1fr;
-
-    gap: 10px;
-
+    gap: 5px;
     align-items: stretch;
-
 }
-
 
 /* =====================================================
    QUARTO

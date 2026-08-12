@@ -434,7 +434,7 @@ function abrirPreviewReport(registro) {
     class="btn btn-success"
     onclick="gerarCardReport()">
 
-    <i class="bi bi-image"></i>
+<i class="bi bi-save"></i>
 
     Gerar Card
 

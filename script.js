@@ -345,15 +345,14 @@ function atualizarTabela(lista = registros) {
 
                     <i class="bi bi-trash"></i>
 
-                </button>
-                                <button
-                    class="btn btn-sm btn-outline-success"
-                    onclick="reportarRegistro(${indice})"
-                    title="Reportar no WhatsApp">
+              <button
+    class="btn btn-sm btn-outline-success"
+    onclick="reportarRegistro(${indice})"
+    title="Gerar Report">
 
-                    <i class="bi bi-whatsapp"></i>
+    <i class="bi bi-save"></i>
 
-                </button>
+</button>
 
             </td>
 

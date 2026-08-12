@@ -57,9 +57,24 @@ function configurarEventos() {
     document
         .getElementById("pesquisa")
         .addEventListener("input", pesquisarRegistros);
+    document
+    .getElementById("data")
+    .addEventListener("change", mudarDataLogbook);
 
 }
+// =====================================================
+// MUDAR DATA DO LOGBOOK
+// =====================================================
 
+function mudarDataLogbook() {
+
+    carregarLocalStorage();
+
+    atualizarTabela();
+
+    atualizarContador();
+
+}
 // ================================================
 // DATA
 // ================================================
@@ -451,15 +466,30 @@ function salvarLocalStorage() {
 
 }
 
+// =====================================================
+// CARREGAR LOGBOOK DA DATA SELECIONADA
+// =====================================================
+
 function carregarLocalStorage() {
 
-    const dados = localStorage.getItem("logbook");
+    const data =
+        document.getElementById("data").value;
 
-    if (dados) {
+    if (!data) {
 
-        registros = JSON.parse(dados);
+        registros = [];
+
+        return;
 
     }
+
+    const arquivo =
+        JSON.parse(
+            localStorage.getItem("logbookArquivo")
+        ) || {};
+
+    registros =
+        arquivo[data] || [];
 
 }
 

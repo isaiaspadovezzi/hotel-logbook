@@ -134,20 +134,7 @@ function reportarRegistro(indice) {
 
     // Confirmação temporária
 
-    alert(
-        "Registro selecionado para reportar:\n\n" +
-
-        registro.atividade +
-
-        "\nQuarto: " +
-
-        (registro.quarto || "Não informado") +
-
-        "\n\n" +
-
-        registro.descricao
-
-    );
+   abrirPreviewReport(registro);
 
 }
 
@@ -200,3 +187,248 @@ function formatarDataReport(data) {
 console.log(
     "Módulo Reports v1.1 carregado."
 );
+// =====================================================
+// PRÉVIA DO REPORT
+// =====================================================
+
+function abrirPreviewReport(registro) {
+
+    const funcionarioElemento =
+        document.getElementById("funcionario");
+
+    const turnoElemento =
+        document.getElementById("turno");
+
+    const dataElemento =
+        document.getElementById("data");
+
+
+    const funcionario =
+        funcionarioElemento
+            ? funcionarioElemento.value
+            : "";
+
+    const turno =
+        turnoElemento
+            ? turnoElemento.value
+            : "";
+
+    const data =
+        dataElemento
+            ? formatarDataReport(dataElemento.value)
+            : "";
+
+
+    // Remove uma prévia anterior
+
+    const anterior =
+        document.getElementById("reportPreview");
+
+    if (anterior) {
+
+        anterior.remove();
+
+    }
+
+
+    // Cria a janela
+
+    const overlay =
+        document.createElement("div");
+
+    overlay.id =
+        "reportPreview";
+
+    overlay.className =
+        "report-preview-overlay";
+
+
+    overlay.innerHTML = `
+
+        <div class="report-preview-modal">
+
+            <div class="report-preview-header">
+
+                <strong>
+                    Prévia do Report
+                </strong>
+
+                <button
+                    type="button"
+                    class="report-preview-close"
+                    onclick="fecharPreviewReport()">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <div class="report-preview-content">
+
+                <div class="report-card">
+
+                    <div class="report-header">
+
+                        <div class="report-header-title">
+
+                            LOGBOOK
+
+                        </div>
+
+                        <img
+                            src="img/logo.png"
+                            class="report-logo"
+                            alt="ibis Styles">
+
+                    </div>
+
+
+                    <div class="report-body">
+
+                        <div class="report-type">
+
+                            ${registro.atividade || "OCORRÊNCIA"}
+
+                        </div>
+
+
+                        <div class="report-room-label">
+
+                            QUARTO
+
+                        </div>
+
+
+                        <div class="report-room">
+
+                            ${registro.quarto || "-"}
+
+                        </div>
+
+
+                        <div class="report-description">
+
+                            ${registro.descricao || "-"}
+
+                        </div>
+
+
+                        <div class="report-info">
+
+                            <div class="report-info-item">
+
+                                <span class="report-info-label">
+                                    Funcionário
+                                </span>
+
+                                ${funcionario || "-"}
+
+                            </div>
+
+
+                            <div class="report-info-item">
+
+                                <span class="report-info-label">
+                                    Turno
+                                </span>
+
+                                ${turno || "-"}
+
+                            </div>
+
+
+                            <div class="report-info-item">
+
+                                <span class="report-info-label">
+                                    Data
+                                </span>
+
+                                ${data || "-"}
+
+                            </div>
+
+
+                            <div class="report-info-item">
+
+                                <span class="report-info-label">
+                                    Hora
+                                </span>
+
+                                ${registro.hora || "-"}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="report-footer">
+
+                        <span>
+                            ibis Styles
+                        </span>
+
+                        <span>
+                            Comunicação interna
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="report-preview-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="fecharPreviewReport()">
+
+                    Cancelar
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn btn-success">
+
+                    <i class="bi bi-image"></i>
+
+                    Gerar Card
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(overlay);
+
+}
+
+
+// =====================================================
+// FECHAR PRÉVIA
+// =====================================================
+
+function fecharPreviewReport() {
+
+    const preview =
+        document.getElementById("reportPreview");
+
+    if (preview) {
+
+        preview.remove();
+
+    }
+
+}

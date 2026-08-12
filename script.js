@@ -728,3 +728,31 @@ window.getRegistros = function(){
 // =====================================================
 
 console.log("LogBook v2.0 carregado com sucesso.");
+// =====================================================
+// ARQUIVO DO LOGBOOK
+// =====================================================
+
+function abrirArquivoLogbook() {
+
+    const arquivo =
+        JSON.parse(
+            localStorage.getItem("logbookArquivo")
+        ) || {};
+
+    const datas =
+        Object.keys(arquivo).sort().reverse();
+
+    if (datas.length === 0) {
+
+        alert("Ainda não existem dias arquivados.");
+
+        return;
+
+    }
+
+    console.log(
+        "Dias arquivados:",
+        datas
+    );
+
+}

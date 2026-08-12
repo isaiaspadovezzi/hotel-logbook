@@ -860,3 +860,77 @@ function abrirArquivoLogbook() {
     modal.show();
 
 }
+// =====================================================
+// ABRIR DIA DO ARQUIVO
+// =====================================================
+
+function abrirDiaArquivo(data) {
+
+    const arquivo =
+        JSON.parse(
+            localStorage.getItem("logbookArquivo")
+        ) || {};
+
+
+    // Carrega os registros daquele dia
+
+    registros =
+        arquivo[data] || [];
+
+
+    // Altera a data do LogBook
+
+    document.getElementById("data").value = data;
+
+
+    // Atualiza a tabela
+
+    atualizarTabela();
+
+
+    // Atualiza contador
+
+    atualizarContador();
+
+
+    // Limpa pesquisa
+
+    const pesquisa =
+        document.getElementById("pesquisa");
+
+    if (pesquisa) {
+
+        pesquisa.value = "";
+
+    }
+
+
+    // Fecha o modal do Arquivo
+
+    const elementoModal =
+        document.getElementById(
+            "modalArquivoLogbook"
+        );
+
+
+    const modal =
+        bootstrap.Modal.getInstance(
+            elementoModal
+        );
+
+
+    if (modal) {
+
+        modal.hide();
+
+    }
+
+
+    console.log(
+        "Dia do LogBook aberto:",
+        data,
+        registros.length,
+        "registros"
+    );
+
+}

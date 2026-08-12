@@ -346,6 +346,14 @@ function atualizarTabela(lista = registros) {
                     <i class="bi bi-trash"></i>
 
                 </button>
+                                <button
+                    class="btn btn-sm btn-outline-success"
+                    onclick="reportarRegistro(${indice})"
+                    title="Reportar no WhatsApp">
+
+                    <i class="bi bi-whatsapp"></i>
+
+                </button>
 
             </td>
 

@@ -191,21 +191,15 @@
    ===================================================== */
 
 .report-room-box {
-
-background: #eef1ed;
-
+    background: #dfe4df !important;
     border-left: 4px solid #166534;
 
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 8px;
-
 }
 
 
@@ -259,27 +253,21 @@ background: #eef1ed;
    ===================================================== */
 
 .report-description {
-
-background: #f0f2ef;
-
+    background: #ecefec !important;
     border-left: 3px solid #d5dbd3;
 
     padding: 11px 13px;
 
     display: flex;
-
     align-items: center;
 
     font-size: 14px;
-
     line-height: 1.4;
 
     color: #303030;
 
     min-height: 72px;
-
 }
-
 
 /* =====================================================
    INFORMAÇÕES

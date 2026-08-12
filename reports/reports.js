@@ -430,13 +430,10 @@ function abrirPreviewReport(registro) {
                 </button>
 
 <button
-    type="button"
-    class="btn btn-success"
-    onclick="gerarCardReport()">
+    class="btn btn-sm btn-outline-success"
+    onclick="reportarRegistro(${indice})">
 
-<i class="bi bi-save"></i>
-
-    Gerar Card
+    <i class="bi bi-save"></i>
 
 </button>
 

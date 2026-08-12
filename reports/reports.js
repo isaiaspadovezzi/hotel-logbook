@@ -433,3 +433,90 @@ function fecharPreviewReport() {
     }
 
 }
+// =====================================================
+// GERAR CARD COMO IMAGEM
+// =====================================================
+
+async function gerarCardReport() {
+
+    const card =
+        document.querySelector(
+            "#reportPreview .report-card"
+        );
+
+    if (!card) {
+
+        alert(
+            "Não foi possível encontrar o card."
+        );
+
+        return;
+
+    }
+
+    if (
+        typeof html2canvas === "undefined"
+    ) {
+
+        alert(
+            "O gerador de imagem ainda não foi carregado."
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const canvas =
+            await html2canvas(card, {
+
+                scale: 2,
+
+                backgroundColor: "#ffffff",
+
+                useCORS: true,
+
+                logging: false
+
+            });
+
+
+        const imagem =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+
+        // Cria o download temporariamente
+
+        const link =
+            document.createElement("a");
+
+        link.href = imagem;
+
+        link.download =
+            "LogBook_Report.png";
+
+        link.click();
+
+
+        console.log(
+            "Card gerado com sucesso."
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao gerar card:",
+            erro
+        );
+
+        alert(
+            "Não foi possível gerar o card."
+        );
+
+    }
+
+}

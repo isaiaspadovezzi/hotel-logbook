@@ -188,6 +188,44 @@ console.log(
     "Módulo Reports v1.1 carregado."
 );
 // =====================================================
+// CLASSE DE COR DO REPORT
+// =====================================================
+
+function classeAtividadeReport(atividade) {
+
+    switch (atividade) {
+
+        case "Manutenção":
+            return "manutencao";
+
+        case "Check-in":
+            return "checkin";
+
+        case "Check-out":
+            return "checkout";
+
+        case "Troca de Quarto":
+        case "Mudança de Quarto":
+            return "troca";
+
+        case "Limpeza":
+            return "limpeza";
+
+        case "Aviso":
+            return "aviso";
+
+        case "Reclamação":
+            return "reclamacao";
+
+        case "Elogio":
+            return "elogio";
+
+        default:
+            return "padrao";
+    }
+
+}
+// =====================================================
 // PRÉVIA DO REPORT
 // =====================================================
 

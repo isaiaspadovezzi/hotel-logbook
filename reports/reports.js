@@ -1,7 +1,9 @@
 // =====================================================
 // LOGBOOK - REPORTS
 // Sistema de notificações
+// Versão 1.1
 // =====================================================
+
 
 // =====================================================
 // CONFIGURAÇÃO
@@ -11,177 +13,147 @@ const REPORTS_CONFIG = {
 
     nomeSistema: "LogBook",
 
-    nomeHotel: "ibis Styles",
-
-    corPrincipal: "#63c132"
+    nomeHotel: "ibis Styles"
 
 };
 
 
 // =====================================================
-// CRIAR CARD DE REPORT
+// REPORTAR REGISTRO
 // =====================================================
 
-function criarCardReport(registro) {
+function reportarRegistro(indice) {
 
-    if (!registro) {
+    console.log("=================================");
+    console.log("REPORTANDO REGISTRO");
+    console.log("Índice:", indice);
+    console.log("=================================");
 
-        console.error("Nenhum registro foi informado.");
 
-        return null;
+    // Verifica se o vetor de registros existe
+
+    if (
+        typeof registros === "undefined" ||
+        !Array.isArray(registros)
+    ) {
+
+        console.error(
+            "Não foi possível acessar os registros."
+        );
+
+        alert(
+            "Erro: os registros não foram encontrados."
+        );
+
+        return;
 
     }
 
+
+    // Verifica se o registro existe
+
+    if (!registros[indice]) {
+
+        console.error(
+            "Registro não encontrado:",
+            indice
+        );
+
+        alert(
+            "Registro não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    // Obtém o registro
+
+    const registro =
+        registros[indice];
+
+
+    // Mostra os dados no console
+
+    console.log(
+        "Registro selecionado:",
+        registro
+    );
+
+
+    // Obtém funcionário
+
+    const funcionarioElemento =
+        document.getElementById("funcionario");
+
     const funcionario =
-        document.getElementById("funcionario")?.value || "";
+        funcionarioElemento
+            ? funcionarioElemento.value
+            : "";
+
+
+    // Obtém turno
+
+    const turnoElemento =
+        document.getElementById("turno");
 
     const turno =
-        document.getElementById("turno")?.value || "";
+        turnoElemento
+            ? turnoElemento.value
+            : "";
+
+
+    // Obtém data
+
+    const dataElemento =
+        document.getElementById("data");
 
     const data =
-        document.getElementById("data")?.value || "";
+        dataElemento
+            ? dataElemento.value
+            : "";
 
-    const dataFormatada =
-        formatarDataReport(data);
 
-    const hora =
-        registro.hora || "";
+    // Mostra todas as informações
 
-    const atividade =
-        registro.atividade || "Ocorrência";
+    console.log("Funcionário:", funcionario);
 
-    const quarto =
-        registro.quarto || "Não informado";
+    console.log("Turno:", turno);
 
-    const descricao =
-        registro.descricao || "Sem descrição";
+    console.log("Data:", data);
 
-    const card = document.createElement("div");
+    console.log("Atividade:", registro.atividade);
 
-    card.className = "report-card";
+    console.log("Quarto:", registro.quarto);
 
-    card.innerHTML = `
+    console.log("Descrição:", registro.descricao);
 
-        <div class="report-header">
+    console.log("Hora:", registro.hora);
 
-            <div class="report-header-title">
 
-                ${REPORTS_CONFIG.nomeSistema}
+    // Confirmação temporária
 
-            </div>
+    alert(
+        "Registro selecionado para reportar:\n\n" +
 
-            <img
-                src="../img/logo.png"
-                class="report-logo"
-                alt="ibis Styles">
+        registro.atividade +
 
-        </div>
+        "\nQuarto: " +
 
-        <div class="report-body">
+        (registro.quarto || "Não informado") +
 
-            <div class="report-type">
+        "\n\n" +
 
-                ${atividade}
+        registro.descricao
 
-            </div>
-
-            <div class="report-room-label">
-
-                Quarto
-
-            </div>
-
-            <div class="report-room">
-
-                ${quarto}
-
-            </div>
-
-            <div class="report-description">
-
-                ${descricao}
-
-            </div>
-
-            <div class="report-info">
-
-                <div class="report-info-item">
-
-                    <span class="report-info-label">
-
-                        Funcionário
-
-                    </span>
-
-                    ${funcionario}
-
-                </div>
-
-                <div class="report-info-item">
-
-                    <span class="report-info-label">
-
-                        Turno
-
-                    </span>
-
-                    ${turno}
-
-                </div>
-
-                <div class="report-info-item">
-
-                    <span class="report-info-label">
-
-                        Data
-
-                    </span>
-
-                    ${dataFormatada}
-
-                </div>
-
-                <div class="report-info-item">
-
-                    <span class="report-info-label">
-
-                        Hora
-
-                    </span>
-
-                    ${hora}
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="report-footer">
-
-            <span>
-
-                ${REPORTS_CONFIG.nomeHotel}
-
-            </span>
-
-            <span>
-
-                Comunicação interna
-
-            </span>
-
-        </div>
-
-    `;
-
-    return card;
+    );
 
 }
 
 
 // =====================================================
-// FORMATAR DATA
+// FORMATA DATA
 // =====================================================
 
 function formatarDataReport(data) {
@@ -192,7 +164,10 @@ function formatarDataReport(data) {
 
     }
 
-    const partes = data.split("-");
+
+    const partes =
+        data.split("-");
+
 
     if (partes.length !== 3) {
 
@@ -200,13 +175,28 @@ function formatarDataReport(data) {
 
     }
 
-    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+    return (
+
+        partes[2] +
+
+        "/" +
+
+        partes[1] +
+
+        "/" +
+
+        partes[0]
+
+    );
 
 }
 
 
 // =====================================================
-// TESTE
+// INICIALIZAÇÃO
 // =====================================================
 
-console.log("Módulo Reports v1 carregado.");
+console.log(
+    "Módulo Reports v1.1 carregado."
+);

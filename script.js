@@ -418,14 +418,35 @@ function excluirRegistro(indice) {
 // LOCAL STORAGE
 // =====================================================
 
+// =====================================================
+// SALVAR LOGBOOK POR DATA
+// =====================================================
+
 function salvarLocalStorage() {
 
+    const data =
+        document.getElementById("data").value;
+
+    if (!data) {
+
+        console.error(
+            "Data do LogBook não encontrada."
+        );
+
+        return;
+
+    }
+
+    let arquivo =
+        JSON.parse(
+            localStorage.getItem("logbookArquivo")
+        ) || {};
+
+    arquivo[data] = registros;
+
     localStorage.setItem(
-
-        "logbook",
-
-        JSON.stringify(registros)
-
+        "logbookArquivo",
+        JSON.stringify(arquivo)
     );
 
 }

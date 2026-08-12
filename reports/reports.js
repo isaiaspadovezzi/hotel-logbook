@@ -22,70 +22,29 @@ const REPORTS_CONFIG = {
 // REPORTAR REGISTRO
 // =====================================================
 
-function reportarRegistro(indice) {
+// =====================================================
+// REPORTAR / COPIAR CARD DIRETAMENTE
+// =====================================================
 
-    console.log("=================================");
-    console.log("REPORTANDO REGISTRO");
-    console.log("Índice:", indice);
-    console.log("=================================");
+async function reportarRegistro(indice) {
 
+    const registro = registros[indice];
 
-    // Verifica se o vetor de registros existe
+    if (!registro) {
 
-    if (
-        typeof registros === "undefined" ||
-        !Array.isArray(registros)
-    ) {
-
-        console.error(
-            "Não foi possível acessar os registros."
-        );
-
-        alert(
-            "Erro: os registros não foram encontrados."
-        );
+        alert("Registro não encontrado.");
 
         return;
 
     }
 
-
-    // Verifica se o registro existe
-
-    if (!registros[indice]) {
-
-        console.error(
-            "Registro não encontrado:",
-            indice
-        );
-
-        alert(
-            "Registro não encontrado."
-        );
-
-        return;
-
-    }
-
-
-    // Obtém o registro
-
-    const registro =
-        registros[indice];
-
-
-    // Mostra os dados no console
-
-    console.log(
-        "Registro selecionado:",
-        registro
-    );
-
-
-    // Obtém funcionário
 
     const funcionarioElemento =
         document.getElementById("funcionario");
+
+    const dataElemento =
+        document.getElementById("data");
+
 
     const funcionario =
         funcionarioElemento
@@ -93,51 +52,223 @@ function reportarRegistro(indice) {
             : "";
 
 
-    // Obtém turno
-
-    const turnoElemento =
-        document.getElementById("turno");
-
-    const turno =
-        turnoElemento
-            ? turnoElemento.value
-            : "";
-
-
-    // Obtém data
-
-    const dataElemento =
-        document.getElementById("data");
-
     const data =
         dataElemento
-            ? dataElemento.value
+            ? formatarDataReport(dataElemento.value)
             : "";
 
 
-    // Mostra todas as informações
+    // =================================================
+    // CRIAR CARD TEMPORÁRIO
+    // =================================================
 
-    console.log("Funcionário:", funcionario);
-
-    console.log("Turno:", turno);
-
-    console.log("Data:", data);
-
-    console.log("Atividade:", registro.atividade);
-
-    console.log("Quarto:", registro.quarto);
-
-    console.log("Descrição:", registro.descricao);
-
-    console.log("Hora:", registro.hora);
+    const container =
+        document.createElement("div");
 
 
-    // Confirmação temporária
+    container.style.position = "fixed";
+    container.style.left = "-10000px";
+    container.style.top = "0";
+    container.style.background = "transparent";
 
-   abrirPreviewReport(registro);
+
+    container.innerHTML = `
+
+        <div class="report-card report-card-${classeAtividadeReport(registro.atividade)}">
+
+            <div class="report-header">
+
+                <div class="report-header-title">
+                    REGISTRO DE TURNO
+                </div>
+
+                <img
+                    src="img/logo.png"
+                    class="report-logo"
+                    alt="ibis Styles">
+
+            </div>
+
+
+            <div class="report-body">
+
+                <div class="report-type">
+                    ${registro.atividade || "OCORRÊNCIA"}
+                </div>
+
+
+                <div class="report-main">
+
+                    <div class="report-room-box">
+
+                        <span class="report-room-label">
+                            QUARTO
+                        </span>
+
+                        <strong class="report-room">
+                            ${registro.quarto || "-"}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="report-description">
+
+                        ${registro.descricao || "-"}
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-info">
+
+                    <div class="report-info-item">
+
+                        <span class="report-info-label">
+                            Funcionário
+                        </span>
+
+                        ${funcionario || "-"}
+
+                    </div>
+
+
+                    <div class="report-info-item">
+
+                        <span class="report-info-label">
+                            Data
+                        </span>
+
+                        ${data || "-"}
+
+                    </div>
+
+
+                    <div class="report-info-item">
+
+                        <span class="report-info-label">
+                            Hora
+                        </span>
+
+                        ${registro.hora || "-"}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="report-footer">
+
+                <span>
+                    ibis Styles
+                </span>
+
+                <span>
+                    Comunicação interna
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(container);
+
+
+    // =================================================
+    // GERAR IMAGEM
+    // =================================================
+
+    try {
+
+        const card =
+            container.querySelector(".report-card");
+
+
+        const canvas =
+            await html2canvas(card, {
+
+                scale: 2,
+
+                backgroundColor: null,
+
+                useCORS: true,
+
+                logging: false
+
+            });
+
+
+        // =================================================
+        // COPIAR IMAGEM
+        // =================================================
+
+        const blob =
+            await new Promise(function(resolve) {
+
+                canvas.toBlob(
+
+                    resolve,
+
+                    "image/png"
+
+                );
+
+            });
+
+
+        if (!blob) {
+
+            throw new Error(
+                "Não foi possível criar a imagem."
+            );
+
+        }
+
+
+        const item =
+            new ClipboardItem({
+
+                "image/png": blob
+
+            });
+
+
+        await navigator.clipboard.write([item]);
+
+
+        container.remove();
+
+
+        alert(
+            "✅ Card copiado!\n\n" +
+            "Agora é só abrir o WhatsApp e pressionar Ctrl + V."
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao copiar card:",
+            erro
+        );
+
+
+        container.remove();
+
+
+        alert(
+            "Não foi possível copiar o card."
+        );
+
+    }
 
 }
-
 
 // =====================================================
 // FORMATA DATA

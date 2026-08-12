@@ -557,7 +557,7 @@ async function gerarCardReport() {
                 class="btn btn-outline-success"
                 onclick="baixarCardReport()">
 
-                <i class="bi bi-download"></i>
+                <i class=" -download"></i>
 
                 Baixar Card
 
@@ -569,7 +569,7 @@ async function gerarCardReport() {
                 class="btn btn-success"
                 onclick="copiarCardReport()">
 
-                <i class="bi bi-clipboard"></i>
+                <i class=" -clipboard"></i>
 
                 Copiar Card
 

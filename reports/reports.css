@@ -198,7 +198,7 @@
 
 .report-room-box {
 
- background: #e3e7e2;
+background: #eef1ed;
 
     border-left: 4px solid #166534;
 
@@ -266,7 +266,7 @@
 
 .report-description {
 
- background: #e9ece8;
+background: #f0f2ef;
 
     border-left: 3px solid #d5dbd3;
 
@@ -487,8 +487,11 @@
     }
 
     .report-main {
-
-        grid-template-columns: 95px 1fr;
+    display: grid;
+    grid-template-columns: 115px 1fr;
+    gap: 5px;
+    align-items: stretch;
+}
 
     }
 

@@ -433,7 +433,7 @@ function fecharPreviewReport() {
 
 }
 // =====================================================
-// GERAR CARD COMO IMAGEM
+// GERAR CARD
 // =====================================================
 
 async function gerarCardReport() {
@@ -445,100 +445,7 @@ async function gerarCardReport() {
 
     if (!card) {
 
-        alert(
-            "Não foi possível encontrar o card."
-        );
-
-        return;
-
-    }
-
-    if (
-        typeof html2canvas === "undefined"
-    ) {
-
-        alert(
-            "O gerador de imagem ainda não foi carregado."
-        );
-
-        return;
-
-    }
-
-    try {
-
-        const canvas =
-            await html2canvas(card, {
-
-                scale: 2,
-
-                backgroundColor: "#ffffff",
-
-                useCORS: true,
-
-                logging: false
-
-            });
-
-
-        const imagem =
-            canvas.toDataURL(
-                "image/png"
-            );
-
-
-        // Cria o download temporariamente
-
-        const link =
-            document.createElement("a");
-
-        link.href = imagem;
-
-        link.download =
-            "LogBook_Report.png";
-
-        link.click();
-
-
-        console.log(
-            "Card gerado com sucesso."
-        );
-
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao gerar card:",
-            erro
-        );
-
-        alert(
-            "Não foi possível gerar o card."
-        );
-
-    }
-
-}
-// =====================================================
-// COMPARTILHAR REPORT
-// =====================================================
-
-// =====================================================
-// ENVIAR REPORT PARA WHATSAPP
-// =====================================================
-
-async function enviarWhatsApp() {
-
-    const card =
-        document.querySelector(
-            "#reportPreview .report-card"
-        );
-
-    if (!card) {
-
-        alert(
-            "Não foi possível encontrar o card."
-        );
+        alert("Não foi possível encontrar o card.");
 
         return;
 
@@ -556,15 +463,6 @@ async function enviarWhatsApp() {
 
     try {
 
-        console.log(
-            "Gerando imagem para WhatsApp..."
-        );
-
-
-        // =================================================
-        // 1. GERAR IMAGEM
-        // =================================================
-
         const canvas =
             await html2canvas(card, {
 
@@ -579,19 +477,164 @@ async function enviarWhatsApp() {
             });
 
 
-        // =================================================
-        // 2. CONVERTER PARA BLOB
-        // =================================================
+        // Guarda a imagem para os outros botões
+
+        window.reportCardCanvas = canvas;
+
+
+        // Converte para PNG
+
+        const imagem =
+            canvas.toDataURL("image/png");
+
+
+        // Remove botões antigos
+
+        const botoesAntigos =
+            document.getElementById(
+                "acoesCardReport"
+            );
+
+        if (botoesAntigos) {
+
+            botoesAntigos.remove();
+
+        }
+
+
+        // Cria os novos botões
+
+        const acoes =
+            document.createElement("div");
+
+        acoes.id =
+            "acoesCardReport";
+
+        acoes.className =
+            "report-card-actions";
+
+
+        acoes.innerHTML = `
+
+            <button
+                type="button"
+                class="btn btn-outline-success"
+                onclick="baixarCardReport()">
+
+                <i class="bi bi-download"></i>
+
+                Baixar Card
+
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-success"
+                onclick="copiarCardReport()">
+
+                <i class="bi bi-clipboard"></i>
+
+                Copiar Card
+
+            </button>
+
+        `;
+
+
+        // Coloca os botões depois do card
+
+        card.parentElement.appendChild(acoes);
+
+
+        console.log(
+            "Card gerado com sucesso."
+        );
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao gerar card:",
+            erro
+        );
+
+        alert(
+            "Não foi possível gerar o card."
+        );
+
+    }
+
+}
+// =====================================================
+// BAIXAR CARD
+// =====================================================
+
+function baixarCardReport() {
+
+    if (!window.reportCardCanvas) {
+
+        alert(
+            "Primeiro clique em Gerar Card."
+        );
+
+        return;
+
+    }
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.download =
+        "LogBook_Report.png";
+
+
+    link.href =
+        window.reportCardCanvas.toDataURL(
+            "image/png"
+        );
+
+
+    link.click();
+
+
+    console.log(
+        "Card baixado."
+    );
+
+}
+
+
+// =====================================================
+// COPIAR CARD
+// =====================================================
+
+async function copiarCardReport() {
+
+    if (!window.reportCardCanvas) {
+
+        alert(
+            "Primeiro clique em Gerar Card."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const canvas =
+            window.reportCardCanvas;
+
 
         const blob =
             await new Promise(function(resolve) {
 
                 canvas.toBlob(
-
                     resolve,
-
                     "image/png"
-
                 );
 
             });
@@ -600,139 +643,65 @@ async function enviarWhatsApp() {
         if (!blob) {
 
             throw new Error(
-                "Não foi possível gerar a imagem."
+                "Não foi possível criar a imagem."
             );
 
         }
-
-
-        // =================================================
-        // 3. COPIAR IMAGEM PARA ÁREA DE TRANSFERÊNCIA
-        // =================================================
-
-        let imagemCopiada = false;
 
 
         if (
-            navigator.clipboard &&
-            window.ClipboardItem
+            !navigator.clipboard ||
+            !window.ClipboardItem
         ) {
 
-            try {
+            alert(
+                "Seu navegador não permite copiar imagens diretamente."
+            );
 
-                const item =
-                    new ClipboardItem({
-
-                        "image/png": blob
-
-                    });
-
-
-                await navigator.clipboard.write([item]);
-
-
-                imagemCopiada = true;
-
-
-                console.log(
-                    "Imagem copiada para a área de transferência."
-                );
-
-
-            } catch (erroClipboard) {
-
-                console.warn(
-                    "Não foi possível copiar a imagem:",
-                    erroClipboard
-                );
-
-            }
+            return;
 
         }
 
 
-        // =================================================
-        // 4. ABRIR WHATSAPP WEB
-        // =================================================
+        const item =
+            new ClipboardItem({
 
-        window.open(
-            "https://web.whatsapp.com/",
-            "_blank"
+                "image/png": blob
+
+            });
+
+
+        await navigator.clipboard.write([
+            item
+        ]);
+
+
+        alert(
+            "✅ Card copiado!\n\n" +
+            "Agora você pode colar onde quiser."
         );
 
 
-        // =================================================
-        // 5. ORIENTAÇÃO PARA O USUÁRIO
-        // =================================================
-
-        if (imagemCopiada) {
-
-            alert(
-                "Card copiado!\n\n" +
-
-                "O WhatsApp Web será aberto.\n\n" +
-
-                "1. Entre no grupo desejado.\n" +
-
-                "2. Pressione Ctrl + V.\n" +
-
-                "3. Envie a imagem."
-            );
-
-        } else {
-
-            // Fallback caso o navegador não permita
-            // copiar a imagem.
-
-            const url =
-                URL.createObjectURL(blob);
-
-
-            const link =
-                document.createElement("a");
-
-
-            link.href = url;
-
-
-            link.download =
-                "LogBook_Report.png";
-
-
-            document.body.appendChild(link);
-
-
-            link.click();
-
-
-            document.body.removeChild(link);
-
-
-            URL.revokeObjectURL(url);
-
-
-            alert(
-                "O WhatsApp foi aberto, mas o navegador " +
-                "não permitiu copiar a imagem automaticamente.\n\n" +
-
-                "A imagem foi salva como LogBook_Report.png."
-            );
-
-        }
+        console.log(
+            "Card copiado para a área de transferência."
+        );
 
 
     } catch (erro) {
 
         console.error(
-            "Erro ao enviar para WhatsApp:",
+            "Erro ao copiar card:",
             erro
         );
 
 
         alert(
-            "Não foi possível preparar o report para o WhatsApp."
+            "Não foi possível copiar o card."
         );
 
     }
 
 }
+
+
+ 

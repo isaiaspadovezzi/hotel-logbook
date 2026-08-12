@@ -470,6 +470,11 @@ function salvarLocalStorage() {
 // CARREGAR LOGBOOK DA DATA SELECIONADA
 // =====================================================
 
+// =====================================================
+// CARREGAR LOGBOOK DA DATA SELECIONADA
+// COM MIGRAÇÃO DOS REGISTROS ANTIGOS
+// =====================================================
+
 function carregarLocalStorage() {
 
     const data =
@@ -483,16 +488,90 @@ function carregarLocalStorage() {
 
     }
 
-    const arquivo =
+
+    // =================================================
+    // NOVO ARQUIVO POR DATA
+    // =================================================
+
+    let arquivo =
         JSON.parse(
             localStorage.getItem("logbookArquivo")
         ) || {};
 
+
+    // =================================================
+    // VERIFICA SE EXISTE O LOGBOOK ANTIGO
+    // =================================================
+
+    const antigo =
+        localStorage.getItem("logbook");
+
+
+    if (
+        antigo &&
+        Object.keys(arquivo).length === 0
+    ) {
+
+        try {
+
+            const registrosAntigos =
+                JSON.parse(antigo);
+
+
+            if (
+                Array.isArray(registrosAntigos) &&
+                registrosAntigos.length > 0
+            ) {
+
+                // Coloca os registros antigos
+                // na data que está selecionada
+
+                arquivo[data] =
+                    registrosAntigos;
+
+
+                // Salva no novo sistema
+
+                localStorage.setItem(
+                    "logbookArquivo",
+                    JSON.stringify(arquivo)
+                );
+
+                console.log(
+                    "Registros antigos migrados para:",
+                    data
+                );
+
+            }
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao migrar registros antigos:",
+                erro
+            );
+
+        }
+
+    }
+
+
+    // =================================================
+    // CARREGA A DATA ATUAL
+    // =================================================
+
     registros =
         arquivo[data] || [];
 
-}
 
+    console.log(
+        "LogBook carregado:",
+        data,
+        registros.length,
+        "registros"
+    );
+
+}
 // =====================================================
 // CONTADOR
 // =====================================================

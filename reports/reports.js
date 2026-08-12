@@ -280,7 +280,7 @@ function abrirPreviewReport(registro) {
                         <img
                             src="img/logo.png"
                             class="report-logo"
-                            alt="ibis Styles">
+                            alt="is Styles">
 
                     </div>
 
@@ -396,11 +396,11 @@ function abrirPreviewReport(registro) {
 <button
     type="button"
     class="btn btn-success"
-    onclick="compartilharReport()">
+    onclick="enviarWhatsApp()">
 
-    <i class="bi bi-share"></i>
+    <i class="bi bi-whatsapp"></i>
 
-    Compartilhar Report
+    WhatsApp
 
 </button>
 
@@ -523,7 +523,11 @@ async function gerarCardReport() {
 // COMPARTILHAR REPORT
 // =====================================================
 
-async function compartilharReport() {
+// =====================================================
+// ENVIAR REPORT PARA WHATSAPP
+// =====================================================
+
+async function enviarWhatsApp() {
 
     const card =
         document.querySelector(
@@ -532,7 +536,9 @@ async function compartilharReport() {
 
     if (!card) {
 
-        alert("Não foi possível encontrar o card.");
+        alert(
+            "Não foi possível encontrar o card."
+        );
 
         return;
 
@@ -550,11 +556,14 @@ async function compartilharReport() {
 
     try {
 
-        console.log("Gerando imagem para compartilhamento...");
+        console.log(
+            "Gerando imagem para WhatsApp..."
+        );
 
-        // ---------------------------------------------
-        // GERA O CARD
-        // ---------------------------------------------
+
+        // =================================================
+        // 1. GERAR IMAGEM
+        // =================================================
 
         const canvas =
             await html2canvas(card, {
@@ -570,16 +579,19 @@ async function compartilharReport() {
             });
 
 
-        // ---------------------------------------------
-        // CONVERTE PARA BLOB
-        // ---------------------------------------------
+        // =================================================
+        // 2. CONVERTER PARA BLOB
+        // =================================================
 
         const blob =
             await new Promise(function(resolve) {
 
                 canvas.toBlob(
+
                     resolve,
+
                     "image/png"
+
                 );
 
             });
@@ -594,132 +606,131 @@ async function compartilharReport() {
         }
 
 
-        // ---------------------------------------------
-        // CRIA ARQUIVO
-        // ---------------------------------------------
+        // =================================================
+        // 3. COPIAR IMAGEM PARA ÁREA DE TRANSFERÊNCIA
+        // =================================================
 
-        const arquivo =
-            new File(
+        let imagemCopiada = false;
 
-                [blob],
-
-                "LogBook_Report.png",
-
-                {
-                    type: "image/png"
-                }
-
-            );
-
-
-        // ---------------------------------------------
-        // TEXTO DO REPORT
-        // ---------------------------------------------
-
-        const atividade =
-            document
-                .querySelector(".report-type")
-                ?.textContent
-                .trim() || "OCORRÊNCIA";
-
-
-        const texto =
-            "🟢 " + atividade;
-
-
-        // ---------------------------------------------
-        // COMPARTILHAMENTO NATIVO
-        // ---------------------------------------------
 
         if (
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({
-                files: [arquivo]
-            })
+            navigator.clipboard &&
+            window.ClipboardItem
         ) {
 
-            await navigator.share({
+            try {
 
-                title:
-                    "LogBook - ibis Styles",
+                const item =
+                    new ClipboardItem({
 
-                text:
-                    texto,
+                        "image/png": blob
 
-                files:
-                    [arquivo]
-
-            });
+                    });
 
 
-            console.log(
-                "Report compartilhado com sucesso."
-            );
+                await navigator.clipboard.write([item]);
 
-            return;
+
+                imagemCopiada = true;
+
+
+                console.log(
+                    "Imagem copiada para a área de transferência."
+                );
+
+
+            } catch (erroClipboard) {
+
+                console.warn(
+                    "Não foi possível copiar a imagem:",
+                    erroClipboard
+                );
+
+            }
 
         }
 
 
-        // ---------------------------------------------
-        // FALLBACK
-        // ---------------------------------------------
+        // =================================================
+        // 4. ABRIR WHATSAPP WEB
+        // =================================================
 
-        const url =
-            URL.createObjectURL(blob);
-
-
-        const link =
-            document.createElement("a");
-
-        link.href = url;
-
-        link.download =
-            "LogBook_Report.png";
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        document.body.removeChild(link);
-
-
-        URL.revokeObjectURL(url);
-
-
-        alert(
-            "Seu dispositivo não permite compartilhar a imagem diretamente. " +
-            "O card foi salvo como imagem para você enviar pelo WhatsApp."
+        window.open(
+            "https://web.whatsapp.com/",
+            "_blank"
         );
+
+
+        // =================================================
+        // 5. ORIENTAÇÃO PARA O USUÁRIO
+        // =================================================
+
+        if (imagemCopiada) {
+
+            alert(
+                "Card copiado!\n\n" +
+
+                "O WhatsApp Web será aberto.\n\n" +
+
+                "1. Entre no grupo desejado.\n" +
+
+                "2. Pressione Ctrl + V.\n" +
+
+                "3. Envie a imagem."
+            );
+
+        } else {
+
+            // Fallback caso o navegador não permita
+            // copiar a imagem.
+
+            const url =
+                URL.createObjectURL(blob);
+
+
+            const link =
+                document.createElement("a");
+
+
+            link.href = url;
+
+
+            link.download =
+                "LogBook_Report.png";
+
+
+            document.body.appendChild(link);
+
+
+            link.click();
+
+
+            document.body.removeChild(link);
+
+
+            URL.revokeObjectURL(url);
+
+
+            alert(
+                "O WhatsApp foi aberto, mas o navegador " +
+                "não permitiu copiar a imagem automaticamente.\n\n" +
+
+                "A imagem foi salva como LogBook_Report.png."
+            );
+
+        }
 
 
     } catch (erro) {
 
         console.error(
-            "Erro ao compartilhar report:",
+            "Erro ao enviar para WhatsApp:",
             erro
         );
 
 
-        // Se o usuário simplesmente cancelar
-        // o compartilhamento, não mostramos erro.
-
-        if (
-            erro.name === "AbortError"
-        ) {
-
-            console.log(
-                "Compartilhamento cancelado pelo usuário."
-            );
-
-            return;
-
-        }
-
-
         alert(
-            "Não foi possível compartilhar o report."
+            "Não foi possível preparar o report para o WhatsApp."
         );
 
     }

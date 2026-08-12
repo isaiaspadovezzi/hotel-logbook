@@ -519,3 +519,209 @@ async function gerarCardReport() {
     }
 
 }
+// =====================================================
+// COMPARTILHAR REPORT
+// =====================================================
+
+async function compartilharReport() {
+
+    const card =
+        document.querySelector(
+            "#reportPreview .report-card"
+        );
+
+    if (!card) {
+
+        alert("Não foi possível encontrar o card.");
+
+        return;
+
+    }
+
+    if (typeof html2canvas === "undefined") {
+
+        alert(
+            "O gerador de imagem ainda não foi carregado."
+        );
+
+        return;
+
+    }
+
+    try {
+
+        console.log("Gerando imagem para compartilhamento...");
+
+        // ---------------------------------------------
+        // GERA O CARD
+        // ---------------------------------------------
+
+        const canvas =
+            await html2canvas(card, {
+
+                scale: 2,
+
+                backgroundColor: "#ffffff",
+
+                useCORS: true,
+
+                logging: false
+
+            });
+
+
+        // ---------------------------------------------
+        // CONVERTE PARA BLOB
+        // ---------------------------------------------
+
+        const blob =
+            await new Promise(function(resolve) {
+
+                canvas.toBlob(
+                    resolve,
+                    "image/png"
+                );
+
+            });
+
+
+        if (!blob) {
+
+            throw new Error(
+                "Não foi possível gerar a imagem."
+            );
+
+        }
+
+
+        // ---------------------------------------------
+        // CRIA ARQUIVO
+        // ---------------------------------------------
+
+        const arquivo =
+            new File(
+
+                [blob],
+
+                "LogBook_Report.png",
+
+                {
+                    type: "image/png"
+                }
+
+            );
+
+
+        // ---------------------------------------------
+        // TEXTO DO REPORT
+        // ---------------------------------------------
+
+        const atividade =
+            document
+                .querySelector(".report-type")
+                ?.textContent
+                .trim() || "OCORRÊNCIA";
+
+
+        const texto =
+            "🟢 " + atividade;
+
+
+        // ---------------------------------------------
+        // COMPARTILHAMENTO NATIVO
+        // ---------------------------------------------
+
+        if (
+            navigator.share &&
+            navigator.canShare &&
+            navigator.canShare({
+                files: [arquivo]
+            })
+        ) {
+
+            await navigator.share({
+
+                title:
+                    "LogBook - ibis Styles",
+
+                text:
+                    texto,
+
+                files:
+                    [arquivo]
+
+            });
+
+
+            console.log(
+                "Report compartilhado com sucesso."
+            );
+
+            return;
+
+        }
+
+
+        // ---------------------------------------------
+        // FALLBACK
+        // ---------------------------------------------
+
+        const url =
+            URL.createObjectURL(blob);
+
+
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+
+        link.download =
+            "LogBook_Report.png";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+
+        URL.revokeObjectURL(url);
+
+
+        alert(
+            "Seu dispositivo não permite compartilhar a imagem diretamente. " +
+            "O card foi salvo como imagem para você enviar pelo WhatsApp."
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao compartilhar report:",
+            erro
+        );
+
+
+        // Se o usuário simplesmente cancelar
+        // o compartilhamento, não mostramos erro.
+
+        if (
+            erro.name === "AbortError"
+        ) {
+
+            console.log(
+                "Compartilhamento cancelado pelo usuário."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Não foi possível compartilhar o report."
+        );
+
+    }
+
+}

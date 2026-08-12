@@ -729,7 +729,7 @@ window.getRegistros = function(){
 
 console.log("LogBook v2.0 carregado com sucesso.");
 // =====================================================
-// ARQUIVO DO LOGBOOK
+// ABRIR ARQUIVO DO LOGBOOK
 // =====================================================
 
 function abrirArquivoLogbook() {
@@ -739,20 +739,124 @@ function abrirArquivoLogbook() {
             localStorage.getItem("logbookArquivo")
         ) || {};
 
+
     const datas =
-        Object.keys(arquivo).sort().reverse();
+        Object.keys(arquivo)
+            .sort()
+            .reverse();
+
+
+    const lista =
+        document.getElementById(
+            "listaArquivoLogbook"
+        );
+
+
+    lista.innerHTML = "";
+
+
+    // =============================================
+    // NENHUM ARQUIVO
+    // =============================================
 
     if (datas.length === 0) {
 
-        alert("Ainda não existem dias arquivados.");
+        lista.innerHTML = `
 
-        return;
+            <div class="text-center text-muted py-4">
+
+                <i class="bi bi-folder2"
+                   style="font-size: 32px;">
+                </i>
+
+                <p class="mt-2 mb-0">
+
+                    Nenhum dia arquivado.
+
+                </p>
+
+            </div>
+
+        `;
 
     }
 
-    console.log(
-        "Dias arquivados:",
-        datas
-    );
+
+    // =============================================
+    // LISTA DE DATAS
+    // =============================================
+
+    datas.forEach(function(data) {
+
+        const quantidade =
+            Array.isArray(arquivo[data])
+                ? arquivo[data].length
+                : 0;
+
+
+        const partes =
+            data.split("-");
+
+
+        const dataFormatada =
+            partes[2] +
+            "/" +
+            partes[1] +
+            "/" +
+            partes[0];
+
+
+        lista.innerHTML += `
+
+            <button
+                type="button"
+                class="list-group-item
+                       list-group-item-action
+                       d-flex
+                       justify-content-between
+                       align-items-center"
+                onclick="abrirDiaArquivo('${data}')">
+
+                <div>
+
+                    <i class="bi bi-calendar3
+                              text-success me-2">
+                    </i>
+
+                    <strong>
+                        ${dataFormatada}
+                    </strong>
+
+                </div>
+
+
+                <span class="badge
+                             bg-success
+                             rounded-pill">
+
+                    ${quantidade}
+
+                </span>
+
+            </button>
+
+        `;
+
+    });
+
+
+    // =============================================
+    // ABRIR MODAL
+    // =============================================
+
+    const modal =
+        new bootstrap.Modal(
+            document.getElementById(
+                "modalArquivoLogbook"
+            )
+        );
+
+
+    modal.show();
 
 }

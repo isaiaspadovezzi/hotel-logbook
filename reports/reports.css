@@ -202,7 +202,6 @@
     padding: 8px;
 }
 
-
 .report-card-manutencao .report-room-box {
     border-left-color: #c62828;
 }
@@ -253,7 +252,7 @@
    ===================================================== */
 
 .report-description {
-    background: #ecefec !important;
+    background: #dfe4df !important;
     border-left: 3px solid #d5dbd3;
 
     padding: 11px 13px;

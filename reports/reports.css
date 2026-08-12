@@ -371,3 +371,378 @@
     margin: 0 auto;
 
 }
+/* =====================================================
+   NOVO DESIGN DO CARD
+   ===================================================== */
+
+.report-card {
+
+    width: 560px;
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    border: 1px solid #dfe7dc;
+
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+
+}
+
+
+/* =====================================================
+   CABEÇALHO
+   ===================================================== */
+
+.report-header {
+
+    height: 58px;
+
+    background: #166534;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+}
+
+
+.report-header-title {
+
+    color: #ffffff;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+}
+
+
+.report-logo {
+
+    width: 38px;
+
+    height: auto;
+
+    object-fit: contain;
+
+}
+
+
+/* =====================================================
+   COR DA ATIVIDADE
+   ===================================================== */
+
+.report-card-manutencao .report-header {
+    background: #c62828;
+}
+
+.report-card-checkin .report-header {
+    background: #16803c;
+}
+
+.report-card-checkout .report-header {
+    background: #2563a6;
+}
+
+.report-card-troca .report-header {
+    background: #ed7d22;
+}
+
+.report-card-limpeza .report-header {
+    background: #15539a;
+}
+
+.report-card-aviso .report-header {
+    background: #e5a629;
+}
+
+.report-card-reclamacao .report-header {
+    background: #a92d2d;
+}
+
+.report-card-elogio .report-header {
+    background: #16803c;
+}
+
+.report-card-padrao .report-header {
+    background: #166534;
+}
+
+
+/* =====================================================
+   CORPO
+   ===================================================== */
+
+.report-body {
+
+    padding: 14px 18px 12px;
+
+}
+
+
+/* =====================================================
+   ATIVIDADE
+   ===================================================== */
+
+.report-type {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    color: #166534;
+
+    margin-bottom: 10px;
+
+}
+
+
+.report-card-manutencao .report-type {
+    color: #c62828;
+}
+
+.report-card-checkin .report-type {
+    color: #16803c;
+}
+
+.report-card-checkout .report-type {
+    color: #2563a6;
+}
+
+.report-card-troca .report-type {
+    color: #ed7d22;
+}
+
+.report-card-limpeza .report-type {
+    color: #15539a;
+}
+
+.report-card-aviso .report-type {
+    color: #b27a00;
+}
+
+
+/* =====================================================
+   QUARTO + DESCRIÇÃO
+   ===================================================== */
+
+.report-main {
+
+    display: grid;
+
+    grid-template-columns: 115px 1fr;
+
+    gap: 14px;
+
+    align-items: stretch;
+
+}
+
+
+/* =====================================================
+   QUARTO
+   ===================================================== */
+
+.report-room-box {
+
+    background: #f1f8ef;
+
+    border-radius: 8px;
+
+    border-left: 4px solid #166534;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 8px;
+
+}
+
+
+.report-card-manutencao .report-room-box {
+    border-left-color: #c62828;
+}
+
+.report-card-checkin .report-room-box {
+    border-left-color: #16803c;
+}
+
+.report-card-checkout .report-room-box {
+    border-left-color: #2563a6;
+}
+
+.report-card-troca .report-room-box {
+    border-left-color: #ed7d22;
+}
+
+.report-room-label {
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    color: #777;
+
+    letter-spacing: 0.8px;
+
+}
+
+
+.report-room {
+
+    font-size: 30px;
+
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    color: #222;
+
+    margin-top: 3px;
+
+}
+
+
+/* =====================================================
+   DESCRIÇÃO
+   ===================================================== */
+
+.report-description {
+
+    background: #f7faf6;
+
+    border-radius: 8px;
+
+    padding: 12px 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+
+    color: #303030;
+
+    min-height: 75px;
+
+}
+
+
+/* =====================================================
+   INFORMAÇÕES
+   ===================================================== */
+
+.report-info {
+
+    display: grid;
+
+    grid-template-columns: 1.5fr 1fr 0.7fr;
+
+    gap: 12px;
+
+    border-top: 1px solid #e1e7df;
+
+    margin-top: 12px;
+
+    padding-top: 10px;
+
+}
+
+
+.report-info-item {
+
+    font-size: 11px;
+
+    color: #444;
+
+}
+
+
+.report-info-label {
+
+    display: block;
+
+    text-transform: uppercase;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    color: #888;
+
+    margin-bottom: 2px;
+
+}
+
+
+/* =====================================================
+   RODAPÉ
+   ===================================================== */
+
+.report-footer {
+
+    height: 30px;
+
+    background: #f4f8f2;
+
+    padding: 0 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    font-size: 8px;
+
+    color: #777;
+
+}
+
+
+/* =====================================================
+   RESPONSIVO
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    .report-card {
+
+        width: 100%;
+
+    }
+
+    .report-main {
+
+        grid-template-columns: 95px 1fr;
+
+    }
+
+    .report-room {
+
+        font-size: 25px;
+
+    }
+
+}

@@ -5,21 +5,20 @@
 
 .report-card {
 
-    width: 100%;
+    width: 560px;
+    max-width: 100%;
 
-    max-width: 600px;
+    margin: 0 auto;
 
     background: #ffffff;
 
-    border: 1px solid #dcebd7;
-
-    border-radius: 18px;
+    border-radius: 12px;
 
     overflow: hidden;
 
-    font-family: Arial, sans-serif;
+    border: 1px solid #dfe7dc;
 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
 
 }
 

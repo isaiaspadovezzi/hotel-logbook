@@ -305,119 +305,117 @@ function abrirPreviewReport(registro) {
 
             <div class="report-preview-content">
 
-              <div class="report-card report-card-${classeAtividadeReport(registro.atividade)}">
+            <div class="report-card report-card-${classeAtividadeReport(registro.atividade)}">
 
-                    <div class="report-header">
+    <!-- CABEÇALHO -->
 
-                        <div class="report-header-title">
+    <div class="report-header">
 
-                            LOGBOOK
+        <div class="report-header-title">
+            REGISTRO DE TURNO
+        </div>
 
-                        </div>
+        <img
+            src="img/logo.png"
+            class="report-logo"
+            alt="ibis Styles">
 
-                        <img
-                            src="img/logo.png"
-                            class="report-logo"
-                            alt="is Styles">
-
-                    </div>
-
-
-                    <div class="report-body">
-
-                        <div class="report-type">
-
-                            ${registro.atividade || "OCORRÊNCIA"}
-
-                        </div>
+    </div>
 
 
-                        <div class="report-room-label">
+    <!-- CONTEÚDO -->
 
-                            QUARTO
+    <div class="report-body">
 
-                        </div>
+        <div class="report-type">
 
+            ${registro.atividade || "OCORRÊNCIA"}
 
-                        <div class="report-room">
-
-                            ${registro.quarto || "-"}
-
-                        </div>
+        </div>
 
 
-                        <div class="report-description">
+        <!-- QUARTO + DESCRIÇÃO -->
 
-                            ${registro.descricao || "-"}
+        <div class="report-main">
 
-                        </div>
+            <div class="report-room-box">
 
+                <span class="report-room-label">
+                    QUARTO
+                </span>
 
-                        <div class="report-info">
-
-                            <div class="report-info-item">
-
-                                <span class="report-info-label">
-                                    Funcionário
-                                </span>
-
-                                ${funcionario || "-"}
-
-                            </div>
-
-
-                            <div class="report-info-item">
-
-                                <span class="report-info-label">
-                                    Turno
-                                </span>
-
-                                ${turno || "-"}
-
-                            </div>
-
-
-                            <div class="report-info-item">
-
-                                <span class="report-info-label">
-                                    Data
-                                </span>
-
-                                ${data || "-"}
-
-                            </div>
-
-
-                            <div class="report-info-item">
-
-                                <span class="report-info-label">
-                                    Hora
-                                </span>
-
-                                ${registro.hora || "-"}
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="report-footer">
-
-                        <span>
-                            ibis Styles
-                        </span>
-
-                        <span>
-                            Comunicação interna
-                        </span>
-
-                    </div>
-
-                </div>
+                <strong class="report-room">
+                    ${registro.quarto || "-"}
+                </strong>
 
             </div>
+
+
+            <div class="report-description">
+
+                ${registro.descricao || "-"}
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMAÇÕES -->
+
+        <div class="report-info">
+
+            <div class="report-info-item">
+
+                <span class="report-info-label">
+                    Funcionário
+                </span>
+
+                ${funcionario || "-"}
+
+            </div>
+
+
+            <div class="report-info-item">
+
+                <span class="report-info-label">
+                    Data
+                </span>
+
+                ${data || "-"}
+
+            </div>
+
+
+            <div class="report-info-item">
+
+                <span class="report-info-label">
+                    Hora
+                </span>
+
+                ${registro.hora || "-"}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RODAPÉ -->
+
+    <div class="report-footer">
+
+        <span>
+            ibis Styles
+        </span>
+
+        <span>
+            Comunicação interna
+        </span>
+
+    </div>
+
+</div>
 
 
             <div class="report-preview-footer">

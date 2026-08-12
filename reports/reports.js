@@ -396,11 +396,11 @@ function abrirPreviewReport(registro) {
 <button
     type="button"
     class="btn btn-success"
-    onclick="enviarWhatsApp()">
+    onclick="gerarCardReport()">
 
-    <i class="bi bi-whatsapp"></i>
+    <i class="bi bi-image"></i>
 
-    WhatsApp
+    Gerar Card
 
 </button>
 

@@ -78,10 +78,9 @@ async function reportarRegistro(indice) {
 
             <div class="report-header">
 
-                <div class="report-header-title">
-                    REGISTRO DE TURNO
-                </div>
-
+              <div class="report-header-title">
+    ${registro.atividade || "OCORRÊNCIA"}
+</div>
                 <img
                     src="img/logo.png"
                     class="report-logo"

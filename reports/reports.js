@@ -91,11 +91,7 @@ async function reportarRegistro(indice) {
 
             <div class="report-body">
 
-                <div class="report-type">
-                    ${registro.atividade || "OCORRÊNCIA"}
-                </div>
-
-
+    
                 <div class="report-main">
 
                     <div class="report-room-box">

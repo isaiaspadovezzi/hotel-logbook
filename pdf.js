@@ -786,8 +786,8 @@ lineWidth:
 // QUADRO DE ASSINATURAS E CONFERÊNCIA
 // =====================================================
 
-// Altura aproximada necessária para o quadro
-const alturaAssinaturas = 46;
+//  aproximada necessária para o quadro
+const alturaAssinaturas = 48;
 
 // Verifica se existe espaço suficiente na página
 let assinaturaY = finalY + 20;

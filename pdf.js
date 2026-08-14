@@ -684,21 +684,25 @@ doc.text(
             },
 
 
-            bodyStyles: {
+          bodyStyles: {
 
-                textColor:
-                    PDF_COR_TEXTO,
+    textColor:
+        PDF_COR_TEXTO,
 
-                fontSize:
-                    9,
+    fontSize:
+        8.5,
 
-                cellPadding:
-                    3,
+    cellPadding: {
+        top: 1.5,
+        right: 3,
+        bottom: 1.5,
+        left: 3
+    },
 
-                valign:
-                    "middle"
+    valign:
+        "middle"
 
-            },
+},
 
 
            alternateRowStyles: {

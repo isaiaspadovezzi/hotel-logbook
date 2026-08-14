@@ -284,7 +284,98 @@ function limparFormulario() {
 // =====================================================
 // ATUALIZAR TABELA
 // =====================================================
+// =====================================================
+// ÍCONE DA ATIVIDADE
+// =====================================================
 
+function iconeAtividade(atividade) {
+
+    const nome =
+        (atividade || "")
+            .toLowerCase()
+            .trim();
+
+
+    if (nome === "check-in") {
+
+        return `
+            <i
+                class="bi bi-person-check"
+                title="Check-in">
+            </i>
+        `;
+
+    }
+
+
+    if (nome === "check-out") {
+
+        return `
+            <i
+                class="bi bi-box-arrow-right"
+                title="Check-out">
+            </i>
+        `;
+
+    }
+
+
+    if (nome === "manutenção") {
+
+        return `
+            <i
+                class="bi bi-tools"
+                title="Manutenção">
+            </i>
+        `;
+
+    }
+
+
+    if (nome === "reserva") {
+
+        return `
+            <i
+                class="bi bi-calendar-check"
+                title="Reserva">
+            </i>
+        `;
+
+    }
+
+
+    if (nome === "pagamento") {
+
+        return `
+            <i
+                class="bi bi-credit-card"
+                title="Pagamento">
+            </i>
+        `;
+
+    }
+
+
+    if (nome === "despertar") {
+
+        return `
+            <i
+                class="bi bi-alarm"
+                title="Despertar">
+            </i>
+        `;
+
+    }
+
+
+    return `
+        <i
+            class="bi bi-clipboard"
+            title="${atividade}">
+        </i>
+    `;
+
+}
 function atualizarTabela(lista = registros) {
 
     const tbody =
@@ -338,7 +429,10 @@ function atualizarTabela(lista = registros) {
 
             <td>${registro.hora}</td>
 
-            <td>${registro.atividade}</td>
+       <td>
+    ${iconeAtividade(registro.atividade)}
+    ${registro.atividade}
+</td>
 
             <td>${registro.quarto}</td>
 

@@ -711,11 +711,11 @@ doc.text(
 
             styles: {
 
-                lineColor:
-                    [220, 220, 220],
+            lineColor:
+    [180, 190, 180],
 
-                lineWidth:
-                    0.2,
+lineWidth:
+    0.4,
 
                 overflow:
                     "linebreak"

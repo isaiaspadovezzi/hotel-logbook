@@ -787,7 +787,7 @@ lineWidth:
 // =====================================================
 
 // Altura aproximada necessária para o quadro
-const alturaAssinaturas = 48;
+const alturaAssinaturas = 40;
 
 // Verifica se existe espaço suficiente na página
 let assinaturaY = finalY + 20;
@@ -905,6 +905,14 @@ doc.text(
 // RESPONSÁVEL PELO REGISTRO
 // =====================================================
 
+doc.setDrawColor(
+    100,
+    100,
+    100
+);
+
+doc.setLineWidth(0.3);
+
 doc.setFont(
     "helvetica",
     "normal"
@@ -924,29 +932,8 @@ doc.text(
     assinaturaY + 29
 );
 
-doc.setDrawColor(
-    100,
-    100,
-    100
-);
-
-doc.setLineWidth(0.3);
-
 doc.line(
     40,
-    assinaturaY + 29,
-    68,
-    assinaturaY + 29
-);
-
-doc.text(
-    "Data:",
-    72,
-    assinaturaY + 29
-);
-
-doc.line(
-    82,
     assinaturaY + 29,
     95,
     assinaturaY + 29
@@ -966,19 +953,6 @@ doc.text(
 doc.line(
     116,
     assinaturaY + 27,
-    145,
-    assinaturaY + 27
-);
-
-doc.text(
-    "Data:",
-    150,
-    assinaturaY + 27
-);
-
-doc.line(
-    160,
-    assinaturaY + 27,
     190,
     assinaturaY + 27
 );
@@ -997,19 +971,6 @@ doc.text(
 doc.line(
     116,
     assinaturaY + 36,
-    145,
-    assinaturaY + 36
-);
-
-doc.text(
-    "Data:",
-    150,
-    assinaturaY + 36
-);
-
-doc.line(
-    160,
-    assinaturaY + 36,
     190,
     assinaturaY + 36
 );
@@ -1027,19 +988,6 @@ doc.text(
 
 doc.line(
     116,
-    assinaturaY + 45,
-    145,
-    assinaturaY + 45
-);
-
-doc.text(
-    "Data:",
-    150,
-    assinaturaY + 45
-);
-
-doc.line(
-    160,
     assinaturaY + 45,
     190,
     assinaturaY + 45

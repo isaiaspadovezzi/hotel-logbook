@@ -454,18 +454,43 @@ const turno =
 
         // Data
 
-        doc.text(
-            "Data:",
-            20,
-            58
-        );
+// ============================================
+// DATA EM DESTAQUE
+// ============================================
 
-        doc.text(
-            data,
-            40,
-            58
-        );
+doc.setFillColor(225, 235, 220);
 
+doc.roundedRect(
+    20,
+    53,
+    45,
+    11,
+    2,
+    2,
+    "F"
+);
+
+doc.setFont("helvetica", "bold");
+
+doc.setFontSize(8);
+
+doc.setTextColor(70, 90, 70);
+
+doc.text(
+    "DATA",
+    23,
+    57
+);
+
+doc.setFontSize(13);
+
+doc.setTextColor(...COR_TEXTO);
+
+doc.text(
+    data,
+    23,
+    62
+);
 
         // Funcionário
 

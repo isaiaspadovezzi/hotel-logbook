@@ -783,6 +783,12 @@ async function copiarCardReport() {
     }
 
 
+    const botao =
+        document.getElementById(
+            "btnCopiarCardReport"
+        );
+
+
     try {
 
         const canvas =
@@ -836,15 +842,61 @@ async function copiarCardReport() {
         ]);
 
 
-        alert(
-            "✅ Card copiado!\n\n" +
-            "Agora você pode colar onde quiser."
-        );
+        // ============================================
+        // RETORNO VISUAL NO BOTÃO
+        // ============================================
+
+        if (botao) {
+
+            botao.innerHTML = `
+                
+                <i class="bi bi-check-lg"></i>
+
+                <span>Copiado</span>
+
+            `;
+
+            botao.classList.remove(
+                "btn-success"
+            );
+
+            botao.classList.add(
+                "btn-dark"
+            );
+
+        }
 
 
         console.log(
             "Card copiado para a área de transferência."
         );
+
+
+        // Volta ao estado original depois de 2 segundos
+
+        setTimeout(function() {
+
+            if (botao) {
+
+                botao.innerHTML = `
+                    
+                    <i class="bi bi-clipboard"></i>
+
+                    <span>Copiar Card</span>
+
+                `;
+
+                botao.classList.remove(
+                    "btn-dark"
+                );
+
+                botao.classList.add(
+                    "btn-success"
+                );
+
+            }
+
+        }, 2000);
 
 
     } catch (erro) {
@@ -862,6 +914,3 @@ async function copiarCardReport() {
     }
 
 }
-
-
- 

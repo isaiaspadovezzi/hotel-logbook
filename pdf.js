@@ -782,7 +782,222 @@ lineWidth:
 
         );
 
+// =====================================================
+// QUADRO DE ASSINATURAS E CONFERÊNCIA
+// =====================================================
 
+// Altura aproximada necessária para o quadro
+const alturaAssinaturas = 48;
+
+// Verifica se existe espaço suficiente na página
+let assinaturaY = finalY + 20;
+
+// Se não houver espaço, cria uma nova página
+if (assinaturaY + alturaAssinaturas > 270) {
+
+    doc.addPage();
+
+    assinaturaY = 20;
+
+}
+
+
+// =====================================================
+// CAIXA PRINCIPAL
+// =====================================================
+
+doc.setFillColor(
+    248,
+    250,
+    247
+);
+
+doc.setDrawColor(
+    190,
+    200,
+    190
+);
+
+doc.setLineWidth(0.4);
+
+doc.roundedRect(
+    15,
+    assinaturaY,
+    180,
+    alturaAssinaturas,
+    2,
+    2,
+    "FD"
+);
+
+
+// =====================================================
+// TÍTULO
+// =====================================================
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
+doc.setFontSize(10);
+
+doc.setTextColor(
+    ...PDF_COR_PRINCIPAL
+);
+
+doc.text(
+    "ASSINATURAS E CONFERÊNCIA",
+    20,
+    assinaturaY + 8
+);
+
+
+// =====================================================
+// LINHA DIVISÓRIA
+// =====================================================
+
+doc.setDrawColor(
+    210,
+    215,
+    210
+);
+
+doc.line(
+    20,
+    assinaturaY + 11,
+    190,
+    assinaturaY + 11
+);
+
+
+// =====================================================
+// TÍTULOS DAS COLUNAS
+// =====================================================
+
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
+doc.setFontSize(8);
+
+doc.setTextColor(
+    80,
+    80,
+    80
+);
+
+doc.text(
+    "RESPONSÁVEL PELO REGISTRO",
+    20,
+    assinaturaY + 18
+);
+
+doc.text(
+    "RESPONSÁVEL PELA VISUALIZAÇÃO",
+    108,
+    assinaturaY + 18
+);
+
+
+// =====================================================
+// LINHAS PARA ASSINATURA
+// =====================================================
+
+doc.setDrawColor(
+    100,
+    100,
+    100
+);
+
+doc.setLineWidth(0.3);
+
+doc.line(
+    20,
+    assinaturaY + 29,
+    92,
+    assinaturaY + 29
+);
+
+doc.line(
+    108,
+    assinaturaY + 29,
+    190,
+    assinaturaY + 29
+);
+
+
+// =====================================================
+// TEXTO "ASSINATURA"
+// =====================================================
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
+doc.setFontSize(7);
+
+doc.setTextColor(
+    130,
+    130,
+    130
+);
+
+doc.text(
+    "Assinatura",
+    20,
+    assinaturaY + 33
+);
+
+doc.text(
+    "Assinatura",
+    108,
+    assinaturaY + 33
+);
+
+
+// =====================================================
+// NOMES
+// =====================================================
+
+doc.setFontSize(7);
+
+doc.setTextColor(
+    90,
+    90,
+    90
+);
+
+doc.text(
+    "Nome: " + (funcionario || "________________________"),
+    20,
+    assinaturaY + 39
+);
+
+doc.text(
+    "Nome: ______________________________",
+    108,
+    assinaturaY + 39
+);
+
+
+// =====================================================
+// DATAS
+// =====================================================
+
+doc.text(
+    "Data: ____/____/________",
+    20,
+    assinaturaY + 45
+);
+
+doc.text(
+    "Data: ____/____/________",
+    108,
+    assinaturaY + 45
+);
         // ---------------------------------------------
         // DATA DE EMISSÃO
         // ---------------------------------------------

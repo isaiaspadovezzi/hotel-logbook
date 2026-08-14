@@ -455,8 +455,12 @@ const turno =
         // Data
 
 // ============================================
-// DATA EM DESTAQUE
+// DATA / FUNCIONÁRIO / TURNO
 // ============================================
+
+// --------------------------------------------
+// DATA
+// --------------------------------------------
 
 doc.setFillColor(225, 235, 220);
 
@@ -470,11 +474,18 @@ doc.roundedRect(
     "F"
 );
 
-doc.setFont("helvetica", "bold");
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-doc.setFontSize(8);
+doc.setFontSize(7);
 
-doc.setTextColor(70, 90, 70);
+doc.setTextColor(
+    70,
+    90,
+    70
+);
 
 doc.text(
     "DATA",
@@ -482,44 +493,99 @@ doc.text(
     57
 );
 
-doc.setFontSize(13);
+doc.setFontSize(11);
 
-doc.setTextColor(...PDF_COR_TEXTO);
+doc.setTextColor(
+    ...PDF_COR_TEXTO
+);
+
 doc.text(
     data,
     23,
     62
 );
 
-        // Funcionário
 
-        doc.text(
-            "Funcionário:",
-            20,
-            64
-        );
+// --------------------------------------------
+// FUNCIONÁRIO
+// --------------------------------------------
 
-        doc.text(
-            funcionario,
-            48,
-            64
-        );
+doc.setFont(
+    "helvetica",
+    "bold"
+);
+
+doc.setFontSize(7);
+
+doc.setTextColor(
+    120,
+    120,
+    120
+);
+
+doc.text(
+    "FUNCIONÁRIO",
+    75,
+    57
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
+doc.setFontSize(10);
+
+doc.setTextColor(
+    ...PDF_COR_TEXTO
+);
+
+doc.text(
+    funcionario,
+    75,
+    63
+);
 
 
-        // Turno
+// --------------------------------------------
+// TURNO
+// --------------------------------------------
 
-        doc.text(
-            "Turno:",
-            120,
-            58
-        );
+doc.setFont(
+    "helvetica",
+    "bold"
+);
 
-        doc.text(
-            turno,
-            140,
-            58
-        );
+doc.setFontSize(7);
 
+doc.setTextColor(
+    120,
+    120,
+    120
+);
+
+doc.text(
+    "TURNO",
+    145,
+    57
+);
+
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
+doc.setFontSize(10);
+
+doc.setTextColor(
+    ...PDF_COR_TEXTO
+);
+
+doc.text(
+    turno,
+    145,
+    63
+);
 
         // ---------------------------------------------
         // REGISTROS

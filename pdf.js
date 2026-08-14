@@ -1100,11 +1100,24 @@ doc.line(
             );
 
 
-            doc.text(
-                "Emitido em " + dataHora,
-                70,
-                290
-            );
+           const dataHoraPDF =
+    new Date().toLocaleDateString(
+        "pt-BR"
+    ) +
+    " às " +
+    new Date().toLocaleTimeString(
+        "pt-BR",
+        {
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+
+doc.text(
+    "Emitido em " + dataHoraPDF,
+    70,
+    290
+);
 
 
             doc.text(

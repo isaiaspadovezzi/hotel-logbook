@@ -78,8 +78,11 @@ async function reportarRegistro(indice) {
 
             <div class="report-header">
 
-              <div class="report-header-title">
+            <div class="report-header-title">
+
+    ${iconeAtividadeReport(registro.atividade)}
     ${registro.atividade || "OCORRÊNCIA"}
+
 </div>
                 <img
                     src="img/logo.png"
@@ -365,6 +368,97 @@ function classeAtividadeReport(atividade) {
 
         default:
             return "padrao";
+    }
+
+}
+// =====================================================
+// ÍCONE DA ATIVIDADE NO CARD
+// =====================================================
+
+function iconeAtividadeReport(atividade) {
+
+    switch (atividade) {
+
+        case "Check-in":
+
+            return `
+                <i
+                    class="bi bi-person-check"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
+
+        case "Check-out":
+
+            return `
+                <i
+                    class="bi bi-box-arrow-right"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
+
+        case "Manutenção":
+
+            return `
+                <i
+                    class="bi bi-tools"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
+
+        case "Troca de Quarto":
+        case "Mudança de Quarto":
+
+            return `
+                <i
+                    class="bi bi-door-open"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
+
+        case "Limpeza":
+
+            return `
+                <i
+                    class="bi bi-stars"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
+
+        case "Aviso":
+
+            return `
+                <i
+                    class="bi bi-info-circle"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
+
+        case "Reclamação":
+
+            return `
+                <i
+                    class="bi bi-exclamation-circle"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
+
+        default:
+
+            return `
+                <i
+                    class="bi bi-clipboard"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
     }
 
 }

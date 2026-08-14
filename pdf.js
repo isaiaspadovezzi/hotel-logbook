@@ -787,7 +787,7 @@ lineWidth:
 // =====================================================
 
 // Altura aproximada necessária para o quadro
-const alturaAssinaturas = 65;
+const alturaAssinaturas = 48;
 
 // Verifica se existe espaço suficiente na página
 let assinaturaY = finalY + 20;
@@ -905,6 +905,25 @@ doc.text(
 // RESPONSÁVEL PELO REGISTRO
 // =====================================================
 
+doc.setFont(
+    "helvetica",
+    "normal"
+);
+
+doc.setFontSize(7);
+
+doc.setTextColor(
+    100,
+    100,
+    100
+);
+
+doc.text(
+    "Assinatura:",
+    20,
+    assinaturaY + 29
+);
+
 doc.setDrawColor(
     100,
     100,
@@ -914,35 +933,23 @@ doc.setDrawColor(
 doc.setLineWidth(0.3);
 
 doc.line(
-    20,
+    40,
     assinaturaY + 29,
-    92,
+    68,
     assinaturaY + 29
 );
 
-doc.setFont(
-    "helvetica",
-    "normal"
-);
-
-doc.setFontSize(7);
-
-doc.setTextColor(
-    130,
-    130,
-    130
-);
-
 doc.text(
-    "Assinatura",
-    20,
-    assinaturaY + 33
+    "Data:",
+    72,
+    assinaturaY + 29
 );
 
-doc.text(
-    "Data: ____/____/________",
-    20,
-    assinaturaY + 42
+doc.line(
+    82,
+    assinaturaY + 29,
+    95,
+    assinaturaY + 29
 );
 
 
@@ -950,31 +957,30 @@ doc.text(
 // CONFERÊNCIA 1
 // =====================================================
 
-doc.setDrawColor(
-    100,
-    100,
-    100
+doc.text(
+    "1.",
+    108,
+    assinaturaY + 27
 );
 
 doc.line(
-    108,
-    assinaturaY + 26,
+    116,
+    assinaturaY + 27,
+    145,
+    assinaturaY + 27
+);
+
+doc.text(
+    "Data:",
+    150,
+    assinaturaY + 27
+);
+
+doc.line(
+    160,
+    assinaturaY + 27,
     190,
-    assinaturaY + 26
-);
-
-doc.setFontSize(7);
-
-doc.text(
-    "1. Assinatura",
-    108,
-    assinaturaY + 30
-);
-
-doc.text(
-    "Data: ____/____/________",
-    108,
-    assinaturaY + 37
+    assinaturaY + 27
 );
 
 
@@ -982,23 +988,30 @@ doc.text(
 // CONFERÊNCIA 2
 // =====================================================
 
+doc.text(
+    "2.",
+    108,
+    assinaturaY + 36
+);
+
 doc.line(
-    108,
-    assinaturaY + 42,
+    116,
+    assinaturaY + 36,
+    145,
+    assinaturaY + 36
+);
+
+doc.text(
+    "Data:",
+    150,
+    assinaturaY + 36
+);
+
+doc.line(
+    160,
+    assinaturaY + 36,
     190,
-    assinaturaY + 42
-);
-
-doc.text(
-    "2. Assinatura",
-    108,
-    assinaturaY + 46
-);
-
-doc.text(
-    "Data: ____/____/________",
-    108,
-    assinaturaY + 53
+    assinaturaY + 36
 );
 
 
@@ -1006,42 +1019,31 @@ doc.text(
 // CONFERÊNCIA 3
 // =====================================================
 
-doc.line(
+doc.text(
+    "3.",
     108,
-    assinaturaY + 58,
-    190,
-    assinaturaY + 58
+    assinaturaY + 45
+);
+
+doc.line(
+    116,
+    assinaturaY + 45,
+    145,
+    assinaturaY + 45
 );
 
 doc.text(
-    "3. Assinatura",
-    108,
-    assinaturaY + 62
+    "Data:",
+    150,
+    assinaturaY + 45
 );
 
-        // ---------------------------------------------
-        // DATA DE EMISSÃO
-        // ---------------------------------------------
-
-        const agora =
-            new Date();
-
-
-        const dataHora =
-
-            agora.toLocaleDateString(
-                "pt-BR"
-            ) +
-
-            " às " +
-
-            agora.toLocaleTimeString(
-                "pt-BR",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            );
+doc.line(
+    160,
+    assinaturaY + 45,
+    190,
+    assinaturaY + 45
+);
 
 
         // ---------------------------------------------

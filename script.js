@@ -221,13 +221,6 @@ function salvarRegistro() {
 
     };
 
-    if (registro.descricao.trim() === "") {
-
-        alert("Digite uma descrição.");
-
-        return;
-
-    }
 
     if (registroEditando === -1) {
 

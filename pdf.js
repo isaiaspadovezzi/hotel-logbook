@@ -787,7 +787,7 @@ lineWidth:
 // =====================================================
 
 // Altura aproximada necessária para o quadro
-const alturaAssinaturas = 48;
+const alturaAssinaturas = 65;
 
 // Verifica se existe espaço suficiente na página
 let assinaturaY = finalY + 20;
@@ -872,7 +872,7 @@ doc.line(
 
 
 // =====================================================
-// TÍTULOS DAS COLUNAS
+// TÍTULOS
 // =====================================================
 
 doc.setFont(
@@ -895,14 +895,14 @@ doc.text(
 );
 
 doc.text(
-    "RESPONSÁVEL PELA VISUALIZAÇÃO",
+    "CONFERÊNCIA",
     108,
     assinaturaY + 18
 );
 
 
 // =====================================================
-// LINHAS PARA ASSINATURA
+// RESPONSÁVEL PELO REGISTRO
 // =====================================================
 
 doc.setDrawColor(
@@ -919,18 +919,6 @@ doc.line(
     92,
     assinaturaY + 29
 );
-
-doc.line(
-    108,
-    assinaturaY + 29,
-    190,
-    assinaturaY + 29
-);
-
-
-// =====================================================
-// TEXTO "ASSINATURA"
-// =====================================================
 
 doc.setFont(
     "helvetica",
@@ -952,52 +940,85 @@ doc.text(
 );
 
 doc.text(
-    "Assinatura",
-    108,
-    assinaturaY + 33
+    "Data: ____/____/________",
+    20,
+    assinaturaY + 42
 );
 
 
 // =====================================================
-// NOMES
+// CONFERÊNCIA 1
 // =====================================================
+
+doc.setDrawColor(
+    100,
+    100,
+    100
+);
+
+doc.line(
+    108,
+    assinaturaY + 26,
+    190,
+    assinaturaY + 26
+);
 
 doc.setFontSize(7);
 
-doc.setTextColor(
-    90,
-    90,
-    90
-);
-
 doc.text(
-    "Nome: " + (funcionario || "________________________"),
-    20,
-    assinaturaY + 39
-);
-
-doc.text(
-    "Nome: ______________________________",
+    "1. Assinatura",
     108,
-    assinaturaY + 39
-);
-
-
-// =====================================================
-// DATAS
-// =====================================================
-
-doc.text(
-    "Data: ____/____/________",
-    20,
-    assinaturaY + 45
+    assinaturaY + 30
 );
 
 doc.text(
     "Data: ____/____/________",
     108,
-    assinaturaY + 45
+    assinaturaY + 37
 );
+
+
+// =====================================================
+// CONFERÊNCIA 2
+// =====================================================
+
+doc.line(
+    108,
+    assinaturaY + 42,
+    190,
+    assinaturaY + 42
+);
+
+doc.text(
+    "2. Assinatura",
+    108,
+    assinaturaY + 46
+);
+
+doc.text(
+    "Data: ____/____/________",
+    108,
+    assinaturaY + 53
+);
+
+
+// =====================================================
+// CONFERÊNCIA 3
+// =====================================================
+
+doc.line(
+    108,
+    assinaturaY + 58,
+    190,
+    assinaturaY + 58
+);
+
+doc.text(
+    "3. Assinatura",
+    108,
+    assinaturaY + 62
+);
+
         // ---------------------------------------------
         // DATA DE EMISSÃO
         // ---------------------------------------------

@@ -787,7 +787,7 @@ lineWidth:
 // =====================================================
 
 // Altura aproximada necessária para o quadro
-const alturaAssinaturas = 40;
+const alturaAssinaturas = 46;
 
 // Verifica se existe espaço suficiente na página
 let assinaturaY = finalY + 20;

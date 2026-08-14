@@ -484,8 +484,7 @@ doc.text(
 
 doc.setFontSize(13);
 
-doc.setTextColor(...COR_TEXTO);
-
+doc.setTextColor(...PDF_COR_TEXTO);
 doc.text(
     data,
     23,

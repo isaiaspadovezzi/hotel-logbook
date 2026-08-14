@@ -701,12 +701,12 @@ doc.text(
             },
 
 
-            alternateRowStyles: {
+           alternateRowStyles: {
 
-                fillColor:
-                    [232, 240, 228]
+    fillColor:
+        [220, 232, 214]
 
-            },
+},
 
 
             styles: {

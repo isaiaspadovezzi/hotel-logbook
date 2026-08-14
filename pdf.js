@@ -642,7 +642,7 @@ doc.text(
 
         doc.autoTable({
 
-            startY: 78,
+            startY: 70,
 
             head: [[
 

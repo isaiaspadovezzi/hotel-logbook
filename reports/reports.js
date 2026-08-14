@@ -673,32 +673,33 @@ async function gerarCardReport() {
             "report-card-actions";
 
 
-        acoes.innerHTML = `
+           acoes.innerHTML = `
 
-            <button
-                type="button"
-                class="btn btn-outline-success"
-                onclick="baixarCardReport()">
+        <button
+            type="button"
+            class="btn btn-outline-success"
+            onclick="baixarCardReport()">
 
-                <i class="bi bi-download"></i>
+            <i class="bi bi-download"></i>
 
-                Baixar Card
+            Baixar Card
 
-            </button>
+        </button>
 
 
-            <button
-                type="button"
-                class="btn btn-success"
-                onclick="copiarCardReport()">
+        <button
+            type="button"
+            id="btnCopiarCardReport"
+            class="btn btn-success"
+            onclick="copiarCardReport()">
 
-               <i class="bi bi-clipboard"></i>
-               
-                Copiar Card
+            <i class="bi bi-clipboard"></i>
 
-            </button>
+            <span>Copiar Card</span>
 
-        `;
+        </button>
+
+    `;
 
 
         // Coloca os botões depois do card

@@ -239,12 +239,29 @@ async function reportarRegistro(indice) {
 
         container.remove();
 
+const botao =
+    document.getElementById(
+        "btnCopiarCardReport"
+    );
 
-        alert(
-            "✅ Card copiado!\n\n" +
-            "Agora é só abrir o WhatsApp e pressionar Ctrl + V."
-        );
+if (botao) {
 
+    botao.innerHTML = `
+        <i class="bi bi-check-lg"></i>
+        <span>Copiado</span>
+    `;
+
+    setTimeout(function() {
+
+        botao.innerHTML = `
+            <i class="bi bi-clipboard"></i>
+            <span>Copiar Card</span>
+        `;
+
+    }, 2000);
+
+}
+     
 
     } catch (erro) {
 

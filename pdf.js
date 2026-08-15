@@ -399,15 +399,15 @@ const turno =
             ...PDF_COR_VERDE_CLARO
         );
 
-        doc.roundedRect(
-            15,
-            40,
-            180,
-            28,
-            3,
-            3,
-            "F"
-        );
+       doc.roundedRect(
+    15,
+    36,
+    180,
+    28,
+    3,
+    3,
+    "F"
+);
 
 
         doc.setFont(

@@ -424,7 +424,7 @@ const turno =
         doc.text(
             "Informações do Turno",
             20,
-            48
+            44
         );
 
 
@@ -436,11 +436,12 @@ const turno =
             220
         );
 
-        doc.line(
-            20,
-            51,
-            190,
-            51
+      doc.line(
+    20,
+    47,
+    190,
+    47
+
         );
 
 
@@ -466,7 +467,7 @@ doc.setFillColor(225, 235, 220);
 
 doc.roundedRect(
     20,
-    53,
+    49,
     45,
     11,
     2,
@@ -490,9 +491,8 @@ doc.setTextColor(
 doc.text(
     "DATA",
     23,
-    57
+    53
 );
-
 doc.setFontSize(11);
 
 doc.setTextColor(
@@ -502,9 +502,8 @@ doc.setTextColor(
 doc.text(
     data,
     23,
-    62
+    58
 );
-
 
 // --------------------------------------------
 // FUNCIONÁRIO
@@ -522,11 +521,10 @@ doc.setTextColor(
     120,
     120
 );
-
 doc.text(
-    "FUNCIONÁRIO",
+    funcionario,
     75,
-    57
+    63
 );
 
 doc.setFont(
@@ -567,7 +565,7 @@ doc.setTextColor(
 doc.text(
     "TURNO",
     145,
-    57
+    53
 );
 
 doc.setFont(
@@ -584,7 +582,7 @@ doc.setTextColor(
 doc.text(
     turno,
     145,
-    63
+    59
 );
 
         // ---------------------------------------------

@@ -638,123 +638,39 @@ doc.text(
         // TABELA
         // ---------------------------------------------
 
-        doc.autoTable({
+columnStyles: {
 
-            startY: 70,
-
-            head: [[
-
-                "Hora",
-
-                "Atividade",
-
-                "Quarto",
-
-                "Descrição"
-
-            ]],
-
-            body: linhas,
-
-            theme: "grid",
-
-
-            headStyles: {
-
-                fillColor:
-                    PDF_COR_PRINCIPAL,
-
-                textColor:
-                    [255, 255, 255],
-
-                fontStyle:
-                    "bold",
-
-                halign:
-                    "center",
-
-                valign:
-                    "middle",
-
-                fontSize:
-                    10
-
-            },
-
-
-          bodyStyles: {
-
-    textColor:
-        PDF_COR_TEXTO,
-
-    fontSize:
-        8.5,
-
-    cellPadding: {
-        top: 1.5,
-        right: 3,
-        bottom: 1.5,
-        left: 3
+    0: {
+        cellWidth: 22,
+        halign: "center"
     },
 
-    valign:
-        "middle"
+    1: {
+        cellWidth: 40,
 
-},
+        cellPadding: {
+            left: 10,
+            right: 3,
+            top: 1.5,
+            bottom: 1.5
+        }
+    },
 
+    2: {
+        cellWidth: 24,
+        halign: "center"
+    },
 
-           alternateRowStyles: {
-
-    fillColor:
-        [220, 232, 214]
-
-},
-
-
-            styles: {
-
-            lineColor:
-    [180, 190, 180],
-
-lineWidth:
-    0.4,
-
-                overflow:
-                    "linebreak"
-
-            },
-
-
-            columnStyles: {
-
-                0: {
-                    cellWidth: 22,
-                    halign: "center"
-                },
-
-               1: {
-    cellWidth: 40,
-    cellPadding: {
-        left: 10,
-        right: 3,
-        top: 1.5,
-        bottom: 1.5
+    3: {
+        cellWidth: 94
     }
+
 },
 
-                2: {
-                    cellWidth: 24,
-                    halign: "center"
-                },
 
-                3: {
-                    cellWidth: 94
-                }
+didDrawCell: function (data) {
 
-            }
-            didDrawCell: function (data) {
-
-    // Ícones somente na coluna Atividade
+    // Somente células da coluna Atividade
     if (
         data.section !== "body" ||
         data.column.index !== 1
@@ -762,10 +678,12 @@ lineWidth:
         return;
     }
 
+
     const atividade =
         String(data.cell.raw || "")
             .toLowerCase()
             .trim();
+
 
     const x =
         data.cell.x + 4;
@@ -789,12 +707,14 @@ lineWidth:
 
         doc.setLineWidth(0.5);
 
+
         // cabeça
         doc.circle(
             x,
             y - 2,
             1.3
         );
+
 
         // corpo
         doc.line(
@@ -804,7 +724,8 @@ lineWidth:
             y + 2
         );
 
-        // pequeno check
+
+        // check
         doc.line(
             x + 2.5,
             y - 1,
@@ -836,7 +757,8 @@ lineWidth:
 
         doc.setLineWidth(0.5);
 
-        // corpo da porta
+
+        // porta
         doc.line(
             x - 2,
             y - 3,
@@ -858,7 +780,8 @@ lineWidth:
             y + 3
         );
 
-        // seta de saída
+
+        // seta
         doc.line(
             x,
             y,
@@ -884,8 +807,7 @@ lineWidth:
 
 }
 
-        });
-
+});
 
         // ---------------------------------------------
         // POSIÇÃO FINAL

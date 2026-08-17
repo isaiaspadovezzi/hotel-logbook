@@ -779,24 +779,18 @@ doc.autoTable({
 
         },
 
+1: {
 
-        1: {
+    cellWidth: 40,
 
-            cellWidth: 40,
+    cellPadding: {
+        left: 7,
+        right: 3,
+        top: 1.5,
+        bottom: 1.5
+    }
 
-            cellPadding: {
-
-                left: 10,
-
-                right: 3,
-
-                top: 1.5,
-
-                bottom: 1.5
-
-            }
-
-        },
+},
 
 
         2: {
@@ -817,165 +811,149 @@ doc.autoTable({
     },
 
 
-    // ==========================================
-    // ÍCONES DE CHECK-IN / CHECK-OUT
-    // ==========================================
+   // ==========================================
+// ÍCONES DE CHECK-IN / CHECK-OUT
+// ==========================================
 
-    didDrawCell: function(data) {
+didDrawCell: function(data) {
 
-        if (
-            data.section !== "body" ||
-            data.column.index !== 1
-        ) {
+    // Somente na coluna Atividade
+    if (
+        data.section !== "body" ||
+        data.column.index !== 1
+    ) {
+        return;
+    }
 
-            return;
 
-        }
-
-
-        const atividade =
-            String(
-                data.cell.raw || ""
-            )
+    const atividade =
+        String(data.cell.raw || "")
             .toLowerCase()
             .trim();
 
 
-        const x =
-            data.cell.x + 4;
+    // Posição do ícone
+    const x =
+        data.cell.x + 3.5;
+
+    const y =
+        data.cell.y +
+        data.cell.height / 2;
 
 
-        const y =
-            data.cell.y +
-            data.cell.height / 2;
+    // ==========================================
+    // CHECK-IN
+    // ==========================================
+
+    if (atividade === "check-in") {
+
+        doc.setDrawColor(
+            40,
+            120,
+            70
+        );
+
+        doc.setLineWidth(0.4);
 
 
-        // --------------------------------------
-        // CHECK-IN
-        // --------------------------------------
-
-        if (
-            atividade === "check-in"
-        ) {
-
-            doc.setDrawColor(
-                40,
-                120,
-                70
-            );
-
-            doc.setLineWidth(
-                0.5
-            );
+        // Cabeça
+        doc.circle(
+            x,
+            y - 1.2,
+            0.8
+        );
 
 
-            // cabeça
-            doc.circle(
-                x,
-                y - 2,
-                1.3
-            );
+        // Corpo
+        doc.line(
+            x - 1.4,
+            y + 1.2,
+            x + 1.4,
+            y + 1.2
+        );
 
 
-            // corpo
-            doc.line(
-                x - 2.2,
-                y + 2,
-                x + 2.2,
-                y + 2
-            );
+        // Check
+        doc.line(
+            x + 1.6,
+            y - 0.6,
+            x + 2.2,
+            y
+        );
 
-
-            // check
-            doc.line(
-                x + 2.5,
-                y - 1,
-                x + 3.5,
-                y
-            );
-
-
-            doc.line(
-                x + 3.5,
-                y,
-                x + 5,
-                y - 2
-            );
-
-        }
-
-
-        // --------------------------------------
-        // CHECK-OUT
-        // --------------------------------------
-
-        if (
-            atividade === "check-out"
-        ) {
-
-            doc.setDrawColor(
-                40,
-                100,
-                160
-            );
-
-            doc.setLineWidth(
-                0.5
-            );
-
-
-            // porta
-            doc.line(
-                x - 2,
-                y - 3,
-                x - 2,
-                y + 3
-            );
-
-
-            doc.line(
-                x - 2,
-                y - 3,
-                x + 1,
-                y - 3
-            );
-
-
-            doc.line(
-                x + 1,
-                y - 3,
-                x + 1,
-                y + 3
-            );
-
-
-            // seta de saída
-            doc.line(
-                x,
-                y,
-                x + 5,
-                y
-            );
-
-
-            doc.line(
-                x + 5,
-                y,
-                x + 3,
-                y - 1.5
-            );
-
-
-            doc.line(
-                x + 5,
-                y,
-                x + 3,
-                y + 1.5
-            );
-
-        }
+        doc.line(
+            x + 2.2,
+            y,
+            x + 3.2,
+            y - 1.2
+        );
 
     }
+
+
+    // ==========================================
+    // CHECK-OUT
+    // ==========================================
+
+    if (atividade === "check-out") {
+
+        doc.setDrawColor(
+            40,
+            100,
+            160
+        );
+
+        doc.setLineWidth(0.4);
+
+
+        // Porta pequena
+        doc.line(
+            x - 1.2,
+            y - 2,
+            x - 1.2,
+            y + 2
+        );
+
+        doc.line(
+            x - 1.2,
+            y - 2,
+            x + 0.6,
+            y - 2
+        );
+
+        doc.line(
+            x + 0.6,
+            y - 2,
+            x + 0.6,
+            y + 2
+        );
+
+
+        // Seta de saída
+        doc.line(
+            x,
+            y,
+            x + 3.2,
+            y
+        );
+
+        doc.line(
+            x + 3.2,
+            y,
+            x + 2,
+            y - 1
+        );
+
+        doc.line(
+            x + 3.2,
+            y,
+            x + 2,
+            y + 1
+        );
+
+    }
+
+}
 
 });
         const finalY =

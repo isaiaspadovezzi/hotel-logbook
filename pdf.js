@@ -522,9 +522,9 @@ doc.setTextColor(
     120
 );
 doc.text(
-    funcionario,
+    "FUNCIONÁRIO",
     75,
-    63
+    53
 );
 
 doc.setFont(
@@ -541,7 +541,7 @@ doc.setTextColor(
 doc.text(
     funcionario,
     75,
-    63
+    59
 );
 
 

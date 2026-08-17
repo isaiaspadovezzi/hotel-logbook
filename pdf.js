@@ -965,18 +965,18 @@ didDrawCell: function(data) {
 // QUADRO DE ASSINATURAS E CONFERÊNCIA
 // =====================================================
 
-//  aproximada necessária para o quadro
-const alturaAssinaturas = 40;
+const alturaAssinaturas = 42;
 
-// Verifica se existe espaço suficiente na página
-let assinaturaY = finalY + 8;
+let assinaturaY = finalY + 5;
 
-// Se não houver espaço, cria uma nova página
-if (assinaturaY + alturaAssinaturas > 280) {
+
+// Se não houver espaço suficiente,
+// cria uma nova página somente nesse caso.
+if (assinaturaY + alturaAssinaturas > 292) {
 
     doc.addPage();
 
-    assinaturaY = 20;
+    assinaturaY = 15;
 
 }
 
@@ -1081,16 +1081,8 @@ doc.text(
 
 
 // =====================================================
-// RESPONSÁVEL PELO REGISTRO
+// LINHAS DE ASSINATURA
 // =====================================================
-
-doc.setDrawColor(
-    100,
-    100,
-    100
-);
-
-doc.setLineWidth(0.3);
 
 doc.setFont(
     "helvetica",
@@ -1104,6 +1096,19 @@ doc.setTextColor(
     100,
     100
 );
+
+doc.setDrawColor(
+    100,
+    100,
+    100
+);
+
+doc.setLineWidth(0.3);
+
+
+// =====================================================
+// RESPONSÁVEL PELO REGISTRO
+// =====================================================
 
 doc.text(
     "Assinatura:",
@@ -1126,14 +1131,14 @@ doc.line(
 doc.text(
     "1.",
     108,
-    assinaturaY + 27
+    assinaturaY + 25
 );
 
 doc.line(
     116,
-    assinaturaY + 27,
+    assinaturaY + 25,
     190,
-    assinaturaY + 27
+    assinaturaY + 25
 );
 
 
@@ -1144,14 +1149,14 @@ doc.line(
 doc.text(
     "2.",
     108,
-    assinaturaY + 36
+    assinaturaY + 32
 );
 
 doc.line(
     116,
-    assinaturaY + 36,
+    assinaturaY + 32,
     190,
-    assinaturaY + 36
+    assinaturaY + 32
 );
 
 
@@ -1162,19 +1167,15 @@ doc.line(
 doc.text(
     "3.",
     108,
-    assinaturaY + 45
+    assinaturaY + 39
 );
 
 doc.line(
     116,
-    assinaturaY + 45,
+    assinaturaY + 39,
     190,
-    assinaturaY + 45
+    assinaturaY + 39
 );
-
-
-
-
         // ---------------------------------------------
         // NOME DO ARQUIVO
         // ---------------------------------------------

@@ -764,13 +764,13 @@ lineWidth:
 // =====================================================
 
 //  aproximada necessária para o quadro
-const alturaAssinaturas = 48;
+const alturaAssinaturas = 40;
 
 // Verifica se existe espaço suficiente na página
-let assinaturaY = finalY + 20;
+let assinaturaY = finalY + 8;
 
 // Se não houver espaço, cria uma nova página
-if (assinaturaY + alturaAssinaturas > 270) {
+if (assinaturaY + alturaAssinaturas > 280) {
 
     doc.addPage();
 

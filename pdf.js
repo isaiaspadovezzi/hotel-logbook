@@ -811,8 +811,8 @@ doc.autoTable({
     },
 
 
-   // ==========================================
-// ÍCONES DE CHECK-IN / CHECK-OUT
+ // ==========================================
+// ÍCONES DAS ATIVIDADES
 // ==========================================
 
 didDrawCell: function(data) {
@@ -841,6 +841,9 @@ didDrawCell: function(data) {
         data.cell.height / 2;
 
 
+    doc.setLineWidth(0.4);
+
+
     // ==========================================
     // CHECK-IN
     // ==========================================
@@ -853,10 +856,8 @@ didDrawCell: function(data) {
             70
         );
 
-        doc.setLineWidth(0.4);
 
-
-        // Cabeça
+        // cabeça
         doc.circle(
             x,
             y - 1.2,
@@ -864,7 +865,7 @@ didDrawCell: function(data) {
         );
 
 
-        // Corpo
+        // corpo
         doc.line(
             x - 1.4,
             y + 1.2,
@@ -873,7 +874,7 @@ didDrawCell: function(data) {
         );
 
 
-        // Check
+        // check
         doc.line(
             x + 1.6,
             y - 0.6,
@@ -895,7 +896,7 @@ didDrawCell: function(data) {
     // CHECK-OUT
     // ==========================================
 
-    if (atividade === "check-out") {
+    else if (atividade === "check-out") {
 
         doc.setDrawColor(
             40,
@@ -903,10 +904,8 @@ didDrawCell: function(data) {
             160
         );
 
-        doc.setLineWidth(0.4);
 
-
-        // Porta pequena
+        // porta
         doc.line(
             x - 1.2,
             y - 2,
@@ -929,7 +928,7 @@ didDrawCell: function(data) {
         );
 
 
-        // Seta de saída
+        // seta
         doc.line(
             x,
             y,
@@ -949,6 +948,222 @@ didDrawCell: function(data) {
             y,
             x + 2,
             y + 1
+        );
+
+    }
+
+
+    // ==========================================
+    // MANUTENÇÃO
+    // ==========================================
+
+    else if (atividade === "manutenção") {
+
+        doc.setDrawColor(
+            180,
+            120,
+            40
+        );
+
+
+        // ferramenta cruzada / chave
+        doc.line(
+            x - 2,
+            y + 2,
+            x + 2,
+            y - 2
+        );
+
+        doc.circle(
+            x + 2.2,
+            y - 2.2,
+            1
+        );
+
+        doc.line(
+            x - 2.5,
+            y + 1.5,
+            x - 1,
+            y + 3
+        );
+
+    }
+
+
+    // ==========================================
+    // TROCA DE QUARTO
+    // ==========================================
+
+    else if (
+        atividade === "troca de quarto" ||
+        atividade === "mudança de quarto"
+    ) {
+
+        doc.setDrawColor(
+            100,
+            100,
+            100
+        );
+
+
+        // porta
+        doc.rect(
+            x - 1.5,
+            y - 2.5,
+            3,
+            5
+        );
+
+
+        // maçaneta
+        doc.circle(
+            x + 0.5,
+            y,
+            0.35
+        );
+
+
+        // seta
+        doc.line(
+            x + 3,
+            y,
+            x + 5,
+            y
+        );
+
+        doc.line(
+            x + 5,
+            y,
+            x + 4,
+            y - 1
+        );
+
+        doc.line(
+            x + 5,
+            y,
+            x + 4,
+            y + 1
+        );
+
+    }
+
+
+    // ==========================================
+    // LIMPEZA
+    // ==========================================
+
+    else if (atividade === "limpeza") {
+
+        doc.setDrawColor(
+            70,
+            150,
+            190
+        );
+
+
+        // brilho / estrela
+        doc.line(
+            x,
+            y - 2.5,
+            x,
+            y + 2.5
+        );
+
+        doc.line(
+            x - 2.5,
+            y,
+            x + 2.5,
+            y
+        );
+
+        doc.line(
+            x - 1.5,
+            y - 1.5,
+            x + 1.5,
+            y + 1.5
+        );
+
+        doc.line(
+            x + 1.5,
+            y - 1.5,
+            x - 1.5,
+            y + 1.5
+        );
+
+    }
+
+
+    // ==========================================
+    // AVISO
+    // ==========================================
+
+    else if (atividade === "aviso") {
+
+        doc.setDrawColor(
+            200,
+            150,
+            40
+        );
+
+
+        // círculo
+        doc.circle(
+            x,
+            y,
+            2
+        );
+
+
+        // ponto de exclamação
+        doc.line(
+            x,
+            y - 1,
+            x,
+            y + 0.7
+        );
+
+        doc.circle(
+            x,
+            y + 1.4,
+            0.25
+        );
+
+    }
+
+
+    // ==========================================
+    // RECLAMAÇÃO
+    // ==========================================
+
+    else if (atividade === "reclamação") {
+
+        doc.setDrawColor(
+            190,
+            70,
+            70
+        );
+
+
+        // círculo
+        doc.circle(
+            x,
+            y,
+            2
+        );
+
+
+        // exclamação
+        doc.line(
+            x,
+            y - 1,
+            x,
+            y + 0.7
+        );
+
+        doc.circle(
+            x,
+            y + 1.4,
+            0.25
         );
 
     }

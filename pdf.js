@@ -758,31 +758,6 @@ lineWidth:
             doc.lastAutoTable.finalY;
 
 
-        // ---------------------------------------------
-        // TOTAL
-        // ---------------------------------------------
-
-        doc.setFont(
-            "helvetica",
-            "bold"
-        );
-
-        doc.setFontSize(10);
-
-        doc.setTextColor(
-            ...PDF_COR_TEXTO
-        );
-
-        doc.text(
-
-            "Total de registros: " +
-            registrosPDF.length,
-
-            15,
-
-            finalY + 10
-
-        );
 
 // =====================================================
 // QUADRO DE ASSINATURAS E CONFERÊNCIA
@@ -996,90 +971,6 @@ doc.line(
 );
 
 
-        // ---------------------------------------------
-        // RODAPÉ
-        // ---------------------------------------------
-
-        const paginas =
-            doc.internal.getNumberOfPages();
-
-
-        for (
-            let i = 1;
-            i <= paginas;
-            i++
-        ) {
-
-            doc.setPage(i);
-
-
-            // Linha verde
-
-            doc.setDrawColor(
-                ...PDF_COR_PRINCIPAL
-            );
-
-            doc.setLineWidth(0.5);
-
-            doc.line(
-                15,
-                285,
-                195,
-                285
-            );
-
-
-            // Texto
-
-            doc.setFont(
-                "helvetica",
-                "normal"
-            );
-
-            doc.setFontSize(8);
-
-            doc.setTextColor(
-                ...PDF_COR_CINZA
-            );
-
-
-            doc.text(
-                "ibis Styles • LogBook",
-                15,
-                290
-            );
-
-
-           const dataHoraPDF =
-    new Date().toLocaleDateString(
-        "pt-BR"
-    ) +
-    " às " +
-    new Date().toLocaleTimeString(
-        "pt-BR",
-        {
-            hour: "2-digit",
-            minute: "2-digit"
-        }
-    );
-
-doc.text(
-    "Emitido em " + dataHoraPDF,
-    70,
-    290
-);
-
-
-            doc.text(
-                "Página " +
-                i +
-                " de " +
-                paginas,
-                165,
-                290
-            );
-
-        }
 
 
         // ---------------------------------------------

@@ -732,9 +732,15 @@ lineWidth:
                     halign: "center"
                 },
 
-                1: {
-                    cellWidth: 40
-                },
+               1: {
+    cellWidth: 40,
+    cellPadding: {
+        left: 10,
+        right: 3,
+        top: 1.5,
+        bottom: 1.5
+    }
+},
 
                 2: {
                     cellWidth: 24,
@@ -746,6 +752,137 @@ lineWidth:
                 }
 
             }
+            didDrawCell: function (data) {
+
+    // Ícones somente na coluna Atividade
+    if (
+        data.section !== "body" ||
+        data.column.index !== 1
+    ) {
+        return;
+    }
+
+    const atividade =
+        String(data.cell.raw || "")
+            .toLowerCase()
+            .trim();
+
+    const x =
+        data.cell.x + 4;
+
+    const y =
+        data.cell.y +
+        data.cell.height / 2;
+
+
+    // ============================================
+    // CHECK-IN
+    // ============================================
+
+    if (atividade === "check-in") {
+
+        doc.setDrawColor(
+            40,
+            120,
+            70
+        );
+
+        doc.setLineWidth(0.5);
+
+        // cabeça
+        doc.circle(
+            x,
+            y - 2,
+            1.3
+        );
+
+        // corpo
+        doc.line(
+            x - 2.2,
+            y + 2,
+            x + 2.2,
+            y + 2
+        );
+
+        // pequeno check
+        doc.line(
+            x + 2.5,
+            y - 1,
+            x + 3.5,
+            y
+        );
+
+        doc.line(
+            x + 3.5,
+            y,
+            x + 5,
+            y - 2
+        );
+
+    }
+
+
+    // ============================================
+    // CHECK-OUT
+    // ============================================
+
+    if (atividade === "check-out") {
+
+        doc.setDrawColor(
+            40,
+            100,
+            160
+        );
+
+        doc.setLineWidth(0.5);
+
+        // corpo da porta
+        doc.line(
+            x - 2,
+            y - 3,
+            x - 2,
+            y + 3
+        );
+
+        doc.line(
+            x - 2,
+            y - 3,
+            x + 1,
+            y - 3
+        );
+
+        doc.line(
+            x + 1,
+            y - 3,
+            x + 1,
+            y + 3
+        );
+
+        // seta de saída
+        doc.line(
+            x,
+            y,
+            x + 5,
+            y
+        );
+
+        doc.line(
+            x + 5,
+            y,
+            x + 3,
+            y - 1.5
+        );
+
+        doc.line(
+            x + 5,
+            y,
+            x + 3,
+            y + 1.5
+        );
+
+    }
+
+}
 
         });
 

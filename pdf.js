@@ -401,7 +401,7 @@ const turno =
 
        doc.roundedRect(
     15,
-    30,
+    36,
     180,
     28,
     3,

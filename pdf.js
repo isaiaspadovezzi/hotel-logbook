@@ -634,185 +634,350 @@ doc.text(
         }
 
 
-        // ---------------------------------------------
-        // TABELA
-        // ---------------------------------------------
+   // ---------------------------------------------
+// TABELA
+// ---------------------------------------------
 
-columnStyles: {
+doc.autoTable({
 
-    0: {
-        cellWidth: 22,
-        halign: "center"
+    startY: 70,
+
+    margin: {
+        left: 15,
+        right: 15
     },
 
-    1: {
-        cellWidth: 40,
+    head: [[
+        "Hora",
+        "Atividade",
+        "Quarto",
+        "Descrição"
+    ]],
+
+    body: linhas,
+
+
+    // ==========================================
+    // CABEÇALHO DA TABELA
+    // ==========================================
+
+    headStyles: {
+
+        fillColor:
+            PDF_COR_PRINCIPAL,
+
+        textColor:
+            [255, 255, 255],
+
+        fontStyle:
+            "bold",
+
+        fontSize:
+            9,
+
+        halign:
+            "center",
+
+        valign:
+            "middle",
+
+        cellPadding:
+            2.5,
+
+        lineColor:
+            [180, 190, 180],
+
+        lineWidth:
+            0.3
+
+    },
+
+
+    // ==========================================
+    // CORPO DA TABELA
+    // ==========================================
+
+    bodyStyles: {
+
+        textColor:
+            PDF_COR_TEXTO,
+
+        fontSize:
+            8.5,
 
         cellPadding: {
-            left: 10,
-            right: 3,
+
             top: 1.5,
-            bottom: 1.5
+
+            right: 3,
+
+            bottom: 1.5,
+
+            left: 3
+
+        },
+
+        valign:
+            "middle",
+
+        lineColor:
+            [170, 180, 170],
+
+        lineWidth:
+            0.3
+
+    },
+
+
+    // ==========================================
+    // ESTILO GERAL
+    // ==========================================
+
+    styles: {
+
+        font:
+            "helvetica",
+
+        overflow:
+            "linebreak",
+
+        cellWidth:
+            "wrap",
+
+        lineColor:
+            [170, 180, 170],
+
+        lineWidth:
+            0.3
+
+    },
+
+
+    // ==========================================
+    // CORES ALTERNADAS DAS LINHAS
+    // ==========================================
+
+    alternateRowStyles: {
+
+        fillColor:
+            [242, 247, 240]
+
+    },
+
+
+    // ==========================================
+    // LARGURA DAS COLUNAS
+    // ==========================================
+
+    columnStyles: {
+
+        0: {
+
+            cellWidth: 22,
+
+            halign: "center"
+
+        },
+
+
+        1: {
+
+            cellWidth: 40,
+
+            cellPadding: {
+
+                left: 10,
+
+                right: 3,
+
+                top: 1.5,
+
+                bottom: 1.5
+
+            }
+
+        },
+
+
+        2: {
+
+            cellWidth: 24,
+
+            halign: "center"
+
+        },
+
+
+        3: {
+
+            cellWidth: 94
+
         }
+
     },
 
-    2: {
-        cellWidth: 24,
-        halign: "center"
-    },
 
-    3: {
-        cellWidth: 94
-    }
+    // ==========================================
+    // ÍCONES DE CHECK-IN / CHECK-OUT
+    // ==========================================
 
-},
+    didDrawCell: function(data) {
 
+        if (
+            data.section !== "body" ||
+            data.column.index !== 1
+        ) {
 
-didDrawCell: function (data) {
+            return;
 
-    // Somente células da coluna Atividade
-    if (
-        data.section !== "body" ||
-        data.column.index !== 1
-    ) {
-        return;
-    }
+        }
 
 
-    const atividade =
-        String(data.cell.raw || "")
+        const atividade =
+            String(
+                data.cell.raw || ""
+            )
             .toLowerCase()
             .trim();
 
 
-    const x =
-        data.cell.x + 4;
-
-    const y =
-        data.cell.y +
-        data.cell.height / 2;
+        const x =
+            data.cell.x + 4;
 
 
-    // ============================================
-    // CHECK-IN
-    // ============================================
-
-    if (atividade === "check-in") {
-
-        doc.setDrawColor(
-            40,
-            120,
-            70
-        );
-
-        doc.setLineWidth(0.5);
+        const y =
+            data.cell.y +
+            data.cell.height / 2;
 
 
-        // cabeça
-        doc.circle(
-            x,
-            y - 2,
-            1.3
-        );
+        // --------------------------------------
+        // CHECK-IN
+        // --------------------------------------
+
+        if (
+            atividade === "check-in"
+        ) {
+
+            doc.setDrawColor(
+                40,
+                120,
+                70
+            );
+
+            doc.setLineWidth(
+                0.5
+            );
 
 
-        // corpo
-        doc.line(
-            x - 2.2,
-            y + 2,
-            x + 2.2,
-            y + 2
-        );
+            // cabeça
+            doc.circle(
+                x,
+                y - 2,
+                1.3
+            );
 
 
-        // check
-        doc.line(
-            x + 2.5,
-            y - 1,
-            x + 3.5,
-            y
-        );
+            // corpo
+            doc.line(
+                x - 2.2,
+                y + 2,
+                x + 2.2,
+                y + 2
+            );
 
-        doc.line(
-            x + 3.5,
-            y,
-            x + 5,
-            y - 2
-        );
+
+            // check
+            doc.line(
+                x + 2.5,
+                y - 1,
+                x + 3.5,
+                y
+            );
+
+
+            doc.line(
+                x + 3.5,
+                y,
+                x + 5,
+                y - 2
+            );
+
+        }
+
+
+        // --------------------------------------
+        // CHECK-OUT
+        // --------------------------------------
+
+        if (
+            atividade === "check-out"
+        ) {
+
+            doc.setDrawColor(
+                40,
+                100,
+                160
+            );
+
+            doc.setLineWidth(
+                0.5
+            );
+
+
+            // porta
+            doc.line(
+                x - 2,
+                y - 3,
+                x - 2,
+                y + 3
+            );
+
+
+            doc.line(
+                x - 2,
+                y - 3,
+                x + 1,
+                y - 3
+            );
+
+
+            doc.line(
+                x + 1,
+                y - 3,
+                x + 1,
+                y + 3
+            );
+
+
+            // seta de saída
+            doc.line(
+                x,
+                y,
+                x + 5,
+                y
+            );
+
+
+            doc.line(
+                x + 5,
+                y,
+                x + 3,
+                y - 1.5
+            );
+
+
+            doc.line(
+                x + 5,
+                y,
+                x + 3,
+                y + 1.5
+            );
+
+        }
 
     }
-
-
-    // ============================================
-    // CHECK-OUT
-    // ============================================
-
-    if (atividade === "check-out") {
-
-        doc.setDrawColor(
-            40,
-            100,
-            160
-        );
-
-        doc.setLineWidth(0.5);
-
-
-        // porta
-        doc.line(
-            x - 2,
-            y - 3,
-            x - 2,
-            y + 3
-        );
-
-        doc.line(
-            x - 2,
-            y - 3,
-            x + 1,
-            y - 3
-        );
-
-        doc.line(
-            x + 1,
-            y - 3,
-            x + 1,
-            y + 3
-        );
-
-
-        // seta
-        doc.line(
-            x,
-            y,
-            x + 5,
-            y
-        );
-
-        doc.line(
-            x + 5,
-            y,
-            x + 3,
-            y - 1.5
-        );
-
-        doc.line(
-            x + 5,
-            y,
-            x + 3,
-            y + 1.5
-        );
-
-    }
-
-}
 
 });
-
-        // ---------------------------------------------
-        // POSIÇÃO FINAL
-        // ---------------------------------------------
-
         const finalY =
             doc.lastAutoTable.finalY;
 

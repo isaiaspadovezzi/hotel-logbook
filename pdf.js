@@ -193,7 +193,74 @@ function resumoRegistroPDF(registro) {
 
 }
 
+// =====================================================
+// ÍCONES BOOTSTRAP PARA O PDF
+// Usa os mesmos ícones da interface
+// =====================================================
 
+async function prepararIconesPDF() {
+
+    const mapa = {
+
+        "Check-in": "bi-person-check",
+        "Check-out": "bi-box-arrow-right",
+        "Procedimentos": "bi-clipboard-check",
+        "Manutenção": "bi-tools",
+        "Troca de Quarto": "bi-arrow-left-right",
+        "Mudança de Quarto": "bi-arrow-left-right",
+        "Limpeza": "bi-stars",
+        "Aviso": "bi-exclamation-circle",
+        "Reclamação": "bi-exclamation-circle"
+
+    };
+
+    const imagens = {};
+
+    for (const atividade in mapa) {
+
+        const container =
+            document.createElement("div");
+
+        container.style.position = "fixed";
+        container.style.left = "-10000px";
+        container.style.top = "-10000px";
+        container.style.width = "32px";
+        container.style.height = "32px";
+        container.style.display = "flex";
+        container.style.alignItems = "center";
+        container.style.justifyContent = "center";
+        container.style.background = "transparent";
+
+        container.innerHTML = `
+            <i
+                class="bi ${mapa[atividade]}"
+                style="
+                    font-size: 22px;
+                    line-height: 1;
+                "
+            ></i>
+        `;
+
+        document.body.appendChild(container);
+
+        const canvas =
+            await html2canvas(
+                container,
+                {
+                    backgroundColor: null,
+                    scale: 3,
+                    logging: false
+                }
+            );
+
+        imagens[atividade] =
+            canvas.toDataURL("image/png");
+
+        container.remove();
+    }
+
+    return imagens;
+}
 // =====================================================
 // EXPORTAR PDF
 // =====================================================
@@ -235,6 +302,8 @@ async function exportarPDF() {
             format: "a4"
 
         });
+        const iconesPDF =
+    await prepararIconesPDF();
 
 
         // ---------------------------------------------
@@ -815,10 +884,9 @@ doc.autoTable({
  // ==========================================
 // ÍCONES DAS ATIVIDADES
 // ==========================================
-
 didDrawCell: function(data) {
 
-    // Somente na coluna ATIVIDADE
+    // Somente coluna ATIVIDADE
     if (
         data.section !== "body" ||
         data.column.index !== 1
@@ -826,77 +894,67 @@ didDrawCell: function(data) {
         return;
     }
 
+
     const atividade =
-        String(data.cell.raw || "")
-            .toLowerCase()
-            .trim();
+        String(data.cell.raw || "").trim();
 
 
-    // =================================================
-    // ÍCONES BOOTSTRAP
-    // =================================================
-
-    const icones = {
-
-        "check-in": {
-            icon: "bi-person-check",
-            color: "#287a46"
-        },
-
-        "check-out": {
-            icon: "bi-box-arrow-right",
-            color: "#2869a3"
-        },
-
-        "procedimentos": {
-            icon: "bi-clipboard-check",
-            color: "#287a46"
-        },
-
-        "manutenção": {
-            icon: "bi-tools",
-            color: "#a06b2d"
-        },
-
-        "troca de quarto": {
-            icon: "bi-arrow-left-right",
-            color: "#666666"
-        },
-
-        "mudança de quarto": {
-            icon: "bi-arrow-left-right",
-            color: "#666666"
-        },
-
-        "limpeza": {
-            icon: "bi-stars",
-            color: "#468eaf"
-        },
-
-        "aviso": {
-            icon: "bi-exclamation-circle",
-            color: "#bd912d"
-        },
-
-        "reclamação": {
-            icon: "bi-exclamation-circle",
-            color: "#b44646"
-        }
-
-    };
+    const icone =
+        iconesPDF[atividade];
 
 
-    const configIcone =
-        icones[atividade];
-
-
-    if (!configIcone) {
+    if (!icone) {
         return;
     }
 
 
     // =================================================
-   
+    // TAMANHO DO ÍCONE
+    // =================================================
+
+    const tamanho =
+        4.2;
+
+
+    // =================================================
+    // POSIÇÃO
+    // =================================================
+
+    const centroX =
+        data.cell.x +
+        data.cell.width / 2;
+
+    const centroY =
+        data.cell.y +
+        data.cell.height / 2;
+
+
+    /*
+        O texto já está centralizado.
+
+        Colocamos o ícone ligeiramente à esquerda
+        do centro, formando um conjunto visual:
+        
+              [ícone] Check-in
+    */
+
+
+    const x =
+        centroX - 14;
+
+    const y =
+        centroY - tamanho / 2;
+
+
+    doc.addImage(
+        icone,
+        "PNG",
+        x,
+        y,
+        tamanho,
+        tamanho
+    );
+
 }
 
 });

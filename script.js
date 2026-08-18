@@ -427,7 +427,9 @@ function atualizarTabela(lista = registros) {
     ${registro.atividade}
 </td>
 
-            <td>${registro.quarto}</td>
+        <td>
+    <strong>${registro.quarto || "-"}</strong>
+</td>
 
             <td>${resumo}</td>
 

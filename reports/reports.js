@@ -102,13 +102,19 @@ async function reportarRegistro(indice) {
 
         ? `
 
-            <div
-                class="report-description"
-                style="
-                    width: 100%;
-                    box-sizing: border-box;
-                "
-            >
+          <div
+    class="report-description"
+    style="
+        width: 100%;
+        max-width: 100%;
+        flex: 1 1 100%;
+        box-sizing: border-box;
+        grid-column: 1 / -1;
+        min-height: 80px;
+    "
+>
+    ${registro.descricao || "-"}
+</div>
 
                 ${registro.descricao || "-"}
 

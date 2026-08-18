@@ -1025,3 +1025,11 @@ async function copiarCardReport() {
     }
 
 }
+case "Procedimentos":
+
+    return `
+        <i
+            class="bi bi-clipboard-check"
+            style="margin-right: 6px;"
+        ></i>
+    `;

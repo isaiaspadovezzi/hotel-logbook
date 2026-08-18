@@ -783,15 +783,16 @@ doc.autoTable({
 
     cellWidth: 40,
 
+    halign: "center",
+
     cellPadding: {
-        left: 7,
+        left: 3,
         right: 3,
         top: 1.5,
         bottom: 1.5
     }
 
 },
-
 
         2: {
 

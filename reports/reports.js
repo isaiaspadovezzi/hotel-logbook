@@ -94,16 +94,14 @@ async function reportarRegistro(indice) {
 
             <div class="report-body">
 
-  <div class="report-main">
+<div class="report-main">
 
     ${
         registro.atividade === "Procedimentos" ||
         registro.atividade === "Conferência"
 
         ? `
-            <div
-                class="report-description report-description-full"
-            >
+            <div class="report-description report-description-full">
                 ${registro.descricao || "-"}
             </div>
         `
@@ -124,38 +122,6 @@ async function reportarRegistro(indice) {
             <div class="report-description">
                 ${registro.descricao || "-"}
             </div>
-        `
-    }
-
-</div>
-
-                ${registro.descricao || "-"}
-
-            </div>
-
-        `
-
-        : `
-
-            <div class="report-room-box">
-
-                <span class="report-room-label">
-                    QUARTO
-                </span>
-
-                <strong class="report-room">
-                    ${registro.quarto || "-"}
-                </strong>
-
-            </div>
-
-
-            <div class="report-description">
-
-                ${registro.descricao || "-"}
-
-            </div>
-
         `
     }
 
@@ -672,13 +638,7 @@ function abrirPreviewReport(registro) {
 
 </div>
 
-            <div class="report-description">
 
-                ${registro.descricao || "-"}
-
-            </div>
-
-        </div>
 
 
         <!-- INFORMAÇÕES -->

@@ -880,7 +880,36 @@ doc.autoTable({
 
     },
 
+        3: {
 
+            cellWidth: 94
+
+        }
+
+    },
+
+
+    // ==========================================
+    // NEGRITO DO NÚMERO DO QUARTO
+    // ==========================================
+    didParseCell: function(data) {
+
+        if (
+            data.section === "body" &&
+            data.column.index === 2
+        ) {
+
+            data.cell.styles.fontStyle = "bold";
+
+        }
+
+    },
+
+
+    // ==========================================
+    // ÍCONES DAS ATIVIDADES
+    // ==========================================
+    didDrawCell: function(data) {
  // ==========================================
 // ÍCONES DAS ATIVIDADES
 // ==========================================

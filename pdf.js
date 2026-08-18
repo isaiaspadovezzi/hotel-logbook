@@ -818,7 +818,7 @@ doc.autoTable({
 
 didDrawCell: function(data) {
 
-    // Somente na coluna Atividade
+    // Somente na coluna ATIVIDADE
     if (
         data.section !== "body" ||
         data.column.index !== 1
@@ -826,348 +826,215 @@ didDrawCell: function(data) {
         return;
     }
 
-
     const atividade =
         String(data.cell.raw || "")
             .toLowerCase()
             .trim();
 
 
-    // Posição do ícone
-    const x =
-        data.cell.x + 3.5;
+    // =================================================
+    // ÍCONES BOOTSTRAP
+    // =================================================
 
-    const y =
+    const icones = {
+
+        "check-in": {
+            icon: "bi-person-check",
+            color: "#287a46"
+        },
+
+        "check-out": {
+            icon: "bi-box-arrow-right",
+            color: "#2869a3"
+        },
+
+        "procedimentos": {
+            icon: "bi-clipboard-check",
+            color: "#287a46"
+        },
+
+        "manutenção": {
+            icon: "bi-tools",
+            color: "#a06b2d"
+        },
+
+        "troca de quarto": {
+            icon: "bi-arrow-left-right",
+            color: "#666666"
+        },
+
+        "mudança de quarto": {
+            icon: "bi-arrow-left-right",
+            color: "#666666"
+        },
+
+        "limpeza": {
+            icon: "bi-stars",
+            color: "#468eaf"
+        },
+
+        "aviso": {
+            icon: "bi-exclamation-circle",
+            color: "#bd912d"
+        },
+
+        "reclamação": {
+            icon: "bi-exclamation-circle",
+            color: "#b44646"
+        }
+
+    };
+
+
+    const configIcone =
+        icones[atividade];
+
+
+    if (!configIcone) {
+        return;
+    }
+
+
+    // =================================================
+    // CRIA SVG DO ÍCONE BOOTSTRAP
+    // =================================================
+
+    const paths = {
+
+        "bi-person-check": `
+            <path
+                fill="${configIcone.color}"
+                d="M15 14s1 0 1 1-1 1-1 1-1-1-1-1 1-1 1-1m-1.5-1.5a.5.5 0 0 0-.5.5v1.5h-1.5a.5.5 0 0 0 0 1H13v1.5a.5.5 0 0 0 1 0V15.5h1.5a.5.5 0 0 0 0-1H14V13a.5.5 0 0 0-.5-.5"/>
+            <path
+                fill="${configIcone.color}"
+                d="M8 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6m0-1a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 2c-2.67 0-5 1.34-5 3v1h5v-1H4c0-1 1.63-2 4-2 .7 0 1.35.1 1.9.27l.4-.92A7 7 0 0 0 8 10"/>
+        `,
+
+        "bi-box-arrow-right": `
+            <path
+                fill="${configIcone.color}"
+                fill-rule="evenodd"
+                d="M10 12.5a.5.5 0 0 0 .5.5h5.793l-1.147 1.146a.5.5 0 0 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708.708L16.293 12H10.5a.5.5 0 0 0-.5.5"/>
+            <path
+                fill="${configIcone.color}"
+                fill-rule="evenodd"
+                d="M5.5 15a.5.5 0 0 0 .5-.5V3h8.5a.5.5 0 0 0 0-1H6a1 1 0 0 0-1 1v11.5a.5.5 0 0 0 .5.5"
+            />
+        `,
+
+        "bi-clipboard-check": `
+            <path
+                fill="${configIcone.color}"
+                d="M10 1.5a.5.5 0 0 1 .5.5v.5h3A1.5 1.5 0 0 1 15 4v11a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 3 15V4a1.5 1.5 0 0 1 1.5-1.5h3V2a.5.5 0 0 1 .5-.5zM5 3.5a.5.5 0 0 0-.5.5v11a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5z"
+            />
+            <path
+                fill="${configIcone.color}"
+                d="m6.5 10.5 1.5 1.5 3-3 .7.7-3.7 3.7-2.2-2.2z"
+            />
+        `,
+
+        "bi-tools": `
+            <path
+                fill="${configIcone.color}"
+                d="M1 0a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h2v9a2 2 0 0 0 2 2h9v-2H5V6h2a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm1 2h4v2H2z"
+            />
+            <path
+                fill="${configIcone.color}"
+                d="M15.5 8.5a2.5 2.5 0 1 0-3.54 3.54l-4.25 4.25a.5.5 0 0 0 .7.7l4.25-4.25a2.5 2.5 0 0 0 2.84-4.24l-1.4 1.4-.7-.7 1.4-1.4a2.5 2.5 0 0 0-1.3.7"
+            />
+        `,
+
+        "bi-arrow-left-right": `
+            <path
+                fill="${configIcone.color}"
+                fill-rule="evenodd"
+                d="M1 11.5a.5.5 0 0 1 .5-.5h11.793l-2.147-2.146a.5.5 0 0 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L13.293 12H1.5a.5.5 0 0 1-.5-.5m14-7a.5.5 0 0 1 .5-.5h1.793l-2.147-2.146a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L17.293 5H15.5a.5.5 0 0 1-.5-.5"
+            />
+        `,
+
+        "bi-stars": `
+            <path
+                fill="${configIcone.color}"
+                d="M7.657 6.247a.5.5 0 0 1 .686 0l.97.97.97-.97a.5.5 0 0 1 .707.707l-.97.97.97.97a.5.5 0 0 1-.707.707l-.97-.97-.97.97a.5.5 0 1 1-.707-.707l.97-.97-.97-.97a.5.5 0 0 1 0-.707"
+            />
+            <path
+                fill="${configIcone.color}"
+                d="M2.5 8.5a.5.5 0 0 1 .5.5v1.5h1.5a.5.5 0 0 1 0 1H3v1.5a.5.5 0 0 1-1 0V11H.5a.5.5 0 0 1 0-1H2V9a.5.5 0 0 1 .5-.5"
+            />
+        `,
+
+        "bi-exclamation-circle": `
+            <circle
+                cx="8"
+                cy="8"
+                r="7"
+                fill="none"
+                stroke="${configIcone.color}"
+                stroke-width="1.4"
+            />
+            <path
+                fill="${configIcone.color}"
+                d="M7.5 4.5h1v5h-1zm0 6h1v1h-1z"
+            />
+        `
+
+    };
+
+
+    const svg = `
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 16 16"
+        >
+            ${paths[configIcone.icon]}
+        </svg>
+    `;
+
+
+    // =================================================
+    // CONVERTE SVG PARA DATA URI
+    // =================================================
+
+    const svgBase64 =
+        btoa(
+            unescape(
+                encodeURIComponent(svg)
+            )
+        );
+
+
+    const dataUri =
+        "data:image/svg+xml;base64," +
+        svgBase64;
+
+
+    // =================================================
+    // POSICIONAMENTO
+    // =================================================
+
+    const imgSize = 4.5;
+
+    const iconX =
+        data.cell.x +
+        (data.cell.width / 2) -
+        12;
+
+    const iconY =
         data.cell.y +
-        data.cell.height / 2;
-
-
-    doc.setLineWidth(0.4);
-
-
-    // ==========================================
-    // CHECK-IN
-    // ==========================================
-
-    if (atividade === "check-in") {
-
-        doc.setDrawColor(
-            40,
-            120,
-            70
-        );
-
-
-        // cabeça
-        doc.circle(
-            x,
-            y - 1.2,
-            0.8
-        );
-
-
-        // corpo
-        doc.line(
-            x - 1.4,
-            y + 1.2,
-            x + 1.4,
-            y + 1.2
-        );
-
-
-        // check
-        doc.line(
-            x + 1.6,
-            y - 0.6,
-            x + 2.2,
-            y
-        );
-
-        doc.line(
-            x + 2.2,
-            y,
-            x + 3.2,
-            y - 1.2
-        );
-
-    }
-
-
-    // ==========================================
-    // CHECK-OUT
-    // ==========================================
-
-    else if (atividade === "check-out") {
-
-        doc.setDrawColor(
-            40,
-            100,
-            160
-        );
-
-
-        // porta
-        doc.line(
-            x - 1.2,
-            y - 2,
-            x - 1.2,
-            y + 2
-        );
-
-        doc.line(
-            x - 1.2,
-            y - 2,
-            x + 0.6,
-            y - 2
-        );
-
-        doc.line(
-            x + 0.6,
-            y - 2,
-            x + 0.6,
-            y + 2
-        );
-
-
-        // seta
-        doc.line(
-            x,
-            y,
-            x + 3.2,
-            y
-        );
-
-        doc.line(
-            x + 3.2,
-            y,
-            x + 2,
-            y - 1
-        );
-
-        doc.line(
-            x + 3.2,
-            y,
-            x + 2,
-            y + 1
-        );
-
-    }
-
-
-    // ==========================================
-    // MANUTENÇÃO
-    // ==========================================
-
-    else if (atividade === "manutenção") {
-
-        doc.setDrawColor(
-            180,
-            120,
-            40
-        );
-
-
-        // ferramenta cruzada / chave
-        doc.line(
-            x - 2,
-            y + 2,
-            x + 2,
-            y - 2
-        );
-
-        doc.circle(
-            x + 2.2,
-            y - 2.2,
-            1
-        );
-
-        doc.line(
-            x - 2.5,
-            y + 1.5,
-            x - 1,
-            y + 3
-        );
-
-    }
-
-
-    // ==========================================
-    // TROCA DE QUARTO
-    // ==========================================
-
-    else if (
-        atividade === "troca de quarto" ||
-        atividade === "mudança de quarto"
-    ) {
-
-        doc.setDrawColor(
-            100,
-            100,
-            100
-        );
-
-
-        // porta
-        doc.rect(
-            x - 1.5,
-            y - 2.5,
-            3,
-            5
-        );
-
-
-        // maçaneta
-        doc.circle(
-            x + 0.5,
-            y,
-            0.35
-        );
-
-
-        // seta
-        doc.line(
-            x + 3,
-            y,
-            x + 5,
-            y
-        );
-
-        doc.line(
-            x + 5,
-            y,
-            x + 4,
-            y - 1
-        );
-
-        doc.line(
-            x + 5,
-            y,
-            x + 4,
-            y + 1
-        );
-
-    }
-
-
-    // ==========================================
-    // LIMPEZA
-    // ==========================================
-
-    else if (atividade === "limpeza") {
-
-        doc.setDrawColor(
-            70,
-            150,
-            190
-        );
-
-
-        // brilho / estrela
-        doc.line(
-            x,
-            y - 2.5,
-            x,
-            y + 2.5
-        );
-
-        doc.line(
-            x - 2.5,
-            y,
-            x + 2.5,
-            y
-        );
-
-        doc.line(
-            x - 1.5,
-            y - 1.5,
-            x + 1.5,
-            y + 1.5
-        );
-
-        doc.line(
-            x + 1.5,
-            y - 1.5,
-            x - 1.5,
-            y + 1.5
-        );
-
-    }
-
-
-    // ==========================================
-    // AVISO
-    // ==========================================
-
-    else if (atividade === "aviso") {
-
-        doc.setDrawColor(
-            200,
-            150,
-            40
-        );
-
-
-        // círculo
-        doc.circle(
-            x,
-            y,
-            2
-        );
-
-
-        // ponto de exclamação
-        doc.line(
-            x,
-            y - 1,
-            x,
-            y + 0.7
-        );
-
-        doc.circle(
-            x,
-            y + 1.4,
-            0.25
-        );
-
-    }
-
-
-    // ==========================================
-    // RECLAMAÇÃO
-    // ==========================================
-
-    else if (atividade === "reclamação") {
-
-        doc.setDrawColor(
-            190,
-            70,
-            70
-        );
-
-
-        // círculo
-        doc.circle(
-            x,
-            y,
-            2
-        );
-
-
-        // exclamação
-        doc.line(
-            x,
-            y - 1,
-            x,
-            y + 0.7
-        );
-
-        doc.circle(
-            x,
-            y + 1.4,
-            0.25
-        );
-
-    }
+        (data.cell.height / 2) -
+        (imgSize / 2);
+
+
+    doc.addImage(
+        dataUri,
+        "SVG",
+        iconX,
+        iconY,
+        imgSize,
+        imgSize
+    );
 
 }
 

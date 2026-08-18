@@ -889,9 +889,10 @@ doc.autoTable({
     },
 
 
-    // ==========================================
+     // ==========================================
     // NEGRITO DO NÚMERO DO QUARTO
     // ==========================================
+
     didParseCell: function(data) {
 
         if (
@@ -909,33 +910,8 @@ doc.autoTable({
     // ==========================================
     // ÍCONES DAS ATIVIDADES
     // ==========================================
+
     didDrawCell: function(data) {
- // ==========================================
-// ÍCONES DAS ATIVIDADES
-// ==========================================
-didDrawCell: function(data) {
-
-    // Somente coluna ATIVIDADE
-    if (
-        data.section !== "body" ||
-        data.column.index !== 1
-    ) {
-        return;
-    }
-
-
-    const atividade =
-        String(data.cell.raw || "").trim();
-
-
-    const icone =
-        iconesPDF[atividade];
-
-
-    if (!icone) {
-        return;
-    }
-
 
     // =================================================
     // TAMANHO DO ÍCONE

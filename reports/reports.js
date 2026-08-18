@@ -428,7 +428,14 @@ function iconeAtividadeReport(atividade) {
                     style="margin-right: 6px;"
                 ></i>
             `;
+case "Procedimentos":
 
+    return `
+        <i
+            class="bi bi-clipboard-check"
+            style="margin-right: 6px;"
+        ></i>
+    `;
 
         case "Aviso":
 

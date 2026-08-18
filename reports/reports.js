@@ -114,7 +114,10 @@ async function reportarRegistro(indice) {
         grid-column: 1 / -1 !important;
         margin: 0 !important;
         padding: 20px !important;
+        font-size: 20px !important;
+        line-height: 1.4 !important;
     "
+>
 >
     ${registro.descricao || "-"}
 </div>

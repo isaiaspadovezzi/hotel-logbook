@@ -610,7 +610,31 @@ function abrirPreviewReport(registro) {
 
         <!-- QUARTO + DESCRIÇÃO -->
 
-        <div class="report-main">
+   <div class="report-main">
+
+    ${
+        registro.atividade === "Procedimentos" ||
+        registro.atividade === "Conferência"
+
+        ? `
+
+            <div
+                class="report-description"
+                style="
+                    width: 100%;
+                    max-width: 100%;
+                    flex: 1 1 100%;
+                    box-sizing: border-box;
+                    grid-column: 1 / -1;
+                    min-height: 80px;
+                "
+            >
+                ${registro.descricao || "-"}
+            </div>
+
+        `
+
+        : `
 
             <div class="report-room-box">
 
@@ -624,6 +648,16 @@ function abrirPreviewReport(registro) {
 
             </div>
 
+            <div class="report-description">
+
+                ${registro.descricao || "-"}
+
+            </div>
+
+        `
+    }
+
+</div>
 
             <div class="report-description">
 

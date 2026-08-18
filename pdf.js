@@ -863,14 +863,15 @@ doc.autoTable({
 
 },
 
-        2: {
+       2: {
 
-            cellWidth: 24,
-            fontStyle: "bold"
-             halign: "center"
+    cellWidth: 24,
 
-        },
+    fontStyle: "bold",
 
+    halign: "center"
+
+},
 
         3: {
 

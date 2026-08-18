@@ -101,9 +101,23 @@ async function reportarRegistro(indice) {
         registro.atividade === "Conferência"
 
         ? `
-            <div class="report-description report-description-full">
-                ${registro.descricao || "-"}
-            </div>
+            <div
+    class="report-description report-description-full"
+    style="
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        min-height: 90px !important;
+        box-sizing: border-box !important;
+        display: block !important;
+        flex: 1 1 100% !important;
+        grid-column: 1 / -1 !important;
+        margin: 0 !important;
+        padding: 20px !important;
+    "
+>
+    ${registro.descricao || "-"}
+</div>
         `
 
         : `

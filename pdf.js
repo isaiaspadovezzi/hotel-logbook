@@ -896,45 +896,45 @@ doc.autoTable({
     // ÍCONES DAS ATIVIDADES
     // ==========================================
 
-    didDrawCell: function(data) {
+   didDrawCell: function(data) {
 
-    // =================================================
-    // TAMANHO DO ÍCONE
-    // =================================================
+    // Somente células do corpo da tabela
+    if (data.section !== "body") {
+        return;
+    }
 
-    const tamanho =
-        4.2;
+    // Somente coluna ATIVIDADE
+    if (data.column.index !== 1) {
+        return;
+    }
 
+    const atividade =
+        String(data.cell.raw || "").trim();
 
-    // =================================================
-    // POSIÇÃO
-    // =================================================
+    const icone =
+        iconesPDF[atividade];
 
-    const centroX =
-        data.cell.x +
-        data.cell.width / 2;
+    // Se não houver ícone para a atividade,
+    // não faz nada
+    if (!icone) {
+        return;
+    }
 
+    // Tamanho pequeno do ícone
+    const tamanho = 4.2;
+
+    // Centralização vertical
     const centroY =
         data.cell.y +
         data.cell.height / 2;
 
-
-    /*
-        O texto já está centralizado.
-
-        Colocamos o ícone ligeiramente à esquerda
-        do centro, formando um conjunto visual:
-        
-              [ícone] Check-in
-    */
-
-
-    const x =
-        centroX - 14;
-
     const y =
-        centroY - tamanho / 2;
+        centroY -
+        tamanho / 2;
 
+    // Ícone fica à esquerda do texto
+    const x =
+        data.cell.x + 4;
 
     doc.addImage(
         icone,

@@ -94,34 +94,51 @@ async function reportarRegistro(indice) {
 
             <div class="report-body">
 
-    
-                <div class="report-main">
+    <div class="report-main">
 
     ${
         registro.atividade === "Procedimentos" ||
         registro.atividade === "Conferência"
-            ? ""
-            : `
-                <div class="report-room-box">
 
-                    <span class="report-room-label">
-                        QUARTO
-                    </span>
+        ? `
 
-                    <strong class="report-room">
-                        ${registro.quarto || "-"}
-                    </strong>
+            <div
+                class="report-description"
+                style="
+                    width: 100%;
+                    box-sizing: border-box;
+                "
+            >
 
-                </div>
-            `
+                ${registro.descricao || "-"}
+
+            </div>
+
+        `
+
+        : `
+
+            <div class="report-room-box">
+
+                <span class="report-room-label">
+                    QUARTO
+                </span>
+
+                <strong class="report-room">
+                    ${registro.quarto || "-"}
+                </strong>
+
+            </div>
+
+
+            <div class="report-description">
+
+                ${registro.descricao || "-"}
+
+            </div>
+
+        `
     }
-
-
-    <div class="report-description">
-
-        ${registro.descricao || "-"}
-
-    </div>
 
 </div>
 

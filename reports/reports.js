@@ -136,9 +136,37 @@ async function reportarRegistro(indice) {
 
             </div>
 
-            <div class="report-description">
-                ${registro.descricao || "-"}
-            </div>
+       <div class="report-description">
+
+    ${
+        registro.descricao
+            ? registro.descricao
+            : ""
+    }
+
+    ${
+        registro.quartoDestino &&
+        (
+            registro.atividade === "Mudança de Quarto" ||
+            registro.atividade === "Troca de Quarto"
+        )
+            ? `
+                <br><br>
+                <strong>
+                    Novo quarto: ${registro.quartoDestino}
+                </strong>
+              `
+            : ""
+    }
+
+    ${
+        !registro.descricao &&
+        !registro.quartoDestino
+            ? "-"
+            : ""
+    }
+
+</div>
         `
     }
 

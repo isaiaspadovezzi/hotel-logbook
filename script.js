@@ -1,26 +1,8 @@
-// =====================================================
-// LOGBOOK - ibis Styles
-// Versão 2.0
-// Parte 1
-// =====================================================
-
-// ================================================
-// DADOS
-// ================================================
-
 let registros = [];
 
 let registroEditando = -1;
 
-// ================================================
-// INICIALIZAÇÃO
-// ================================================
-
 document.addEventListener("DOMContentLoaded", iniciarSistema);
-
-// ================================================
-// INICIAR SISTEMA
-// ================================================
 
 function iniciarSistema() {
 
@@ -40,10 +22,6 @@ function iniciarSistema() {
 
 }
 
-// ================================================
-// EVENTOS
-// ================================================
-
 function configurarEventos() {
 
     document
@@ -57,14 +35,12 @@ function configurarEventos() {
     document
         .getElementById("pesquisa")
         .addEventListener("input", pesquisarRegistros);
+
     document
-    .getElementById("data")
-    .addEventListener("change", mudarDataLogbook);
+        .getElementById("data")
+        .addEventListener("change", mudarDataLogbook);
 
 }
-// =====================================================
-// MUDAR DATA DO LOGBOOK
-// =====================================================
 
 function mudarDataLogbook() {
 
@@ -75,9 +51,6 @@ function mudarDataLogbook() {
     atualizarContador();
 
 }
-// ================================================
-// DATA
-// ================================================
 
 function preencherDataAtual() {
 
@@ -87,10 +60,6 @@ function preencherDataAtual() {
         hoje.toISOString().split("T")[0];
 
 }
-
-// ================================================
-// HORA
-// ================================================
 
 function preencherHoraAtual() {
 
@@ -107,30 +76,19 @@ function preencherHoraAtual() {
 
 }
 
-// ================================================
-// MOSTRAR / ESCONDER CAMPOS
-// ================================================
-
 function atualizarCampos() {
 
-    // Garante que o campo "Novo Quarto"
-    // exista no formulário
     garantirCampoQuartoDestino();
 
-
     esconderTodosCampos();
-
 
     const atividade =
         document.getElementById("atividade").value;
 
-
     const config =
         CONFIG.atividades[atividade];
 
-
     if (!config) return;
-
 
     config.campos.forEach(function(campo){
 
@@ -142,20 +100,17 @@ function atualizarCampos() {
 
                 break;
 
-
             case "valor":
 
                 mostrar("grupoValor");
 
                 break;
 
-
             case "reserva":
 
                 mostrar("grupoReserva");
 
                 break;
-
 
             case "despertar":
 
@@ -166,11 +121,6 @@ function atualizarCampos() {
         }
 
     });
-
-
-    // =================================================
-    // TROCA / MUDANÇA DE QUARTO
-    // =================================================
 
     if (
         atividade === "Troca de Quarto" ||
@@ -182,56 +132,41 @@ function atualizarCampos() {
     }
 
 }
-// =====================================================
-// CRIAR CAMPO NOVO QUARTO
-// =====================================================
 
 function garantirCampoQuartoDestino() {
 
-    // Se já existe, não cria novamente
     if (
         document.getElementById("grupoQuartoDestino")
     ) {
         return;
     }
 
-
     const campoQuarto =
         document.getElementById("quarto");
-
 
     if (!campoQuarto) {
         return;
     }
 
-
-    // Procura o container do campo Quarto
     const containerQuarto =
         campoQuarto.closest(".mb-3") ||
         campoQuarto.parentElement;
-
 
     if (!containerQuarto) {
         return;
     }
 
-
-    // Cria o grupo
     const grupo =
         document.createElement("div");
-
 
     grupo.id =
         "grupoQuartoDestino";
 
-
     grupo.className =
         "mb-3";
 
-
     grupo.style.display =
         "none";
-
 
     grupo.innerHTML = `
 
@@ -241,7 +176,6 @@ function garantirCampoQuartoDestino() {
         >
             Novo quarto
         </label>
-
 
         <input
             type="text"
@@ -253,40 +187,9 @@ function garantirCampoQuartoDestino() {
 
     `;
 
-
-    // Coloca logo depois do campo Quarto
     containerQuarto.after(grupo);
 
 }
-    config.campos.forEach(function(campo){
-
-        switch(campo){
-
-            case "pagamento":
-                mostrar("grupoPagamento");
-                break;
-
-            case "valor":
-                mostrar("grupoValor");
-                break;
-
-            case "reserva":
-                mostrar("grupoReserva");
-                break;
-
-            case "despertar":
-                mostrar("grupoDespertar");
-                break;
-
-        }
-
-    });
-
-}
-
-// ================================================
-// ESCONDER CAMPOS
-// ================================================
 
 function esconderTodosCampos() {
 
@@ -298,21 +201,23 @@ function esconderTodosCampos() {
 
     esconder("grupoDespertar");
 
-}
+    esconder("grupoQuartoDestino");
 
-// ================================================
-// MOSTRAR
-// ================================================
+}
 
 function mostrar(id) {
 
     console.log("Mostrando:", id);
 
-    const elemento = document.getElementById(id);
+    const elemento =
+        document.getElementById(id);
 
     if (!elemento) {
 
-        console.error("Elemento não encontrado:", id);
+        console.error(
+            "Elemento não encontrado:",
+            id
+        );
 
         return;
 
@@ -322,61 +227,51 @@ function mostrar(id) {
 
 }
 
-// ================================================
-// ESCONDER
-// ================================================
-
 function esconder(id) {
 
-    document.getElementById(id).style.display = "none";
+    const elemento =
+        document.getElementById(id);
+
+    if (elemento) {
+
+        elemento.style.display = "none";
+
+    }
 
 }
-// =====================================================
-// PARTE 2
-// SALVAR REGISTRO
-// =====================================================
 
 function salvarRegistro() {
 
-   const registro = {
+    const registro = {
 
-    hora:
-        document.getElementById("hora").value,
+        hora:
+            document.getElementById("hora").value,
 
+        atividade:
+            document.getElementById("atividade").value,
 
-    atividade:
-        document.getElementById("atividade").value,
+        quarto:
+            document.getElementById("quarto").value,
 
+        quartoDestino:
+            document.getElementById("quartoDestino")?.value || "",
 
-    quarto:
-        document.getElementById("quarto").value,
+        pagamento:
+            document.getElementById("pagamento").value,
 
+        valor:
+            document.getElementById("valor").value,
 
-    quartoDestino:
-        document.getElementById("quartoDestino")?.value || "",
+        reserva:
+            document.getElementById("reserva").value,
 
+        despertar:
+            document.getElementById("horaDespertar").value,
 
-    pagamento:
-        document.getElementById("pagamento").value,
+        descricao:
+            document.getElementById("descricao").value
 
-
-    valor:
-        document.getElementById("valor").value,
-
-
-    reserva:
-        document.getElementById("reserva").value,
-
-
-    despertar:
-        document.getElementById("horaDespertar").value,
-
-
-    descricao:
-        document.getElementById("descricao").value
-
-};
-
+    };
 
     if (registroEditando === -1) {
 
@@ -384,7 +279,8 @@ function salvarRegistro() {
 
     } else {
 
-        registros[registroEditando] = registro;
+        registros[registroEditando] =
+            registro;
 
         registroEditando = -1;
 
@@ -398,62 +294,67 @@ function salvarRegistro() {
 
     limparFormulario();
 
-    bootstrap.Modal
-        .getInstance(document.getElementById("modalRegistro"))
-        .hide();
+    const modal =
+        bootstrap.Modal.getInstance(
+            document.getElementById(
+                "modalRegistro"
+            )
+        );
+
+    if (modal) {
+
+        modal.hide();
+
+    }
 
 }
-
-// =====================================================
-// LIMPAR FORMULÁRIO
-// =====================================================
 
 function limparFormulario() {
 
     preencherHoraAtual();
 
-    document.getElementById("atividade").selectedIndex = 0;
+    document.getElementById(
+        "atividade"
+    ).selectedIndex = 0;
 
-    document.getElementById("quarto").value = "";
+    document.getElementById(
+        "quarto"
+    ).value = "";
 
-    document.getElementById("pagamento").selectedIndex = 0;
+    document.getElementById(
+        "pagamento"
+    ).selectedIndex = 0;
 
-    document.getElementById("valor").value = "";
+    document.getElementById(
+        "valor"
+    ).value = "";
 
-    document.getElementById("reserva").value = "";
+    document.getElementById(
+        "reserva"
+    ).value = "";
 
-    document.getElementById("horaDespertar").value = "";
+    document.getElementById(
+        "horaDespertar"
+    ).value = "";
 
-    document.getElementById("descricao").value = "";
+    document.getElementById(
+        "descricao"
+    ).value = "";
+
     const quartoDestino =
-    document.getElementById("quartoDestino");
+        document.getElementById(
+            "quartoDestino"
+        );
 
-if (quartoDestino) {
+    if (quartoDestino) {
 
-    quartoDestino.value = "";
+        quartoDestino.value = "";
 
-}
+    }
 
     atualizarCampos();
 
 }
-const quartoDestino =
-    document.getElementById("quartoDestino");
-
-
-if (quartoDestino) {
-
-    quartoDestino.value =
-        registro.quartoDestino || "";
-
-}
-
-// =====================================================
-// ATUALIZAR TABELA
-// =====================================================
-// =====================================================
-// ÍCONE DA ATIVIDADE
-// =====================================================
 
 function iconeAtividade(atividade) {
 
@@ -461,7 +362,6 @@ function iconeAtividade(atividade) {
         (atividade || "")
             .toLowerCase()
             .trim();
-
 
     if (nome === "check-in") {
 
@@ -474,7 +374,6 @@ function iconeAtividade(atividade) {
 
     }
 
-
     if (nome === "check-out") {
 
         return `
@@ -485,7 +384,6 @@ function iconeAtividade(atividade) {
         `;
 
     }
-
 
     if (nome === "manutenção") {
 
@@ -498,7 +396,6 @@ function iconeAtividade(atividade) {
 
     }
 
-
     if (nome === "reserva") {
 
         return `
@@ -509,7 +406,6 @@ function iconeAtividade(atividade) {
         `;
 
     }
-
 
     if (nome === "pagamento") {
 
@@ -522,7 +418,6 @@ function iconeAtividade(atividade) {
 
     }
 
-
     if (nome === "despertar") {
 
         return `
@@ -534,7 +429,6 @@ function iconeAtividade(atividade) {
 
     }
 
-
     return `
         <i
             class="bi bi-clipboard"
@@ -543,10 +437,15 @@ function iconeAtividade(atividade) {
     `;
 
 }
-function atualizarTabela(lista = registros) {
+
+function atualizarTabela(
+    lista = registros
+) {
 
     const tbody =
-        document.getElementById("listaRegistros");
+        document.getElementById(
+            "listaRegistros"
+        );
 
     tbody.innerHTML = "";
 
@@ -556,8 +455,10 @@ function atualizarTabela(lista = registros) {
 
         <tr>
 
-            <td colspan="5"
-                class="text-center text-muted py-5">
+            <td
+                colspan="5"
+                class="text-center text-muted py-5"
+            >
 
                 Nenhum registro encontrado.
 
@@ -571,61 +472,97 @@ function atualizarTabela(lista = registros) {
 
     }
 
-    lista.forEach((registro, indice) => {
+    lista.forEach(
+        (registro, indice) => {
 
-        let resumo = "";
+            let resumo = "";
 
-        if (registro.pagamento)
-            resumo += "💳 " + registro.pagamento + " ";
+            if (registro.pagamento)
 
-        if (registro.valor)
-            resumo += "R$ " + registro.valor + " ";
+                resumo +=
+                    "💳 " +
+                    registro.pagamento +
+                    " ";
 
-        if (registro.reserva)
-            resumo += "Reserva: " + registro.reserva + " ";
+            if (registro.valor)
 
-        if (registro.despertar)
-            resumo += "Despertar: " + registro.despertar + " ";
-        if (
-    registro.quartoDestino &&
-    (
-        registro.atividade === "Troca de Quarto" ||
-        registro.atividade === "Mudança de Quarto"
-    )
-) {
+                resumo +=
+                    "R$ " +
+                    registro.valor +
+                    " ";
 
-    resumo +=
-        "Novo quarto: " +
-        registro.quartoDestino +
-        " ";
+            if (registro.reserva)
 
-}
+                resumo +=
+                    "Reserva: " +
+                    registro.reserva +
+                    " ";
 
-        if (resumo === "")
-            resumo = registro.descricao;
+            if (registro.despertar)
 
-        tbody.innerHTML += `
+                resumo +=
+                    "Despertar: " +
+                    registro.despertar +
+                    " ";
+
+            if (
+                registro.quartoDestino &&
+                (
+                    registro.atividade ===
+                        "Troca de Quarto" ||
+                    registro.atividade ===
+                        "Mudança de Quarto"
+                )
+            ) {
+
+                resumo +=
+                    "Novo quarto: " +
+                    registro.quartoDestino +
+                    " ";
+
+            }
+
+            if (resumo === "")
+
+                resumo =
+                    registro.descricao;
+
+            tbody.innerHTML += `
 
         <tr>
 
-            <td>${registro.hora}</td>
+            <td>
+                ${registro.hora}
+            </td>
 
-       <td>
-    ${iconeAtividade(registro.atividade)}
-    ${registro.atividade}
-</td>
+            <td>
 
-        <td>
-    <strong>${registro.quarto || "-"}</strong>
-</td>
+                ${iconeAtividade(
+                    registro.atividade
+                )}
 
-            <td>${resumo}</td>
+                ${registro.atividade}
+
+            </td>
+
+            <td>
+
+                <strong>
+                    ${registro.quarto || "-"}
+                </strong>
+
+            </td>
+
+            <td>
+                ${resumo}
+            </td>
 
             <td>
 
                 <button
                     class="btn btn-sm btn-outline-primary"
-                    onclick="editarRegistro(${indice})">
+                    onclick="editarRegistro(${indice})"
+                >
 
                     <i class="bi bi-pencil"></i>
 
@@ -633,18 +570,22 @@ function atualizarTabela(lista = registros) {
 
                 <button
                     class="btn btn-sm btn-outline-danger"
-                    onclick="excluirRegistro(${indice})">
+                    onclick="excluirRegistro(${indice})"
+                >
 
                     <i class="bi bi-trash"></i>
 
-              <button
-    class="btn btn-sm btn-outline-success"
-    onclick="reportarRegistro(${indice})"
-    title="Gerar Report">
+                </button>
 
-    <i class="bi bi-save"></i>
+                <button
+                    class="btn btn-sm btn-outline-success"
+                    onclick="reportarRegistro(${indice})"
+                    title="Gerar Report"
+                >
 
-</button>
+                    <i class="bi bi-save"></i>
+
+                </button>
 
             </td>
 
@@ -652,51 +593,102 @@ function atualizarTabela(lista = registros) {
 
         `;
 
-    });
+        }
+    );
 
 }
-// =====================================================
-// PARTE 3
-// EDITAR REGISTRO
-// =====================================================
 
 function editarRegistro(indice) {
 
-    const registro = registros[indice];
+    const registro =
+        registros[indice];
 
-    registroEditando = indice;
+    if (!registro) {
+        return;
+    }
 
-    document.getElementById("hora").value = registro.hora;
-    document.getElementById("atividade").value = registro.atividade;
-    document.getElementById("quarto").value = registro.quarto;
+    registroEditando =
+        indice;
+
+    document.getElementById(
+        "hora"
+    ).value =
+        registro.hora || "";
+
+    document.getElementById(
+        "atividade"
+    ).value =
+        registro.atividade || "";
+
+    document.getElementById(
+        "quarto"
+    ).value =
+        registro.quarto || "";
 
     atualizarCampos();
 
-    document.getElementById("pagamento").value = registro.pagamento || "";
-    document.getElementById("valor").value = registro.valor || "";
-    document.getElementById("reserva").value = registro.reserva || "";
-    document.getElementById("horaDespertar").value = registro.despertar || "";
+    const quartoDestino =
+        document.getElementById(
+            "quartoDestino"
+        );
 
-    document.getElementById("descricao").value = registro.descricao;
+    if (quartoDestino) {
 
-    const modal = new bootstrap.Modal(
-        document.getElementById("modalRegistro")
-    );
+        quartoDestino.value =
+            registro.quartoDestino || "";
+
+    }
+
+    document.getElementById(
+        "pagamento"
+    ).value =
+        registro.pagamento || "";
+
+    document.getElementById(
+        "valor"
+    ).value =
+        registro.valor || "";
+
+    document.getElementById(
+        "reserva"
+    ).value =
+        registro.reserva || "";
+
+    document.getElementById(
+        "horaDespertar"
+    ).value =
+        registro.despertar || "";
+
+    document.getElementById(
+        "descricao"
+    ).value =
+        registro.descricao || "";
+
+    const modal =
+        new bootstrap.Modal(
+            document.getElementById(
+                "modalRegistro"
+            )
+        );
 
     modal.show();
 
 }
 
-// =====================================================
-// EXCLUIR
-// =====================================================
-
 function excluirRegistro(indice) {
 
-    if (!confirm("Deseja excluir este registro?"))
+    if (
+        !confirm(
+            "Deseja excluir este registro?"
+        )
+    ) {
         return;
+    }
 
-    registros.splice(indice, 1);
+    registros.splice(
+        indice,
+        1
+    );
 
     salvarLocalStorage();
 
@@ -706,18 +698,12 @@ function excluirRegistro(indice) {
 
 }
 
-// =====================================================
-// LOCAL STORAGE
-// =====================================================
-
-// =====================================================
-// SALVAR LOGBOOK POR DATA
-// =====================================================
-
 function salvarLocalStorage() {
 
     const data =
-        document.getElementById("data").value;
+        document.getElementById(
+            "data"
+        ).value;
 
     if (!data) {
 
@@ -731,10 +717,13 @@ function salvarLocalStorage() {
 
     let arquivo =
         JSON.parse(
-            localStorage.getItem("logbookArquivo")
+            localStorage.getItem(
+                "logbookArquivo"
+            )
         ) || {};
 
-    arquivo[data] = registros;
+    arquivo[data] =
+        registros;
 
     localStorage.setItem(
         "logbookArquivo",
@@ -743,17 +732,12 @@ function salvarLocalStorage() {
 
 }
 
-
-
-// =====================================================
-// CARREGAR LOGBOOK DA DATA SELECIONADA
-// COM MIGRAÇÃO DOS REGISTROS ANTIGOS
-// =====================================================
-
 function carregarLocalStorage() {
 
     const data =
-        document.getElementById("data").value;
+        document.getElementById(
+            "data"
+        ).value;
 
     if (!data) {
 
@@ -763,24 +747,17 @@ function carregarLocalStorage() {
 
     }
 
-
-    // =================================================
-    // NOVO ARQUIVO POR DATA
-    // =================================================
-
     let arquivo =
         JSON.parse(
-            localStorage.getItem("logbookArquivo")
+            localStorage.getItem(
+                "logbookArquivo"
+            )
         ) || {};
 
-
-    // =================================================
-    // VERIFICA SE EXISTE O LOGBOOK ANTIGO
-    // =================================================
-
     const antigo =
-        localStorage.getItem("logbook");
-
+        localStorage.getItem(
+            "logbook"
+        );
 
     if (
         antigo &&
@@ -790,26 +767,25 @@ function carregarLocalStorage() {
         try {
 
             const registrosAntigos =
-                JSON.parse(antigo);
-
+                JSON.parse(
+                    antigo
+                );
 
             if (
-                Array.isArray(registrosAntigos) &&
+                Array.isArray(
+                    registrosAntigos
+                ) &&
                 registrosAntigos.length > 0
             ) {
-
-                // Coloca os registros antigos
-                // na data que está selecionada
 
                 arquivo[data] =
                     registrosAntigos;
 
-
-                // Salva no novo sistema
-
                 localStorage.setItem(
                     "logbookArquivo",
-                    JSON.stringify(arquivo)
+                    JSON.stringify(
+                        arquivo
+                    )
                 );
 
                 console.log(
@@ -830,14 +806,8 @@ function carregarLocalStorage() {
 
     }
 
-
-    // =================================================
-    // CARREGA A DATA ATUAL
-    // =================================================
-
     registros =
         arquivo[data] || [];
-
 
     console.log(
         "LogBook carregado:",
@@ -847,34 +817,33 @@ function carregarLocalStorage() {
     );
 
 }
-// =====================================================
-// CONTADOR
-// =====================================================
 
 function atualizarContador() {
 
-    document.getElementById("contadorRegistros").innerHTML =
+    document.getElementById(
+        "contadorRegistros"
+    ).innerHTML =
 
         registros.length +
 
-        (registros.length === 1
+        (
+            registros.length === 1
 
-            ? " registro"
+                ? " registro"
 
-            : " registros");
+                : " registros"
+        );
 
 }
-
-// =====================================================
-// PESQUISA
-// =====================================================
 
 function pesquisarRegistros() {
 
     const texto =
 
         document
-            .getElementById("pesquisa")
+            .getElementById(
+                "pesquisa"
+            )
             .value
             .toLowerCase();
 
@@ -886,41 +855,88 @@ function pesquisarRegistros() {
 
     }
 
-    const filtrados = registros.filter(function(registro){
+    const filtrados =
+        registros.filter(
+            function(registro){
 
-        return (
+                return (
 
-            registro.hora.toLowerCase().includes(texto) ||
+                    (
+                        registro.hora ||
+                        ""
+                    )
+                        .toLowerCase()
+                        .includes(texto)
 
-            registro.atividade.toLowerCase().includes(texto) ||
+                    ||
 
-            registro.quarto.toString().includes(texto) ||
+                    (
+                        registro.atividade ||
+                        ""
+                    )
+                        .toLowerCase()
+                        .includes(texto)
 
-            registro.descricao.toLowerCase().includes(texto) ||
+                    ||
 
-            (registro.pagamento || "").toLowerCase().includes(texto) ||
+                    String(
+                        registro.quarto ||
+                        ""
+                    )
+                        .includes(texto)
 
-            (registro.reserva || "").toLowerCase().includes(texto)
+                    ||
 
+                    (
+                        registro.descricao ||
+                        ""
+                    )
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    (
+                        registro.pagamento ||
+                        ""
+                    )
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    (
+                        registro.reserva ||
+                        ""
+                    )
+                        .toLowerCase()
+                        .includes(texto)
+
+                    ||
+
+                    (
+                        registro.quartoDestino ||
+                        ""
+                    )
+                        .toLowerCase()
+                        .includes(texto)
+
+                );
+
+            }
         );
 
-    });
-
-    atualizarTabela(filtrados);
+    atualizarTabela(
+        filtrados
+    );
 
 }
-// =====================================================
-// PARTE 4
-// UTILITÁRIOS
-// =====================================================
-
-// -------------------------------------
-// Retorna um resumo do registro
-// -------------------------------------
 
 function gerarResumo(registro){
 
-    switch(registro.atividade){
+    switch(
+        registro.atividade
+    ){
 
         case "Check-in":
 
@@ -931,28 +947,54 @@ function gerarResumo(registro){
         case "Pagamento":
 
             return registro.pagamento
-                ? "💳 " + registro.pagamento
+
+                ? "💳 " +
+                    registro.pagamento
+
                 : registro.descricao;
 
         case "Estorno":
 
             return "💳 " +
-                (registro.pagamento || "-") +
+                (
+                    registro.pagamento ||
+                    "-"
+                ) +
                 " | 💲 " +
-                (registro.valor || "-");
+                (
+                    registro.valor ||
+                    "-"
+                );
 
         case "Cancelamento":
 
         case "No Show":
 
             return registro.reserva
-                ? "Reserva: " + registro.reserva
+
+                ? "Reserva: " +
+                    registro.reserva
+
                 : registro.descricao;
 
         case "Despertar":
 
             return registro.despertar
-                ? "⏰ " + registro.despertar
+
+                ? "⏰ " +
+                    registro.despertar
+
+                : registro.descricao;
+
+        case "Troca de Quarto":
+
+        case "Mudança de Quarto":
+
+            return registro.quartoDestino
+
+                ? "Novo quarto: " +
+                    registro.quartoDestino
+
                 : registro.descricao;
 
         default:
@@ -963,90 +1005,94 @@ function gerarResumo(registro){
 
 }
 
-// =====================================================
-// ABRIR MODAL PARA NOVO REGISTRO
-// =====================================================
+const modalRegistro =
+    document.getElementById(
+        "modalRegistro"
+    );
 
-const modalRegistro = document.getElementById("modalRegistro");
+if (modalRegistro) {
 
-modalRegistro.addEventListener("shown.bs.modal", function(){
+    modalRegistro.addEventListener(
+        "shown.bs.modal",
+        function(){
 
-    if(registroEditando === -1){
+            if (
+                registroEditando === -1
+            ){
 
-        limparFormulario();
+                limparFormulario();
 
-    }
+            }
 
-});
+        }
+    );
 
-// =====================================================
-// FECHAR MODAL
-// =====================================================
+    modalRegistro.addEventListener(
+        "hidden.bs.modal",
+        function(){
 
-modalRegistro.addEventListener("hidden.bs.modal", function(){
+            registroEditando = -1;
 
-    registroEditando = -1;
-
-});
-
-// =====================================================
-// EXPORTAÇÃO PDF
-// (pdf.js utilizará o vetor registros)
-// =====================================================
-
-window.getRegistros = function(){
-
-    return registros;
+        }
+    );
 
 }
 
-// =====================================================
-// VERSÃO
-// =====================================================
+window.getRegistros =
+    function(){
 
-console.log("LogBook v2.0 carregado com sucesso.");
-// =====================================================
-// ABRIR ARQUIVO DO LOGBOOK
-// =====================================================
+        return registros;
+
+    };
+
+console.log(
+    "LogBook v2.0 carregado com sucesso."
+);
 
 function abrirArquivoLogbook() {
 
     const arquivo =
         JSON.parse(
-            localStorage.getItem("logbookArquivo")
+            localStorage.getItem(
+                "logbookArquivo"
+            )
         ) || {};
 
-
     const datas =
-        Object.keys(arquivo)
+        Object.keys(
+            arquivo
+        )
             .sort()
             .reverse();
-
 
     const lista =
         document.getElementById(
             "listaArquivoLogbook"
         );
 
+    if (!lista) {
+        return;
+    }
 
     lista.innerHTML = "";
-
-
-    // =============================================
-    // NENHUM ARQUIVO
-    // =============================================
 
     if (datas.length === 0) {
 
         lista.innerHTML = `
 
-            <div class="text-center text-muted py-4">
+            <div
+                class="text-center text-muted py-4"
+            >
 
-                <i class="bi bi-folder2"
-                   style="font-size: 32px;">
+                <i
+                    class="bi bi-folder2"
+                    style="font-size: 32px;"
+                >
                 </i>
 
-                <p class="mt-2 mb-0">
+                <p
+                    class="mt-2 mb-0"
+                >
 
                     Nenhum dia arquivado.
 
@@ -1058,32 +1104,27 @@ function abrirArquivoLogbook() {
 
     }
 
+    datas.forEach(
+        function(data) {
 
-    // =============================================
-    // LISTA DE DATAS
-    // =============================================
+            const quantidade =
+                Array.isArray(
+                    arquivo[data]
+                )
+                    ? arquivo[data].length
+                    : 0;
 
-    datas.forEach(function(data) {
+            const partes =
+                data.split("-");
 
-        const quantidade =
-            Array.isArray(arquivo[data])
-                ? arquivo[data].length
-                : 0;
+            const dataFormatada =
+                partes[2] +
+                "/" +
+                partes[1] +
+                "/" +
+                partes[0];
 
-
-        const partes =
-            data.split("-");
-
-
-        const dataFormatada =
-            partes[2] +
-            "/" +
-            partes[1] +
-            "/" +
-            partes[0];
-
-
-        lista.innerHTML += `
+            lista.innerHTML += `
 
             <button
                 type="button"
@@ -1092,12 +1133,15 @@ function abrirArquivoLogbook() {
                        d-flex
                        justify-content-between
                        align-items-center"
-                onclick="abrirDiaArquivo('${data}')">
+                onclick="abrirDiaArquivo('${data}')"
+            >
 
                 <div>
 
-                    <i class="bi bi-calendar3
-                              text-success me-2">
+                    <i
+                        class="bi bi-calendar3
+                               text-success me-2"
+                    >
                     </i>
 
                     <strong>
@@ -1106,10 +1150,11 @@ function abrirArquivoLogbook() {
 
                 </div>
 
-
-                <span class="badge
-                             bg-success
-                             rounded-pill">
+                <span
+                    class="badge
+                           bg-success
+                           rounded-pill"
+                >
 
                     ${quantidade}
 
@@ -1117,14 +1162,10 @@ function abrirArquivoLogbook() {
 
             </button>
 
-        `;
+            `;
 
-    });
-
-
-    // =============================================
-    // ABRIR MODAL
-    // =============================================
+        }
+    );
 
     const modal =
         new bootstrap.Modal(
@@ -1133,47 +1174,35 @@ function abrirArquivoLogbook() {
             )
         );
 
-
     modal.show();
 
 }
-// =====================================================
-// ABRIR DIA DO ARQUIVO
-// =====================================================
 
 function abrirDiaArquivo(data) {
 
     const arquivo =
         JSON.parse(
-            localStorage.getItem("logbookArquivo")
+            localStorage.getItem(
+                "logbookArquivo"
+            )
         ) || {};
-
-
-    // Carrega os registros daquele dia
 
     registros =
         arquivo[data] || [];
 
-
-    // Altera a data do LogBook
-
-    document.getElementById("data").value = data;
-
-
-    // Atualiza a tabela
+    document.getElementById(
+        "data"
+    ).value =
+        data;
 
     atualizarTabela();
 
-
-    // Atualiza contador
-
     atualizarContador();
 
-
-    // Limpa pesquisa
-
     const pesquisa =
-        document.getElementById("pesquisa");
+        document.getElementById(
+            "pesquisa"
+        );
 
     if (pesquisa) {
 
@@ -1181,27 +1210,21 @@ function abrirDiaArquivo(data) {
 
     }
 
-
-    // Fecha o modal do Arquivo
-
     const elementoModal =
         document.getElementById(
             "modalArquivoLogbook"
         );
-
 
     const modal =
         bootstrap.Modal.getInstance(
             elementoModal
         );
 
-
     if (modal) {
 
         modal.hide();
 
     }
-
 
     console.log(
         "Dia do LogBook aberto:",

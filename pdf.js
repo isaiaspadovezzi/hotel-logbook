@@ -199,37 +199,82 @@ function resumoRegistroPDF(registro) {
 // =====================================================
 
 async function prepararIconesPDF() {
+async function prepararIconesPDF() {
 
     const mapa = {
 
+        // HOSPEDAGEM
         "Check-in": "bi-person-check",
         "Check-out": "bi-box-arrow-right",
+        "Walk-in": "bi-person-plus",
+
+        // FINANCEIRO
+        "Pagamento": "bi-credit-card",
+        "Estorno": "bi-arrow-counterclockwise",
+
+        // RESERVAS
+        "Cancelamento": "bi-x-circle",
+        "No Show": "bi-person-x",
+
+        // PROCEDIMENTOS
         "Procedimentos": "bi-clipboard-check",
+        "Conferência": "bi-clipboard-check",
+
+        // OPERACIONAL
         "Manutenção": "bi-tools",
         "Troca de Quarto": "bi-arrow-left-right",
         "Mudança de Quarto": "bi-arrow-left-right",
         "Limpeza": "bi-stars",
+
+        // COMUNICAÇÃO
         "Aviso": "bi-exclamation-circle",
-        "Reclamação": "bi-exclamation-circle"
+        "Reclamação": "bi-exclamation-circle",
+        "Elogio": "bi-hand-thumbs-up",
+
+        // OUTROS
+        "Despertar": "bi-alarm",
+        "Auditoria": "bi-search",
+        "Diária": "bi-calendar-check"
 
     };
 
+
     const imagens = {};
+
 
     for (const atividade in mapa) {
 
         const container =
             document.createElement("div");
 
-        container.style.position = "fixed";
-        container.style.left = "-10000px";
-        container.style.top = "-10000px";
-        container.style.width = "32px";
-        container.style.height = "32px";
-        container.style.display = "flex";
-        container.style.alignItems = "center";
-        container.style.justifyContent = "center";
-        container.style.background = "transparent";
+
+        container.style.position =
+            "fixed";
+
+        container.style.left =
+            "-10000px";
+
+        container.style.top =
+            "-10000px";
+
+        container.style.width =
+            "32px";
+
+        container.style.height =
+            "32px";
+
+        container.style.display =
+            "flex";
+
+        container.style.alignItems =
+            "center";
+
+        container.style.justifyContent =
+            "center";
+
+        container.style.background =
+            "transparent";
+
 
         container.innerHTML = `
             <i
@@ -241,7 +286,11 @@ async function prepararIconesPDF() {
             ></i>
         `;
 
-        document.body.appendChild(container);
+
+        document.body.appendChild(
+            container
+        );
+
 
         const canvas =
             await html2canvas(
@@ -253,13 +302,20 @@ async function prepararIconesPDF() {
                 }
             );
 
+
         imagens[atividade] =
-            canvas.toDataURL("image/png");
+            canvas.toDataURL(
+                "image/png"
+            );
+
 
         container.remove();
+
     }
 
+
     return imagens;
+
 }
 // =====================================================
 // EXPORTAR PDF

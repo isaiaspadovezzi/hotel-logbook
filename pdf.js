@@ -952,68 +952,346 @@ doc.autoTable({
         }
 
     },
+    // =================================================
+    // PREPARAR DESCRIÇÃO
+    // =================================================
+
+    didParseCell: function(data) {
+
+        if (
+            data.section === "body" &&
+            data.column.index === 3
+        ) {
+
+            const registro =
+                registrosPDF[
+                    data.row.index
+                ];
 
 
-    // ==========================================
-    // ÍCONES DAS ATIVIDADES
-    // ==========================================
+            if (!registro) {
+                return;
+            }
 
-    didDrawCell: function(data) {
 
-        // Somente células do corpo da tabela
-        if (data.section !== "body") {
-            return;
+            const linhas = [];
+
+
+            // DESCRIÇÃO
+            linhas.push(
+                registro.descricao ||
+                "-"
+            );
+
+
+            // EXTRAS
+            if (registro.pagamento) {
+
+                linhas.push(
+                    "Pagamento: " +
+                    registro.pagamento
+                );
+
+            }
+
+
+            if (registro.valor) {
+
+                linhas.push(
+                    "Valor: R$ " +
+                    registro.valor
+                );
+
+            }
+
+
+            if (registro.reserva) {
+
+                linhas.push(
+                    "Reserva: " +
+                    registro.reserva
+                );
+
+            }
+
+
+            if (registro.despertar) {
+
+                linhas.push(
+                    "Despertar: " +
+                    registro.despertar
+                );
+
+            }
+
+
+            // Mantém as linhas para que
+            // o AutoTable calcule a altura
+            // corretamente.
+            data.cell.text =
+                linhas;
+
         }
 
-        // Somente coluna ATIVIDADE
-        if (data.column.index !== 1) {
-            return;
+    },
+
+
+    willDrawCell: function(data) {
+
+        if (
+            data.section === "body" &&
+            data.column.index === 3
+        ) {
+
+            // Impede o AutoTable de
+            // desenhar o texto sozinho.
+            //
+            // O didDrawCell fará
+            // o desenho formatado.
+            data.cell.text = [];
+
         }
+
+    },
+
+   didDrawCell: function(data) {
+
+    // =================================================
+    // ÍCONE DA ATIVIDADE
+    // =================================================
+
+    if (
+        data.section === "body" &&
+        data.column.index === 1
+    ) {
 
         const atividade =
-            String(data.cell.raw || "").trim();
+            String(
+                data.cell.raw || ""
+            ).trim();
 
-        const icone =
+
+        // Procura o ícone da atividade
+        let icone =
             iconesPDF[atividade];
 
-        // Se não houver ícone para a atividade
+
+        // Se não existir ícone específico,
+        // usa Procedimentos como ícone padrão
         if (!icone) {
-            return;
+
+            icone =
+                iconesPDF["Procedimentos"];
+
         }
 
-        // Tamanho do ícone
-        const tamanho = 4.2;
 
-        // Centralização vertical
-        const centroY =
-            data.cell.y +
-            data.cell.height / 2;
+        if (icone) {
 
-        const y =
-            centroY -
-            tamanho / 2;
+            const tamanho = 4.2;
 
-        // Ícone à esquerda do texto
-        const x =
-            data.cell.x + 4;
 
-        doc.addImage(
-            icone,
-            "PNG",
-            x,
-            y,
-            tamanho,
-            tamanho
-        );
+            const centroY =
+                data.cell.y +
+                data.cell.height / 2;
+
+
+            const y =
+                centroY -
+                tamanho / 2;
+
+
+            const x =
+                data.cell.x + 4;
+
+
+            doc.addImage(
+                icone,
+                "PNG",
+                x,
+                y,
+                tamanho,
+                tamanho
+            );
+
+        }
 
     }
 
-});
- 
-        const finalY =
-            doc.lastAutoTable.finalY;
+
+    // =================================================
+    // DESCRIÇÃO + CAMPOS EXTRAS
+    // =================================================
+
+    if (
+        data.section === "body" &&
+        data.column.index === 3
+    ) {
+
+        const registro =
+            registrosPDF[
+                data.row.index
+            ];
 
 
+        if (!registro) {
+            return;
+        }
+
+
+        const descricao =
+            registro.descricao ||
+            "";
+
+
+        const extras = [];
+
+
+        // PAGAMENTO
+        if (registro.pagamento) {
+
+            extras.push(
+                "Pagamento: " +
+                registro.pagamento
+            );
+
+        }
+
+
+        // VALOR
+        if (registro.valor) {
+
+            extras.push(
+                "Valor: R$ " +
+                registro.valor
+            );
+
+        }
+
+
+        // RESERVA
+        if (registro.reserva) {
+
+            extras.push(
+                "Reserva: " +
+                registro.reserva
+            );
+
+        }
+
+
+        // DESPERTAR
+        if (registro.despertar) {
+
+            extras.push(
+                "Despertar: " +
+                registro.despertar
+            );
+
+        }
+
+
+        const x =
+            data.cell.x +
+            3;
+
+
+        const largura =
+            data.cell.width -
+            6;
+
+
+        let y =
+            data.cell.y +
+            4;
+
+
+        // =================================================
+        // DESCRIÇÃO PRINCIPAL
+        // =================================================
+
+        doc.setFont(
+            "helvetica",
+            "normal"
+        );
+
+
+        doc.setFontSize(
+            8.5
+        );
+
+
+        doc.setTextColor(
+            ...PDF_COR_TEXTO
+        );
+
+
+        const linhasDescricao =
+            doc.splitTextToSize(
+                descricao || "-",
+                largura
+            );
+
+
+        doc.text(
+            linhasDescricao,
+            x,
+            y
+        );
+
+
+        y +=
+            linhasDescricao.length *
+            3.6;
+
+
+        // =================================================
+        // CAMPOS EXTRAS EM NEGRITO
+        // =================================================
+
+        for (
+            const extra of extras
+        ) {
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+
+            doc.setFontSize(
+                8.5
+            );
+
+
+            doc.setTextColor(
+                ...PDF_COR_TEXTO
+            );
+
+
+            const linhasExtra =
+                doc.splitTextToSize(
+                    extra,
+                    largura
+                );
+
+
+            doc.text(
+                linhasExtra,
+                x,
+                y
+            );
+
+
+            y +=
+                linhasExtra.length *
+                3.6;
+
+        }
+
+    }
+
+}
 
 // =====================================================
 // QUADRO DE ASSINATURAS E CONFERÊNCIA

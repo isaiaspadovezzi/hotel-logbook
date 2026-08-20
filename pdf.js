@@ -1178,19 +1178,33 @@ doc.line(
         // NOME DO ARQUIVO
         // ---------------------------------------------
 
-        const nomeArquivo =
+       const funcionario =
+    document.getElementById("funcionario")?.value ||
+    "Funcionario";
 
-            "LogBook_" +
+const funcionarioNome =
+    funcionario
+        .trim()
+        .replace(/\s+/g, "_")
+        .replace(/[^\wÀ-ÿ-]/g, "");
 
-            (
-                data ||
-                "registro"
-            ).replace(
-                /\//g,
-                "-"
-            ) +
+const nomeArquivo =
 
-            ".pdf";
+    "LogBook_" +
+
+    (
+        data ||
+        "registro"
+    ).replace(
+        /\//g,
+        "-"
+    ) +
+
+    "_" +
+
+    funcionarioNome +
+
+    ".pdf";
 
 
         // ---------------------------------------------

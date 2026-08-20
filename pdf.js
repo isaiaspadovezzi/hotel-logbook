@@ -1286,15 +1286,21 @@ doc.autoTable({
                 3.6;
 
         }
-
     }
 
-});
+    // FECHA A FUNÇÃO didDrawCell
+    }
+
+}); // FECHA doc.autoTable
 
 
 // =====================================================
-// QUADRO DE ASSINATURAS E CONFERÊNCIA
+// POSIÇÃO FINAL DA TABELA
 // =====================================================
+
+const finalY =
+    doc.lastAutoTable.finalY;
+
 
 // =====================================================
 // QUADRO DE ASSINATURAS E CONFERÊNCIA
@@ -1302,7 +1308,8 @@ doc.autoTable({
 
 const alturaAssinaturas = 42;
 
-let assinaturaY = finalY + 5;
+let assinaturaY =
+    finalY + 5;
 
 
 // Se não houver espaço suficiente,

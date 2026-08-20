@@ -199,7 +199,6 @@ function resumoRegistroPDF(registro) {
 // =====================================================
 
 async function prepararIconesPDF() {
-async function prepararIconesPDF() {
 
     const mapa = {
 
@@ -1282,7 +1281,6 @@ doc.autoTable({
                 y
             );
 
-
             y +=
                 linhasExtra.length *
                 3.6;
@@ -1291,7 +1289,12 @@ doc.autoTable({
 
     }
 
-}
+});
+
+
+// =====================================================
+// QUADRO DE ASSINATURAS E CONFERÊNCIA
+// =====================================================
 
 // =====================================================
 // QUADRO DE ASSINATURAS E CONFERÊNCIA

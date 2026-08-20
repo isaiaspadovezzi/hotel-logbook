@@ -1,0 +1,243 @@
+/* =====================================================
+   CAPA DE CAIXA
+   Não interfere no layout normal do LogBook
+   ===================================================== */
+
+
+/* =====================================================
+   CAMPO CAIXA
+   ===================================================== */
+
+.capa-caixa-campo {
+    margin-top: 10px;
+}
+
+
+/* =====================================================
+   ÁREA DE IMPRESSÃO
+   ===================================================== */
+
+.capa-caixa-impressao {
+    display: none;
+}
+
+
+/* =====================================================
+   IMPRESSÃO
+   ===================================================== */
+
+@media print {
+
+    @page {
+
+        size: A4 portrait;
+
+        margin: 0;
+
+    }
+
+
+    /* ---------------------------------------------
+       ESCONDE O LOGBOOK INTEIRO
+       --------------------------------------------- */
+
+    body > *:not(#capaCaixaImpressao) {
+
+        display: none !important;
+
+    }
+
+
+    html,
+    body {
+
+        width: 210mm;
+
+        height: 297mm;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        background: white !important;
+
+    }
+
+
+    /* ---------------------------------------------
+       CAPA
+       --------------------------------------------- */
+
+    .capa-caixa-impressao {
+
+        display: flex !important;
+
+        position: fixed;
+
+        left: 0;
+
+        bottom: 0;
+
+        width: 210mm;
+
+        height: 148.5mm;
+
+        background: white;
+
+        box-sizing: border-box;
+
+        border: 1px solid #000;
+
+        flex-direction: column;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        color: #000;
+
+    }
+
+
+    /* ---------------------------------------------
+       TÍTULO PRETO
+       --------------------------------------------- */
+
+    .capa-caixa-titulo {
+
+        width: 100%;
+
+        height: 13mm;
+
+        background: #000;
+
+        color: #fff;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 13pt;
+
+        font-weight: 700;
+
+        letter-spacing: 0.2px;
+
+        box-sizing: border-box;
+
+    }
+
+
+    /* ---------------------------------------------
+       ÁREA DOS DADOS
+       --------------------------------------------- */
+
+    .capa-caixa-conteudo {
+
+        flex: 1;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        box-sizing: border-box;
+
+        padding: 7mm 10mm 8mm 10mm;
+
+    }
+
+
+    /* ---------------------------------------------
+       LINHA CAIXA
+       --------------------------------------------- */
+
+    .capa-caixa-numero {
+
+        text-align: center;
+
+        font-size: 12pt;
+
+        font-style: italic;
+
+        font-weight: 700;
+
+        margin-bottom: 1.5mm;
+
+    }
+
+
+    /* ---------------------------------------------
+       FUNCIONÁRIO
+       --------------------------------------------- */
+
+    .capa-caixa-funcionario {
+
+        text-align: center;
+
+        font-size: 22pt;
+
+        font-weight: 800;
+
+        line-height: 1.05;
+
+        text-transform: uppercase;
+
+        margin-bottom: 1mm;
+
+    }
+
+
+    /* ---------------------------------------------
+       DATA
+       --------------------------------------------- */
+
+    .capa-caixa-data {
+
+        text-align: center;
+
+        font-size: 17pt;
+
+        font-weight: 400;
+
+        line-height: 1.1;
+
+    }
+
+
+    /* ---------------------------------------------
+       LOGO
+       --------------------------------------------- */
+
+    .capa-caixa-logo {
+
+        position: absolute;
+
+        left: 14mm;
+
+        top: 35mm;
+
+        width: 18mm;
+
+        height: auto;
+
+        object-fit: contain;
+
+    }
+
+
+    /* ---------------------------------------------
+       BORDA
+       --------------------------------------------- */
+
+    .capa-caixa-impressao {
+
+        border: 1.2px solid #000;
+
+    }
+
+}

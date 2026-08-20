@@ -500,6 +500,48 @@ case "Procedimentos":
 // =====================================================
 
 function abrirPreviewReport(registro) {
+        // ============================================
+    // INFORMAÇÃO DO NOVO QUARTO
+    // ============================================
+
+    let descricaoReport =
+        registro.descricao || "";
+
+    if (
+        registro.quartoDestino &&
+        (
+            registro.atividade === "Mudança de Quarto" ||
+            registro.atividade === "Troca de Quarto"
+        )
+    ) {
+
+        if (descricaoReport.trim() !== "") {
+
+            descricaoReport +=
+                "<br><br>" +
+                "<strong>Novo quarto: " +
+                registro.quartoDestino +
+                "</strong>";
+
+        } else {
+
+            descricaoReport =
+                "<strong>Novo quarto: " +
+                registro.quartoDestino +
+                "</strong>";
+
+        }
+
+    }
+
+    if (
+        !descricaoReport ||
+        descricaoReport.trim() === ""
+    ) {
+
+        descricaoReport = "-";
+
+    }
 
     const funcionarioElemento =
         document.getElementById("funcionario");

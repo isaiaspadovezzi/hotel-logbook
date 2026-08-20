@@ -167,6 +167,8 @@ function garantirCampoQuartoDestino() {
 
     grupo.style.display =
         "none";
+    grupo.style.width = "180px";
+grupo.style.marginTop = "10px";
 
     grupo.innerHTML = `
 

@@ -113,14 +113,151 @@ function preencherHoraAtual() {
 
 function atualizarCampos() {
 
+    // Garante que o campo "Novo Quarto"
+    // exista no formulário
+    garantirCampoQuartoDestino();
+
+
     esconderTodosCampos();
 
-    const atividade = document.getElementById("atividade").value;
 
-    const config = CONFIG.atividades[atividade];
+    const atividade =
+        document.getElementById("atividade").value;
+
+
+    const config =
+        CONFIG.atividades[atividade];
+
 
     if (!config) return;
 
+
+    config.campos.forEach(function(campo){
+
+        switch(campo){
+
+            case "pagamento":
+
+                mostrar("grupoPagamento");
+
+                break;
+
+
+            case "valor":
+
+                mostrar("grupoValor");
+
+                break;
+
+
+            case "reserva":
+
+                mostrar("grupoReserva");
+
+                break;
+
+
+            case "despertar":
+
+                mostrar("grupoDespertar");
+
+                break;
+
+        }
+
+    });
+
+
+    // =================================================
+    // TROCA / MUDANÇA DE QUARTO
+    // =================================================
+
+    if (
+        atividade === "Troca de Quarto" ||
+        atividade === "Mudança de Quarto"
+    ) {
+
+        mostrar("grupoQuartoDestino");
+
+    }
+
+}
+// =====================================================
+// CRIAR CAMPO NOVO QUARTO
+// =====================================================
+
+function garantirCampoQuartoDestino() {
+
+    // Se já existe, não cria novamente
+    if (
+        document.getElementById("grupoQuartoDestino")
+    ) {
+        return;
+    }
+
+
+    const campoQuarto =
+        document.getElementById("quarto");
+
+
+    if (!campoQuarto) {
+        return;
+    }
+
+
+    // Procura o container do campo Quarto
+    const containerQuarto =
+        campoQuarto.closest(".mb-3") ||
+        campoQuarto.parentElement;
+
+
+    if (!containerQuarto) {
+        return;
+    }
+
+
+    // Cria o grupo
+    const grupo =
+        document.createElement("div");
+
+
+    grupo.id =
+        "grupoQuartoDestino";
+
+
+    grupo.className =
+        "mb-3";
+
+
+    grupo.style.display =
+        "none";
+
+
+    grupo.innerHTML = `
+
+        <label
+            for="quartoDestino"
+            class="form-label"
+        >
+            Novo quarto
+        </label>
+
+
+        <input
+            type="text"
+            class="form-control"
+            id="quartoDestino"
+            placeholder="Digite o novo quarto"
+            autocomplete="off"
+        >
+
+    `;
+
+
+    // Coloca logo depois do campo Quarto
+    containerQuarto.after(grupo);
+
+}
     config.campos.forEach(function(campo){
 
         switch(campo){
@@ -201,25 +338,44 @@ function esconder(id) {
 
 function salvarRegistro() {
 
-    const registro = {
+   const registro = {
 
-        hora: document.getElementById("hora").value,
+    hora:
+        document.getElementById("hora").value,
 
-        atividade: document.getElementById("atividade").value,
 
-        quarto: document.getElementById("quarto").value,
+    atividade:
+        document.getElementById("atividade").value,
 
-        pagamento: document.getElementById("pagamento").value,
 
-        valor: document.getElementById("valor").value,
+    quarto:
+        document.getElementById("quarto").value,
 
-        reserva: document.getElementById("reserva").value,
 
-        despertar: document.getElementById("horaDespertar").value,
+    quartoDestino:
+        document.getElementById("quartoDestino")?.value || "",
 
-        descricao: document.getElementById("descricao").value
 
-    };
+    pagamento:
+        document.getElementById("pagamento").value,
+
+
+    valor:
+        document.getElementById("valor").value,
+
+
+    reserva:
+        document.getElementById("reserva").value,
+
+
+    despertar:
+        document.getElementById("horaDespertar").value,
+
+
+    descricao:
+        document.getElementById("descricao").value
+
+};
 
 
     if (registroEditando === -1) {
@@ -269,8 +425,26 @@ function limparFormulario() {
     document.getElementById("horaDespertar").value = "";
 
     document.getElementById("descricao").value = "";
+    const quartoDestino =
+    document.getElementById("quartoDestino");
+
+if (quartoDestino) {
+
+    quartoDestino.value = "";
+
+}
 
     atualizarCampos();
+
+}
+const quartoDestino =
+    document.getElementById("quartoDestino");
+
+
+if (quartoDestino) {
+
+    quartoDestino.value =
+        registro.quartoDestino || "";
 
 }
 
@@ -412,6 +586,20 @@ function atualizarTabela(lista = registros) {
 
         if (registro.despertar)
             resumo += "Despertar: " + registro.despertar + " ";
+        if (
+    registro.quartoDestino &&
+    (
+        registro.atividade === "Troca de Quarto" ||
+        registro.atividade === "Mudança de Quarto"
+    )
+) {
+
+    resumo +=
+        "Novo quarto: " +
+        registro.quartoDestino +
+        " ";
+
+}
 
         if (resumo === "")
             resumo = registro.descricao;

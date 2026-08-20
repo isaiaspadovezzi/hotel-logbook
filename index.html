@@ -629,7 +629,7 @@ CONTEÚDO
                         </th>
 
 
-                        <th width="120">
+                        <th width="150">
 
                             Ações
 
@@ -2052,38 +2052,42 @@ FILTROS E ORDENAÇÃO DA TABELA
                         </td>
 
 
-                        <td>
+              <td class="acoes-registro">
 
-                            <button
-                                class="btn btn-sm btn-outline-primary"
-                                onclick="editarRegistro(${indiceOriginal})"
-                                title="Editar">
+    <div class="acoes-registro-container">
 
-                                <i class="bi bi-pencil"></i>
+        <button
+            class="btn btn-sm btn-outline-primary"
+            onclick="editarRegistro(${indiceOriginal})"
+            title="Editar">
 
-                            </button>
+            <i class="bi bi-pencil"></i>
 
-
-                            <button
-                                class="btn btn-sm btn-outline-danger"
-                                onclick="excluirRegistro(${indiceOriginal})"
-                                title="Excluir">
-
-                                <i class="bi bi-trash"></i>
-
-                            </button>
+        </button>
 
 
-                            <button
-                                class="btn btn-sm btn-outline-success"
-                                onclick="reportarRegistro(${indiceOriginal})"
-                                title="Gerar Report">
+        <button
+            class="btn btn-sm btn-outline-danger"
+            onclick="excluirRegistro(${indiceOriginal})"
+            title="Excluir">
 
-                                <i class="bi bi-save"></i>
+            <i class="bi bi-trash"></i>
 
-                            </button>
+        </button>
 
-                        </td>
+
+        <button
+            class="btn btn-sm btn-outline-success"
+            onclick="reportarRegistro(${indiceOriginal})"
+            title="Gerar Report">
+
+            <i class="bi bi-save"></i>
+
+        </button>
+
+    </div>
+
+</td>
 
                     </tr>
 

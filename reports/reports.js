@@ -84,6 +84,7 @@ async function reportarRegistro(indice) {
     ${registro.atividade || "OCORRÊNCIA"}
 
 </div>
+
                 <img
                     src="img/logo.png"
                     class="report-logo"
@@ -118,12 +119,14 @@ async function reportarRegistro(indice) {
         line-height: 1.4 !important;
     "
 >
->
+
     ${registro.descricao || "-"}
+
 </div>
         `
 
         : `
+
             <div class="report-room-box">
 
                 <span class="report-room-label">
@@ -296,29 +299,32 @@ async function reportarRegistro(indice) {
 
         container.remove();
 
-const botao =
-    document.getElementById(
-        "btnCopiarCardReport"
-    );
 
-if (botao) {
+        const botao =
+            document.getElementById(
+                "btnCopiarCardReport"
+            );
 
-    botao.innerHTML = `
-        <i class="bi bi-check-lg"></i>
-        <span>Copiado</span>
-    `;
 
-    setTimeout(function() {
+        if (botao) {
 
-        botao.innerHTML = `
-            <i class="bi bi-clipboard"></i>
-            <span>Copiar Card</span>
-        `;
+            botao.innerHTML = `
+                <i class="bi bi-check-lg"></i>
+                <span>Copiado</span>
+            `;
 
-    }, 2000);
 
-}
-     
+            setTimeout(function() {
+
+                botao.innerHTML = `
+                    <i class="bi bi-clipboard"></i>
+                    <span>Copiar Card</span>
+                `;
+
+            }, 2000);
+
+        }
+
 
     } catch (erro) {
 
@@ -338,6 +344,7 @@ if (botao) {
     }
 
 }
+
 
 // =====================================================
 // FORMATA DATA
@@ -387,6 +394,8 @@ function formatarDataReport(data) {
 console.log(
     "Módulo Reports v1.1 carregado."
 );
+
+
 // =====================================================
 // CLASSE DE COR DO REPORT
 // =====================================================
@@ -396,35 +405,56 @@ function classeAtividadeReport(atividade) {
     switch (atividade) {
 
         case "Manutenção":
+
             return "manutencao";
 
+
         case "Check-in":
+
             return "checkin";
 
+
         case "Check-out":
+
             return "checkout";
 
+
         case "Troca de Quarto":
+
         case "Mudança de Quarto":
+
             return "troca";
 
+
         case "Limpeza":
+
             return "limpeza";
 
+
         case "Aviso":
+
             return "aviso";
 
+
         case "Reclamação":
+
             return "reclamacao";
 
+
         case "Elogio":
+
             return "elogio";
 
+
         default:
+
             return "padrao";
+
     }
 
 }
+
+
 // =====================================================
 // ÍCONE DA ATIVIDADE NO CARD
 // =====================================================
@@ -464,6 +494,7 @@ function iconeAtividadeReport(atividade) {
 
 
         case "Troca de Quarto":
+
         case "Mudança de Quarto":
 
             return `
@@ -482,14 +513,17 @@ function iconeAtividadeReport(atividade) {
                     style="margin-right: 6px;"
                 ></i>
             `;
-case "Procedimentos":
 
-    return `
-        <i
-            class="bi bi-clipboard-check"
-            style="margin-right: 6px;"
-        ></i>
-    `;
+
+        case "Procedimentos":
+
+            return `
+                <i
+                    class="bi bi-clipboard-check"
+                    style="margin-right: 6px;"
+                ></i>
+            `;
+
 
         case "Aviso":
 
@@ -523,17 +557,21 @@ case "Procedimentos":
     }
 
 }
+
+
 // =====================================================
 // PRÉVIA DO REPORT
 // =====================================================
 
 function abrirPreviewReport(registro) {
-        // ============================================
+
+    // ============================================
     // INFORMAÇÃO DO NOVO QUARTO
     // ============================================
 
     let descricaoReport =
         registro.descricao || "";
+
 
     if (
         registro.quartoDestino &&
@@ -562,6 +600,7 @@ function abrirPreviewReport(registro) {
 
     }
 
+
     if (
         !descricaoReport ||
         descricaoReport.trim() === ""
@@ -571,11 +610,14 @@ function abrirPreviewReport(registro) {
 
     }
 
+
     const funcionarioElemento =
         document.getElementById("funcionario");
 
+
     const turnoElemento =
         document.getElementById("turno");
+
 
     const dataElemento =
         document.getElementById("data");
@@ -586,10 +628,12 @@ function abrirPreviewReport(registro) {
             ? funcionarioElemento.value
             : "";
 
+
     const turno =
         turnoElemento
             ? turnoElemento.value
             : "";
+
 
     const data =
         dataElemento
@@ -601,6 +645,7 @@ function abrirPreviewReport(registro) {
 
     const anterior =
         document.getElementById("reportPreview");
+
 
     if (anterior) {
 
@@ -614,52 +659,13 @@ function abrirPreviewReport(registro) {
     const overlay =
         document.createElement("div");
 
+
     overlay.id =
         "reportPreview";
 
+
     overlay.className =
         "report-preview-overlay";
-    let descricaoReport =
-    registro.descricao || "";
-
-if (
-    registro.quartoDestino &&
-    (
-        registro.atividade === "Mudança de Quarto" ||
-        registro.atividade === "Troca de Quarto"
-    )
-) {
-
-    const novoQuarto =
-        "Novo quarto: " +
-        registro.quartoDestino;
-
-    if (descricaoReport.trim() !== "") {
-
-        descricaoReport +=
-            "<br><strong>" +
-            novoQuarto +
-            "</strong>";
-
-    } else {
-
-        descricaoReport =
-            "<strong>" +
-            novoQuarto +
-            "</strong>";
-
-    }
-
-}
-
-if (
-    !descricaoReport ||
-    descricaoReport.trim() === ""
-) {
-
-    descricaoReport = "-";
-
-}
 
 
     overlay.innerHTML = `
@@ -671,6 +677,7 @@ if (
                 <strong>
                     Prévia do Report
                 </strong>
+
 
                 <button
                     type="button"
@@ -693,8 +700,11 @@ if (
     <div class="report-header">
 
         <div class="report-header-title">
+
             REGISTRO DE TURNO
+
         </div>
+
 
         <img
             src="img/logo.png"
@@ -717,7 +727,7 @@ if (
 
         <!-- QUARTO + DESCRIÇÃO -->
 
-   <div class="report-main">
+        <div class="report-main">
 
     ${
         registro.atividade === "Procedimentos" ||
@@ -736,7 +746,9 @@ if (
                     min-height: 80px;
                 "
             >
-              ${descricaoReport}
+
+                ${descricaoReport}
+
             </div>
 
         `
@@ -749,15 +761,19 @@ if (
                     QUARTO
                 </span>
 
+
                 <strong class="report-room">
+
                     ${registro.quarto || "-"}
+
                 </strong>
 
             </div>
 
+
             <div class="report-description">
 
-                ${registro.descricao || "-"}
+                ${descricaoReport}
 
             </div>
 
@@ -765,8 +781,6 @@ if (
     }
 
 </div>
-
-
 
 
         <!-- INFORMAÇÕES -->
@@ -838,6 +852,7 @@ if (
 
     </button>
 
+
     <button
         type="button"
         class="btn btn-success"
@@ -850,6 +865,7 @@ if (
     </button>
 
 </div>
+
     `;
 
 
@@ -867,6 +883,7 @@ function fecharPreviewReport() {
     const preview =
         document.getElementById("reportPreview");
 
+
     if (preview) {
 
         preview.remove();
@@ -874,6 +891,8 @@ function fecharPreviewReport() {
     }
 
 }
+
+
 // =====================================================
 // GERAR CARD
 // =====================================================
@@ -885,6 +904,7 @@ async function gerarCardReport() {
             "#reportPreview .report-card"
         );
 
+
     if (!card) {
 
         alert("Não foi possível encontrar o card.");
@@ -892,6 +912,7 @@ async function gerarCardReport() {
         return;
 
     }
+
 
     if (typeof html2canvas === "undefined") {
 
@@ -903,6 +924,7 @@ async function gerarCardReport() {
 
     }
 
+
     try {
 
         const canvas =
@@ -910,7 +932,7 @@ async function gerarCardReport() {
 
                 scale: 2,
 
-             backgroundColor: null,
+                backgroundColor: null,
 
                 useCORS: true,
 
@@ -937,6 +959,7 @@ async function gerarCardReport() {
                 "acoesCardReport"
             );
 
+
         if (botoesAntigos) {
 
             botoesAntigos.remove();
@@ -949,14 +972,16 @@ async function gerarCardReport() {
         const acoes =
             document.createElement("div");
 
+
         acoes.id =
             "acoesCardReport";
+
 
         acoes.className =
             "report-card-actions";
 
 
-           acoes.innerHTML = `
+        acoes.innerHTML = `
 
         <button
             type="button"
@@ -994,12 +1019,14 @@ async function gerarCardReport() {
             "Card gerado com sucesso."
         );
 
+
     } catch (erro) {
 
         console.error(
             "Erro ao gerar card:",
             erro
         );
+
 
         alert(
             "Não foi possível gerar o card."
@@ -1008,6 +1035,8 @@ async function gerarCardReport() {
     }
 
 }
+
+
 // =====================================================
 // BAIXAR CARD
 // =====================================================
@@ -1139,9 +1168,11 @@ async function copiarCardReport() {
 
             `;
 
+
             botao.classList.remove(
                 "btn-success"
             );
+
 
             botao.classList.add(
                 "btn-dark"
@@ -1169,9 +1200,11 @@ async function copiarCardReport() {
 
                 `;
 
+
                 botao.classList.remove(
                     "btn-dark"
                 );
+
 
                 botao.classList.add(
                     "btn-success"

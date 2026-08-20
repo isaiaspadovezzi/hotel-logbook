@@ -549,6 +549,47 @@ function abrirPreviewReport(registro) {
 
     overlay.className =
         "report-preview-overlay";
+    let descricaoReport =
+    registro.descricao || "";
+
+if (
+    registro.quartoDestino &&
+    (
+        registro.atividade === "Mudança de Quarto" ||
+        registro.atividade === "Troca de Quarto"
+    )
+) {
+
+    const novoQuarto =
+        "Novo quarto: " +
+        registro.quartoDestino;
+
+    if (descricaoReport.trim() !== "") {
+
+        descricaoReport +=
+            "<br><strong>" +
+            novoQuarto +
+            "</strong>";
+
+    } else {
+
+        descricaoReport =
+            "<strong>" +
+            novoQuarto +
+            "</strong>";
+
+    }
+
+}
+
+if (
+    !descricaoReport ||
+    descricaoReport.trim() === ""
+) {
+
+    descricaoReport = "-";
+
+}
 
 
     overlay.innerHTML = `
@@ -625,7 +666,7 @@ function abrirPreviewReport(registro) {
                     min-height: 80px;
                 "
             >
-                ${registro.descricao || "-"}
+              ${descricaoReport}
             </div>
 
         `

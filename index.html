@@ -5,36 +5,56 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
+    <meta
+        name="viewport"
         content="width=device-width, initial-scale=1.0">
 
     <title>LogBook | ibis Styles</title>
 
-    <!-- Bootstrap -->
+
+    <!-- =====================================================
+    BOOTSTRAP
+    ====================================================== -->
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
+
+    <!-- =====================================================
+    BOOTSTRAP ICONS
+    ====================================================== -->
 
     <link
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
-    <!-- CSS -->
+
+    <!-- =====================================================
+    CSS PRINCIPAL
+    ====================================================== -->
 
     <link
         rel="stylesheet"
         href="style.css">
-    <link rel="stylesheet" href="reports/reports.css">
+
+
+    <!-- =====================================================
+    CSS DOS REPORTS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="reports/reports.css">
 
 </head>
 
+
 <body>
 
+
 <!-- =====================================================
-CABEÇALHO
+CABECALHO
 ====================================================== -->
 
 <header class="topo shadow-sm">
@@ -48,11 +68,13 @@ CABEÇALHO
                 class="logo mb-3"
                 alt="ibis Styles">
 
+
             <h1 class="fw-bold">
 
                 LogBook
 
             </h1>
+
 
             <p class="text-secondary">
 
@@ -66,274 +88,593 @@ CABEÇALHO
 
 </header>
 
+
+
 <!-- =====================================================
 CONTEÚDO
 ====================================================== -->
 
 <main class="container my-4">
 
-<!-- =====================================================
-INFORMAÇÕES DO TURNO
-====================================================== -->
 
-<div class="card shadow-sm border-0 mb-4">
+    <!-- =====================================================
+    INFORMAÇÕES DO TURNO
+    ====================================================== -->
 
-<div class="card-body">
+    <div class="card shadow-sm border-0 mb-4">
 
-<div class="row g-3">
+        <div class="card-body">
 
-<!-- Data -->
+            <div class="row g-3">
 
-<div class="col-lg-4">
 
-<label class="form-label">
+                <!-- DATA -->
 
-<i class="bi bi-calendar3"></i>
+                <div class="col-lg-4">
 
-Data
+                    <label
+                        class="form-label">
 
-</label>
+                        <i class="bi bi-calendar3"></i>
 
-<input
-id="data"
-type="date"
-class="form-control">
+                        Data
 
-</div>
+                    </label>
 
-<!-- Funcionário -->
 
-<div class="col-lg-4">
+                    <input
+                        id="data"
+                        type="date"
+                        class="form-control">
 
-<label class="form-label">
+                </div>
 
-<i class="bi bi-person-circle"></i>
 
-Funcionário
 
-</label>
+                <!-- FUNCIONÁRIO -->
 
-<select
-id="funcionario"
-class="form-select">
+                <div class="col-lg-4">
 
-<option>Isaias Padovezzi</option>
-<option>Carol Ortiz</option>
-<option>Filipe Morais</option>
-    <option>Cleberson Souza</option>
+                    <label
+                        class="form-label">
 
-</select>
+                        <i class="bi bi-person-circle"></i>
 
-</div>
+                        Funcionário
 
-<!-- Turno -->
+                    </label>
 
-<div class="col-lg-4">
 
-<label class="form-label">
+                    <select
+                        id="funcionario"
+                        class="form-select">
 
-<i class="bi bi-clock"></i>
+                        <option>
+                            Isaias Padovezzi
+                        </option>
 
-Turno
+                        <option>
+                            Carol Ortiz
+                        </option>
 
-</label>
+                        <option>
+                            Filipe Morais
+                        </option>
 
-<select
-id="turno"
-class="form-select">
+                        <option>
+                            Cleberson Souza
+                        </option>
 
-<option>11h-23h</option>
-<option>15h-23h</option>
-<option>7h-19h</option>
+                    </select>
 
-</select>
+                </div>
 
-</div>
 
-</div>
 
-</div>
+                <!-- TURNO -->
 
-</div>
+                <div class="col-lg-4">
 
-<!-- =====================================================
-BOTÕES
-====================================================== -->
+                    <label
+                        class="form-label">
 
-<div class="d-flex justify-content-between flex-wrap gap-3 mb-4">
+                        <i class="bi bi-clock"></i>
 
-<button
+                        Turno
 
-class="btn btn-success btn-lg"
+                    </label>
 
-data-bs-toggle="modal"
 
-data-bs-target="#modalRegistro">
+                    <select
+                        id="turno"
+                        class="form-select">
 
-<i class="bi bi-plus-circle"></i>
+                        <option>
+                            11h-23h
+                        </option>
 
-Novo Registro
+                        <option>
+                            15h-23h
+                        </option>
 
-</button>
+                        <option>
+                            7h-19h
+                        </option>
 
-<button
+                    </select>
 
-class="btn btn-outline-success"
+                </div>
 
-onclick="exportarPDF()">
-
-<i class="bi bi-file-earmark-pdf"></i>
-
-Exportar PDF
-
-</button>
-    <button
-    type="button"
-    class="btn btn-outline-success"
-    onclick="abrirArquivoLogbook()">
-
-    <i class="bi bi-folder2-open"></i>
-
-    Arquivo
-
-</button>
-
-</div>
-
-<!-- =====================================================
-PESQUISA
-====================================================== -->
-
-<div class="card shadow-sm border-0 mb-4">
-
-<div class="card-body">
-
-<div class="input-group">
-
-<span class="input-group-text">
-
-<i class="bi bi-search"></i>
-
-</span>
-
-<input
-
-id="pesquisa"
-
-type="text"
-
-class="form-control"
-
-placeholder="Pesquisar quarto, atividade ou descrição...">
-
-</div>
-
-</div>
-
-</div>
-
-<!-- FIM DA PARTE 1 -->
-  <!-- =====================================================
-TABELA DE REGISTROS
-====================================================== -->
-
-<div class="card shadow-sm border-0">
-
-    <div class="card-header bg-success text-white">
-
-        <div class="d-flex justify-content-between align-items-center">
-
-            <h5 class="mb-0">
-
-                <i class="bi bi-journal-text"></i>
-
-                Registros do Turno
-
-            </h5>
-
-            <span
-                id="contadorRegistros"
-                class="badge bg-light text-success">
-
-                0 registros
-
-            </span>
+            </div>
 
         </div>
 
     </div>
 
-    <div class="table-responsive">
 
-        <table
-            class="table table-hover align-middle mb-0">
 
-            <thead class="table-success">
+    <!-- =====================================================
+    BOTÕES
+    ====================================================== -->
 
-                <tr>
+    <div
+        class="d-flex justify-content-between flex-wrap gap-3 mb-4">
 
-                    <th width="90">
 
-                        Hora
+        <button
+            class="btn btn-success btn-lg"
+            data-bs-toggle="modal"
+            data-bs-target="#modalRegistro">
 
-                    </th>
+            <i class="bi bi-plus-circle"></i>
 
-                    <th width="180">
+            Novo Registro
 
-                        Atividade
+        </button>
 
-                    </th>
 
-                    <th width="90">
 
-                        Quarto
+        <div class="d-flex flex-wrap gap-2">
 
-                    </th>
 
-                    <th>
+            <button
+                class="btn btn-outline-success"
+                onclick="exportarPDF()">
 
-                        Resumo
+                <i class="bi bi-file-earmark-pdf"></i>
 
-                    </th>
+                Exportar PDF
 
-                    <th width="120">
+            </button>
 
-                        Ações
 
-                    </th>
+            <button
+                type="button"
+                class="btn btn-outline-success"
+                onclick="abrirArquivoLogbook()">
 
-                </tr>
+                <i class="bi bi-folder2-open"></i>
 
-            </thead>
+                Arquivo
 
-            <tbody id="listaRegistros">
+            </button>
 
-                <tr>
-
-                    <td
-                        colspan="5"
-                        class="text-center text-muted py-5">
-
-                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-
-                        Nenhum registro encontrado.
-
-                    </td>
-
-                </tr>
-
-            </tbody>
-
-        </table>
+        </div>
 
     </div>
 
-</div>
+
+
+    <!-- =====================================================
+    PESQUISA
+    ====================================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+
+            <!-- PESQUISA -->
+
+            <div class="row g-3">
+
+
+                <div class="col-lg-6">
+
+                    <label
+                        for="pesquisa"
+                        class="form-label">
+
+                        <i class="bi bi-search"></i>
+
+                        Pesquisar
+
+                    </label>
+
+
+                    <div class="input-group">
+
+                        <span
+                            class="input-group-text">
+
+                            <i class="bi bi-search"></i>
+
+                        </span>
+
+
+                        <input
+                            id="pesquisa"
+                            type="text"
+                            class="form-control"
+                            placeholder="Pesquisar quarto, atividade ou descrição...">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FILTRO POR ATIVIDADE -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        for="filtroAtividade"
+                        class="form-label">
+
+                        <i class="bi bi-funnel"></i>
+
+                        Filtrar atividade
+
+                    </label>
+
+
+                    <select
+                        id="filtroAtividade"
+                        class="form-select">
+
+                        <option value="">
+                            Todas as atividades
+                        </option>
+
+                        <option value="Check-in">
+                            Check-in
+                        </option>
+
+                        <option value="Check-out">
+                            Check-out
+                        </option>
+
+                        <option value="Procedimentos">
+                            Procedimentos
+                        </option>
+
+                        <option value="Walk-in">
+                            Walk-in
+                        </option>
+
+                        <option value="No Show">
+                            No Show
+                        </option>
+
+                        <option value="Cancelamento">
+                            Cancelamento
+                        </option>
+
+                        <option value="Estorno">
+                            Estorno
+                        </option>
+
+                        <option value="Despertar">
+                            Despertar
+                        </option>
+
+                        <option value="Pagamento">
+                            Pagamento
+                        </option>
+
+                        <option value="Depósito">
+                            Depósito
+                        </option>
+
+                        <option value="Mudança de Quarto">
+                            Mudança de Quarto
+                        </option>
+
+                        <option value="Manutenção">
+                            Manutenção
+                        </option>
+
+                        <option value="Lost & Found">
+                            Lost & Found
+                        </option>
+
+                        <option value="Reclamação">
+                            Reclamação
+                        </option>
+
+                        <option value="Elogio">
+                            Elogio
+                        </option>
+
+                        <option value="Reservas">
+                            Reservas
+                        </option>
+
+                        <option value="Lavanderia">
+                            Lavanderia
+                        </option>
+
+                        <option value="Empréstimos">
+                            Empréstimos
+                        </option>
+
+                        <option value="Conferência">
+                            Conferência
+                        </option>
+
+                        <option value="Aviso">
+                            Aviso
+                        </option>
+
+                        <option value="Outro">
+                            Outro
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ORDENAR POR -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        for="ordenarPor"
+                        class="form-label">
+
+                        <i class="bi bi-sort-alpha-down"></i>
+
+                        Ordenar por
+
+                    </label>
+
+
+                    <select
+                        id="ordenarPor"
+                        class="form-select">
+
+                        <option value="hora">
+                            Hora
+                        </option>
+
+                        <option value="atividade">
+                            Atividade
+                        </option>
+
+                        <option value="quarto">
+                            Quarto
+                        </option>
+
+                        <option value="descricao">
+                            Resumo
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ORDEM + LIMPAR -->
+
+            <div class="row g-3 mt-1">
+
+
+                <div class="col-lg-3">
+
+                    <label
+                        for="ordem"
+                        class="form-label">
+
+                        <i class="bi bi-arrow-down-up"></i>
+
+                        Ordem
+
+                    </label>
+
+
+                    <select
+                        id="ordem"
+                        class="form-select">
+
+                        <option value="asc">
+                            Crescente ↑
+                        </option>
+
+                        <option value="desc">
+                            Decrescente ↓
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div
+                    class="col-lg-9 d-flex align-items-end justify-content-between flex-wrap gap-2">
+
+
+                    <!-- CONTAGEM -->
+
+                    <div
+                        id="contadorFiltro"
+                        class="text-secondary">
+
+                        <i class="bi bi-list-check"></i>
+
+                        <span id="textoContadorFiltro">
+                            Todos os registros
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- LIMPAR -->
+
+                    <button
+                        type="button"
+                        id="btnLimparFiltros"
+                        class="btn btn-outline-secondary">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Limpar filtros
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+    TABELA DE REGISTROS
+    ====================================================== -->
+
+    <div class="card shadow-sm border-0">
+
+
+        <!-- CABEÇALHO -->
+
+        <div
+            class="card-header bg-success text-white">
+
+            <div
+                class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+
+                <h5 class="mb-0">
+
+                    <i class="bi bi-journal-text"></i>
+
+                    Registros do Turno
+
+                </h5>
+
+
+                <span
+                    id="contadorRegistros"
+                    class="badge bg-light text-success">
+
+                    0 registros
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TABELA -->
+
+        <div class="table-responsive">
+
+            <table
+                class="table table-hover align-middle mb-0">
+
+
+                <thead
+                    class="table-success">
+
+                    <tr>
+
+                        <th width="90">
+
+                            Hora
+
+                        </th>
+
+
+                        <th width="180">
+
+                            Atividade
+
+                        </th>
+
+
+                        <th width="90">
+
+                            Quarto
+
+                        </th>
+
+
+                        <th>
+
+                            Resumo
+
+                        </th>
+
+
+                        <th width="120">
+
+                            Ações
+
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody
+                    id="listaRegistros">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="text-center text-muted py-5">
+
+
+                            <i
+                                class="bi bi-inbox fs-1 d-block mb-2">
+                            </i>
+
+
+                            Nenhum registro encontrado.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </main>
 
-<!-- FIM DA PARTE 2 -->
-  <!-- =====================================================
+
+
+<!-- =====================================================
 MODAL NOVO REGISTRO
 ====================================================== -->
 
@@ -343,13 +684,19 @@ MODAL NOVO REGISTRO
     tabindex="-1"
     aria-hidden="true">
 
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+    <div
+        class="modal-dialog modal-lg modal-dialog-centered">
+
 
         <div class="modal-content">
 
-            <!-- Cabeçalho -->
 
-            <div class="modal-header bg-success text-white">
+            <!-- CABEÇALHO -->
+
+            <div
+                class="modal-header bg-success text-white">
+
 
                 <h5 class="modal-title">
 
@@ -359,6 +706,7 @@ MODAL NOVO REGISTRO
 
                 </h5>
 
+
                 <button
                     type="button"
                     class="btn-close btn-close-white"
@@ -367,21 +715,27 @@ MODAL NOVO REGISTRO
 
             </div>
 
-            <!-- Corpo -->
+
+
+            <!-- CORPO -->
 
             <div class="modal-body">
 
+
                 <div class="row g-3">
 
-                    <!-- Hora -->
+
+                    <!-- HORA -->
 
                     <div class="col-md-3">
 
-                        <label class="form-label">
+                        <label
+                            class="form-label">
 
                             Hora
 
                         </label>
+
 
                         <input
                             id="hora"
@@ -390,54 +744,147 @@ MODAL NOVO REGISTRO
 
                     </div>
 
-                    <!-- Atividade -->
+
+
+                    <!-- ATIVIDADE -->
 
                     <div class="col-md-5">
 
-                        <label class="form-label">
+                        <label
+                            class="form-label">
 
                             Atividade
 
                         </label>
 
+
                         <select
                             id="atividade"
                             class="form-select">
 
-                            <option value="Check-in">Check-in</option>
-                            <option value="Check-out">Check-out</option>
-                            <option value="Procedimentos">Procedimentos</option>
-                            <option value="Walk-in">Walk-in</option>
-                            <option value="No Show">No Show</option>
-                            <option value="Cancelamento">Cancelamento</option>
-                            <option value="Estorno">Estorno</option>
-                            <option value="Despertar">Despertar</option>
-                            <option value="Pagamento">Pagamento</option>
-                            <option value="Depósito">Depósito</option>
-                            <option value="Mudança de Quarto">Mudança de Quarto</option>
-                            <option value="Manutenção">Manutenção</option>
-                            <option value="Lost & Found">Lost & Found</option>
-                            <option value="Reclamação">Reclamação</option>
-                            <option value="Elogio">Elogio</option>
-                            <option value="Elogio">Reservas</option>
-                            <option value="Elogio">Lavanderia</option>
-                            <option value="Elogio">Empréstimos</option>
-                            <option value="Elogio">Conferência</option>
-                            <option value="Aviso">Outro</option>
+
+                            <option value="Check-in">
+                                Check-in
+                            </option>
+
+
+                            <option value="Check-out">
+                                Check-out
+                            </option>
+
+
+                            <option value="Procedimentos">
+                                Procedimentos
+                            </option>
+
+
+                            <option value="Walk-in">
+                                Walk-in
+                            </option>
+
+
+                            <option value="No Show">
+                                No Show
+                            </option>
+
+
+                            <option value="Cancelamento">
+                                Cancelamento
+                            </option>
+
+
+                            <option value="Estorno">
+                                Estorno
+                            </option>
+
+
+                            <option value="Despertar">
+                                Despertar
+                            </option>
+
+
+                            <option value="Pagamento">
+                                Pagamento
+                            </option>
+
+
+                            <option value="Depósito">
+                                Depósito
+                            </option>
+
+
+                            <option value="Mudança de Quarto">
+                                Mudança de Quarto
+                            </option>
+
+
+                            <option value="Manutenção">
+                                Manutenção
+                            </option>
+
+
+                            <option value="Lost & Found">
+                                Lost & Found
+                            </option>
+
+
+                            <option value="Reclamação">
+                                Reclamação
+                            </option>
+
+
+                            <option value="Elogio">
+                                Elogio
+                            </option>
+
+
+                            <option value="Reservas">
+                                Reservas
+                            </option>
+
+
+                            <option value="Lavanderia">
+                                Lavanderia
+                            </option>
+
+
+                            <option value="Empréstimos">
+                                Empréstimos
+                            </option>
+
+
+                            <option value="Conferência">
+                                Conferência
+                            </option>
+
+
+                            <option value="Aviso">
+                                Aviso
+                            </option>
+
+
+                            <option value="Outro">
+                                Outro
+                            </option>
+
 
                         </select>
 
                     </div>
 
-                    <!-- Quarto -->
+
+
+                    <!-- QUARTO -->
 
                     <div class="col-md-4">
 
-                        <label class="form-label">
+                        <label
+                            class="form-label">
 
                             Quarto
 
                         </label>
+
 
                         <input
                             id="quarto"
@@ -446,51 +893,105 @@ MODAL NOVO REGISTRO
 
                     </div>
 
-                    <!-- Forma de Pagamento -->
+
+
+                    <!-- FORMA DE PAGAMENTO -->
 
                     <div
                         id="grupoPagamento"
                         class="col-md-6"
                         style="display:none;">
 
-                        <label class="form-label">
+
+                        <label
+                            class="form-label">
 
                             Forma de Pagamento
 
                         </label>
 
+
                         <select
                             id="pagamento"
                             class="form-select">
 
-                            <option value="">Selecione...</option>
-                            <option>Direto</option>
-                            <option>Cartão</option>
-                            <option>PIX</option>
-                            <option>Dinheiro</option>
-                            <option>Faturado</option>
-                            <option>Cortesia</option>
-                            <option>Cartão Virtual</option>
-                            <option>Voucher</option>
-                             <option>Depósito Antecipado</option>
-                            <option>Check-out Cartão Virtual </option>
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
+
+                            <option>
+                                Direto
+                            </option>
+
+
+                            <option>
+                                Cartão
+                            </option>
+
+
+                            <option>
+                                PIX
+                            </option>
+
+
+                            <option>
+                                Dinheiro
+                            </option>
+
+
+                            <option>
+                                Faturado
+                            </option>
+
+
+                            <option>
+                                Cortesia
+                            </option>
+
+
+                            <option>
+                                Cartão Virtual
+                            </option>
+
+
+                            <option>
+                                Voucher
+                            </option>
+
+
+                            <option>
+                                Depósito Antecipado
+                            </option>
+
+
+                            <option>
+                                Check-out Cartão Virtual
+                            </option>
+
 
                         </select>
 
                     </div>
 
-                    <!-- Valor -->
+
+
+                    <!-- VALOR -->
 
                     <div
                         id="grupoValor"
                         class="col-md-3"
                         style="display:none;">
 
-                        <label class="form-label">
+
+                        <label
+                            class="form-label">
 
                             Valor
 
                         </label>
+
 
                         <input
                             id="valor"
@@ -501,18 +1002,23 @@ MODAL NOVO REGISTRO
 
                     </div>
 
-                    <!-- Nº Reserva -->
+
+
+                    <!-- RESERVA -->
 
                     <div
                         id="grupoReserva"
                         class="col-md-4"
                         style="display:none;">
 
-                        <label class="form-label">
+
+                        <label
+                            class="form-label">
 
                             Nº Reserva
 
                         </label>
+
 
                         <input
                             id="reserva"
@@ -521,18 +1027,23 @@ MODAL NOVO REGISTRO
 
                     </div>
 
-                    <!-- Horário Despertar -->
+
+
+                    <!-- DESPERTAR -->
 
                     <div
                         id="grupoDespertar"
                         class="col-md-4"
                         style="display:none;">
 
-                        <label class="form-label">
+
+                        <label
+                            class="form-label">
 
                             Horário do Despertar
 
                         </label>
+
 
                         <input
                             id="horaDespertar"
@@ -541,31 +1052,40 @@ MODAL NOVO REGISTRO
 
                     </div>
 
-                    <!-- Descrição -->
+
+
+                    <!-- DESCRIÇÃO -->
 
                     <div class="col-12">
 
-                        <label class="form-label">
+                        <label
+                            class="form-label">
 
                             Descrição
 
                         </label>
 
+
                         <textarea
                             id="descricao"
                             rows="5"
                             class="form-control"
-                            placeholder="Descreva a ocorrência..."></textarea>
+                            placeholder="Descreva a ocorrência...">
+                        </textarea>
 
                     </div>
+
 
                 </div>
 
             </div>
 
-            <!-- Rodapé -->
+
+
+            <!-- RODAPÉ -->
 
             <div class="modal-footer">
+
 
                 <button
                     class="btn btn-secondary"
@@ -574,6 +1094,7 @@ MODAL NOVO REGISTRO
                     Cancelar
 
                 </button>
+
 
                 <button
                     id="btnSalvar"
@@ -587,40 +1108,18 @@ MODAL NOVO REGISTRO
 
             </div>
 
+
         </div>
 
     </div>
 
 </div>
 
-<!-- FIM DA PARTE 3 -->
-  <!-- =====================================================
-SCRIPTS
+
+
+<!-- =====================================================
+MODAL - ARQUIVO DO LOGBOOK
 ====================================================== -->
-
-<!-- Bootstrap -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- jsPDF -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<!-- jsPDF AutoTable -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
-<!-- Gerador de imagem dos Reports -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
-<script src="config.js"></script>
-
-<script src="script.js"></script>
-<script src="pdf.js?v=8"></script>
-
-<script src="reports/reports.js"></script>
-    <!-- =====================================================
-     MODAL - ARQUIVO DO LOGBOOK
-     ===================================================== -->
 
 <div
     class="modal fade"
@@ -628,19 +1127,27 @@ SCRIPTS
     tabindex="-1"
     aria-hidden="true">
 
-    <div class="modal-dialog modal-dialog-centered">
+
+    <div
+        class="modal-dialog modal-dialog-centered">
+
 
         <div class="modal-content">
 
+
             <div class="modal-header">
+
 
                 <h5 class="modal-title">
 
-                    <i class="bi bi-folder2-open text-success"></i>
+                    <i
+                        class="bi bi-folder2-open text-success">
+                    </i>
 
                     Arquivo do LogBook
 
                 </h5>
+
 
                 <button
                     type="button"
@@ -650,6 +1157,7 @@ SCRIPTS
                 </button>
 
             </div>
+
 
 
             <div class="modal-body">
@@ -662,11 +1170,1172 @@ SCRIPTS
 
             </div>
 
+
         </div>
 
     </div>
 
 </div>
+
+
+
+<!-- =====================================================
+SCRIPTS
+====================================================== -->
+
+
+<!-- Bootstrap -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- jsPDF -->
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+</script>
+
+
+<!-- jsPDF AutoTable -->
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
+</script>
+
+
+<!-- html2canvas -->
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+</script>
+
+
+<!-- CONFIG -->
+
+<script src="config.js"></script>
+
+
+<!-- SISTEMA PRINCIPAL -->
+
+<script src="script.js"></script>
+
+
+<!-- PDF -->
+
+<script src="pdf.js?v=8"></script>
+
+
+<!-- REPORTS -->
+
+<script src="reports/reports.js"></script>
+
+
+<!-- =====================================================
+FILTROS E ORDENAÇÃO DA TABELA
+====================================================== -->
+
+<script>
+
+(function() {
+
+
+    // =================================================
+    // ELEMENTOS
+    // =================================================
+
+    const filtro =
+        document.getElementById(
+            "filtroAtividade"
+        );
+
+
+    const ordenarPor =
+        document.getElementById(
+            "ordenarPor"
+        );
+
+
+    const ordem =
+        document.getElementById(
+            "ordem"
+        );
+
+
+    const pesquisa =
+        document.getElementById(
+            "pesquisa"
+        );
+
+
+    const btnLimpar =
+        document.getElementById(
+            "btnLimparFiltros"
+        );
+
+
+    const contador =
+        document.getElementById(
+            "textoContadorFiltro"
+        );
+
+
+    const contadorRegistros =
+        document.getElementById(
+            "contadorRegistros"
+        );
+
+
+
+    // =================================================
+    // APLICA FILTROS
+    // =================================================
+
+    function aplicarFiltrosETabela() {
+
+
+        if (
+            typeof registros ===
+            "undefined"
+        ) {
+
+            return;
+
+        }
+
+
+        let resultado =
+            [...registros];
+
+
+        // =============================================
+        // PESQUISA
+        // =============================================
+
+        const texto =
+            (
+                pesquisa?.value ||
+                ""
+            )
+                .trim()
+                .toLowerCase();
+
+
+        if (texto !== "") {
+
+            resultado =
+                resultado.filter(
+                    function(registro) {
+
+                        const conteudo = [
+
+                            registro.hora,
+
+                            registro.atividade,
+
+                            registro.quarto,
+
+                            registro.quartoDestino,
+
+                            registro.descricao,
+
+                            registro.pagamento,
+
+                            registro.valor,
+
+                            registro.reserva,
+
+                            registro.despertar
+
+                        ]
+                            .filter(
+                                valor =>
+                                    valor !==
+                                    undefined &&
+                                    valor !==
+                                    null
+                            )
+                            .join(" ")
+                            .toLowerCase();
+
+
+                        return conteudo.includes(
+                            texto
+                        );
+
+                    }
+                );
+
+        }
+
+
+
+        // =============================================
+        // FILTRO POR ATIVIDADE
+        // =============================================
+
+        const atividade =
+            filtro?.value || "";
+
+
+        if (atividade !== "") {
+
+            resultado =
+                resultado.filter(
+                    function(registro) {
+
+                        return (
+                            registro.atividade ===
+                            atividade
+                        );
+
+                    }
+                );
+
+        }
+
+
+
+        // =============================================
+        // ORDENAÇÃO
+        // =============================================
+
+        const campo =
+            ordenarPor?.value ||
+            "hora";
+
+
+        const direcao =
+            ordem?.value ||
+            "asc";
+
+
+        resultado.sort(
+            function(a, b) {
+
+
+                let valorA =
+                    obterValorOrdenacao(
+                        a,
+                        campo
+                    );
+
+
+                let valorB =
+                    obterValorOrdenacao(
+                        b,
+                        campo
+                    );
+
+
+                let comparacao = 0;
+
+
+                if (
+                    typeof valorA ===
+                        "number" &&
+                    typeof valorB ===
+                        "number"
+                ) {
+
+                    comparacao =
+                        valorA -
+                        valorB;
+
+                } else {
+
+                    comparacao =
+                        String(valorA)
+                            .localeCompare(
+                                String(valorB),
+                                "pt-BR",
+                                {
+                                    numeric: true,
+                                    sensitivity: "base"
+                                }
+                            );
+
+                }
+
+
+                return direcao === "desc"
+                    ? comparacao * -1
+                    : comparacao;
+
+            }
+        );
+
+
+
+        // =============================================
+        // MOSTRA RESULTADO
+        // =============================================
+
+        atualizarTabelaComFiltro(
+            resultado
+        );
+
+
+        atualizarContadores(
+            resultado.length
+        );
+
+    }
+
+
+
+    // =================================================
+    // VALOR PARA ORDENAÇÃO
+    // =================================================
+
+    function obterValorOrdenacao(
+        registro,
+        campo
+    ) {
+
+
+        switch (campo) {
+
+
+            case "hora":
+
+                return converterHora(
+                    registro.hora
+                );
+
+
+            case "atividade":
+
+                return (
+                    registro.atividade ||
+                    ""
+                );
+
+
+            case "quarto":
+
+                return converterNumero(
+                    registro.quarto
+                );
+
+
+            case "descricao":
+
+                return (
+                    gerarResumoFiltro(
+                        registro
+                    )
+                );
+
+
+            default:
+
+                return "";
+
+        }
+
+    }
+
+
+
+    // =================================================
+    // CONVERTER HORA
+    // =================================================
+
+    function converterHora(
+        hora
+    ) {
+
+        if (!hora) {
+
+            return 999999;
+
+        }
+
+
+        const partes =
+            String(hora).split(":");
+
+
+        if (
+            partes.length !== 2
+        ) {
+
+            return 999999;
+
+        }
+
+
+        return (
+            Number(partes[0]) * 60 +
+            Number(partes[1])
+        );
+
+    }
+
+
+
+    // =================================================
+    // CONVERTER NÚMERO
+    // =================================================
+
+    function converterNumero(
+        valor
+    ) {
+
+        if (
+            valor ===
+            undefined ||
+            valor ===
+            null ||
+            valor === ""
+        ) {
+
+            return 999999999;
+
+        }
+
+
+        const numero =
+            Number(valor);
+
+
+        return Number.isNaN(
+            numero
+        )
+            ? 999999999
+            : numero;
+
+    }
+
+
+
+    // =================================================
+    // RESUMO PARA ORDENAÇÃO
+    // =================================================
+
+    function gerarResumoFiltro(
+        registro
+    ) {
+
+        return [
+
+            registro.descricao,
+
+            registro.pagamento,
+
+            registro.valor,
+
+            registro.reserva,
+
+            registro.despertar,
+
+            registro.quartoDestino
+
+        ]
+            .filter(
+                valor =>
+                    valor !==
+                    undefined &&
+                    valor !==
+                    null
+            )
+            .join(" ");
+
+    }
+
+
+
+    // =================================================
+    // ATUALIZA TABELA
+    // =================================================
+
+    function atualizarTabelaComFiltro(
+        lista
+    ) {
+
+
+        const tbody =
+            document.getElementById(
+                "listaRegistros"
+            );
+
+
+        if (!tbody) {
+
+            return;
+
+        }
+
+
+        tbody.innerHTML = "";
+
+
+        if (
+            lista.length === 0
+        ) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="text-center text-muted py-5">
+
+                        <i
+                            class="bi bi-search fs-1 d-block mb-2">
+                        </i>
+
+                        Nenhum registro encontrado
+                        com os filtros selecionados.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+
+            return;
+
+        }
+
+
+
+        lista.forEach(
+            function(registro) {
+
+
+                const indiceOriginal =
+                    registros.indexOf(
+                        registro
+                    );
+
+
+                let resumo = "";
+
+
+                // =====================================
+                // PAGAMENTO
+                // =====================================
+
+                if (
+                    registro.pagamento
+                ) {
+
+                    resumo +=
+                        "💳 " +
+                        registro.pagamento +
+                        " ";
+
+                }
+
+
+                // =====================================
+                // VALOR
+                // =====================================
+
+                if (
+                    registro.valor
+                ) {
+
+                    resumo +=
+                        "R$ " +
+                        registro.valor +
+                        " ";
+
+                }
+
+
+                // =====================================
+                // RESERVA
+                // =====================================
+
+                if (
+                    registro.reserva
+                ) {
+
+                    resumo +=
+                        "Reserva: " +
+                        registro.reserva +
+                        " ";
+
+                }
+
+
+                // =====================================
+                // DESPERTAR
+                // =====================================
+
+                if (
+                    registro.despertar
+                ) {
+
+                    resumo +=
+                        "Despertar: " +
+                        registro.despertar +
+                        " ";
+
+                }
+
+
+                // =====================================
+                // NOVO QUARTO
+                // =====================================
+
+                if (
+                    registro.quartoDestino &&
+                    (
+                        registro.atividade ===
+                            "Mudança de Quarto" ||
+                        registro.atividade ===
+                            "Troca de Quarto"
+                    )
+                ) {
+
+                    resumo +=
+                        "Novo quarto: " +
+                        registro.quartoDestino +
+                        " ";
+
+                }
+
+
+                // =====================================
+                // DESCRIÇÃO
+                // =====================================
+
+                if (
+                    registro.descricao
+                ) {
+
+                    if (
+                        resumo !== ""
+                    ) {
+
+                        resumo +=
+                            "<br>";
+
+                    }
+
+
+                    resumo +=
+                        registro.descricao;
+
+                }
+
+
+                if (
+                    resumo === ""
+                ) {
+
+                    resumo = "-";
+
+                }
+
+
+                // =====================================
+                // ÍCONE
+                // =====================================
+
+                let icone = `
+                    <i class="bi bi-clipboard"></i>
+                `;
+
+
+                switch (
+                    registro.atividade
+                ) {
+
+
+                    case "Check-in":
+
+                        icone = `
+                            <i class="bi bi-person-check"></i>
+                        `;
+
+                        break;
+
+
+                    case "Check-out":
+
+                        icone = `
+                            <i class="bi bi-box-arrow-right"></i>
+                        `;
+
+                        break;
+
+
+                    case "Walk-in":
+
+                        icone = `
+                            <i class="bi bi-person-plus"></i>
+                        `;
+
+                        break;
+
+
+                    case "Pagamento":
+
+                        icone = `
+                            <i class="bi bi-credit-card"></i>
+                        `;
+
+                        break;
+
+
+                    case "Estorno":
+
+                        icone = `
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                        `;
+
+                        break;
+
+
+                    case "Cancelamento":
+
+                        icone = `
+                            <i class="bi bi-x-circle"></i>
+                        `;
+
+                        break;
+
+
+                    case "No Show":
+
+                        icone = `
+                            <i class="bi bi-person-x"></i>
+                        `;
+
+                        break;
+
+
+                    case "Procedimentos":
+
+                        icone = `
+                            <i class="bi bi-clipboard-check"></i>
+                        `;
+
+                        break;
+
+
+                    case "Conferência":
+
+                        icone = `
+                            <i class="bi bi-clipboard-check"></i>
+                        `;
+
+                        break;
+
+
+                    case "Manutenção":
+
+                        icone = `
+                            <i class="bi bi-tools"></i>
+                        `;
+
+                        break;
+
+
+                    case "Mudança de Quarto":
+
+                        icone = `
+                            <i class="bi bi-door-open"></i>
+                        `;
+
+                        break;
+
+
+                    case "Troca de Quarto":
+
+                        icone = `
+                            <i class="bi bi-door-open"></i>
+                        `;
+
+                        break;
+
+
+                    case "Limpeza":
+
+                        icone = `
+                            <i class="bi bi-stars"></i>
+                        `;
+
+                        break;
+
+
+                    case "Aviso":
+
+                        icone = `
+                            <i class="bi bi-info-circle"></i>
+                        `;
+
+                        break;
+
+
+                    case "Reclamação":
+
+                        icone = `
+                            <i class="bi bi-exclamation-circle"></i>
+                        `;
+
+                        break;
+
+
+                    case "Elogio":
+
+                        icone = `
+                            <i class="bi bi-hand-thumbs-up"></i>
+                        `;
+
+                        break;
+
+
+                    case "Despertar":
+
+                        icone = `
+                            <i class="bi bi-alarm"></i>
+                        `;
+
+                        break;
+
+                }
+
+
+
+                // =====================================
+                // LINHA
+                // =====================================
+
+                tbody.innerHTML += `
+
+                    <tr>
+
+                        <td>
+
+                            ${registro.hora || "-"}
+
+                        </td>
+
+
+                        <td>
+
+                            ${icone}
+
+                            <span class="ms-1">
+
+                                ${registro.atividade || "-"}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+
+                                ${registro.quarto || "-"}
+
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            ${resumo}
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="btn btn-sm btn-outline-primary"
+                                onclick="editarRegistro(${indiceOriginal})"
+                                title="Editar">
+
+                                <i class="bi bi-pencil"></i>
+
+                            </button>
+
+
+                            <button
+                                class="btn btn-sm btn-outline-danger"
+                                onclick="excluirRegistro(${indiceOriginal})"
+                                title="Excluir">
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+
+                            <button
+                                class="btn btn-sm btn-outline-success"
+                                onclick="reportarRegistro(${indiceOriginal})"
+                                title="Gerar Report">
+
+                                <i class="bi bi-save"></i>
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+
+    // =================================================
+    // CONTADORES
+    // =================================================
+
+    function atualizarContadores(
+        quantidade
+    ) {
+
+
+        const total =
+            registros.length;
+
+
+        if (
+            contadorRegistros
+        ) {
+
+            contadorRegistros.textContent =
+
+                quantidade +
+                (
+                    quantidade === 1
+                        ? " registro"
+                        : " registros"
+                );
+
+        }
+
+
+        if (
+            contador
+        ) {
+
+
+            const temPesquisa =
+                (
+                    pesquisa?.value ||
+                    ""
+                ).trim() !== "";
+
+
+            const temFiltro =
+                (
+                    filtro?.value ||
+                    ""
+                ) !== "";
+
+
+            if (
+                !temPesquisa &&
+                !temFiltro
+            ) {
+
+                contador.innerHTML = `
+
+                    <strong>
+                        ${total}
+                    </strong>
+
+                    ${
+                        total === 1
+                            ? "registro no turno"
+                            : "registros no turno"
+                    }
+
+                `;
+
+                return;
+
+            }
+
+
+            contador.innerHTML = `
+
+                <strong>
+                    ${quantidade}
+                </strong>
+
+                de
+
+                <strong>
+                    ${total}
+                </strong>
+
+                ${
+                    quantidade === 1
+                        ? "registro"
+                        : "registros"
+                }
+
+                encontrados
+
+            `;
+
+        }
+
+    }
+
+
+
+    // =================================================
+    // EVENTOS
+    // =================================================
+
+    if (filtro) {
+
+        filtro.addEventListener(
+            "change",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (ordenarPor) {
+
+        ordenarPor.addEventListener(
+            "change",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (ordem) {
+
+        ordem.addEventListener(
+            "change",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (pesquisa) {
+
+        pesquisa.addEventListener(
+            "input",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (btnLimpar) {
+
+        btnLimpar.addEventListener(
+            "click",
+            function() {
+
+
+                if (pesquisa) {
+
+                    pesquisa.value = "";
+
+                }
+
+
+                if (filtro) {
+
+                    filtro.value = "";
+
+                }
+
+
+                if (ordenarPor) {
+
+                    ordenarPor.value =
+                        "hora";
+
+                }
+
+
+                if (ordem) {
+
+                    ordem.value =
+                        "asc";
+
+                }
+
+
+                aplicarFiltrosETabela();
+
+            }
+        );
+
+    }
+
+
+
+    // =================================================
+    // ATUALIZA AUTOMATICAMENTE
+    // QUANDO A TABELA NORMAL FOR ATUALIZADA
+    // =================================================
+
+    const atualizarOriginal =
+        window.atualizarTabela;
+
+
+    if (
+        typeof atualizarOriginal ===
+        "function"
+    ) {
+
+        window.atualizarTabela =
+            function(lista) {
+
+                aplicarFiltrosETabela();
+
+            };
+
+    }
+
+
+
+    // =================================================
+    // OBSERVADOR
+    // =================================================
+
+    setInterval(
+        function() {
+
+            if (
+                typeof registros !==
+                "undefined"
+            ) {
+
+                aplicarFiltrosETabela();
+
+            }
+
+        },
+        500
+    );
+
+
+})();
+
+</script>
+
 
 </body>
 

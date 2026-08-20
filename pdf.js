@@ -1178,12 +1178,11 @@ doc.line(
         // NOME DO ARQUIVO
         // ---------------------------------------------
 
-       const funcionario =
-    document.getElementById("funcionario")?.value ||
-    "Funcionario";
-
 const funcionarioNome =
-    funcionario
+    (
+        funcionario ||
+        "Funcionario"
+    )
         .trim()
         .replace(/\s+/g, "_")
         .replace(/[^\wÀ-ÿ-]/g, "");
@@ -1205,7 +1204,6 @@ const nomeArquivo =
     funcionarioNome +
 
     ".pdf";
-
 
         // ---------------------------------------------
         // SALVAR

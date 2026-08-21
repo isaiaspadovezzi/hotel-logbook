@@ -52,242 +52,268 @@
     CSS - CAPA CAIXA
     ====================================================== -->
 
-    <style>
+  <style>
 
-        /* =====================================================
-           CAPA CAIXA
-           ====================================================== */
+/* =====================================================
+   CAPA CAIXA
+   DESIGN PARA IMPRESSÃO
+   ===================================================== */
 
-        #capaCaixaImpressao {
+#capaCaixaImpressao {
 
-            display: none;
+    display: none;
 
-        }
+}
 
 
-        /* =====================================================
-           IMPRESSÃO
-           ====================================================== */
+/* =====================================================
+   IMPRESSÃO
+   ===================================================== */
 
-        @media print {
+@media print {
 
-            @page {
+    /* -------------------------------------------------
+       FOLHA A4
+       ------------------------------------------------- */
 
-                size: A4 portrait;
+    @page {
 
-                margin: 0;
+        size: A4 portrait;
 
-            }
+        margin: 0;
 
+    }
 
-            html,
-            body {
 
-                width: 210mm;
+    html,
+    body {
 
-                height: 297mm;
+        width: 210mm;
 
-                margin: 0 !important;
+        height: 297mm;
 
-                padding: 0 !important;
+        margin: 0 !important;
 
-                background: white !important;
+        padding: 0 !important;
 
-            }
+        background: #ffffff !important;
 
+    }
 
-            /*
-             * Esconde todo o LogBook
-             * durante a impressão.
-             */
 
-            body > *:not(#capaCaixaImpressao) {
+    /* -------------------------------------------------
+       ESCONDE TODO O LOGBOOK
+       ------------------------------------------------- */
 
-                display: none !important;
+    body > *:not(#capaCaixaImpressao) {
 
-            }
+        display: none !important;
 
+    }
 
-            /*
-             * Mostra somente a capa.
-             */
 
-            #capaCaixaImpressao {
+    /* =================================================
+       CAPA
+       FICA NA PARTE INFERIOR DA FOLHA
+       ================================================= */
 
-                display: flex !important;
+    #capaCaixaImpressao {
 
-                position: fixed;
+        display: flex !important;
 
-                left: 0;
+        position: fixed !important;
 
-                bottom: 0;
+        left: 10mm !important;
 
-                width: 210mm;
+        bottom: 8mm !important;
 
-                height: 148.5mm;
+        width: 190mm !important;
 
-                box-sizing: border-box;
+        height: 82mm !important;
 
-                background: #ffffff;
+        box-sizing: border-box !important;
 
-                border: 1px solid #000000;
+        background: #ffffff !important;
 
-                flex-direction: column;
+        border: 0.6mm solid #bfc8c1 !important;
 
-                font-family:
-                    Arial,
-                    Helvetica,
-                    sans-serif;
+        border-radius: 3mm !important;
 
-                color: #000000;
+        overflow: hidden !important;
 
-            }
+        flex-direction: column !important;
 
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif !important;
 
-            /* =================================================
-               TÍTULO
-               ================================================= */
+        color: #202020 !important;
 
-            .capa-caixa-titulo {
+    }
 
-                width: 100%;
 
-                height: 14mm;
+    /* =================================================
+       CABEÇALHO
+       PADRÃO VERDE DO LOGBOOK
+       ================================================= */
 
-                background: #000000;
+    .capa-caixa-titulo {
 
-                color: #ffffff;
+        width: 100% !important;
 
-                display: flex;
+        height: 18mm !important;
 
-                align-items: center;
+        min-height: 18mm !important;
 
-                justify-content: center;
+        box-sizing: border-box !important;
 
-                font-size: 15pt;
+        background: #198754 !important;
 
-                font-weight: 700;
+        color: #ffffff !important;
 
-                letter-spacing: 0.2px;
+        display: flex !important;
 
-            }
+        align-items: center !important;
 
+        justify-content: space-between !important;
 
-            /* =================================================
-               CONTEÚDO
-               ================================================= */
+        padding:
+            0
+            7mm
+            0
+            7mm !important;
 
-            .capa-caixa-conteudo {
+        font-size: 15pt !important;
 
-                position: relative;
+        font-weight: 700 !important;
 
-                flex: 1;
+        letter-spacing: 0.2px !important;
 
-                display: flex;
+    }
 
-                flex-direction: column;
 
-                align-items: center;
+    /* =================================================
+       CONTEÚDO
+       ================================================= */
 
-                justify-content: center;
+    .capa-caixa-conteudo {
 
-                box-sizing: border-box;
+        position: relative !important;
 
-                padding:
+        flex: 1 !important;
 
-                    8mm
+        width: 100% !important;
 
-                    15mm
+        box-sizing: border-box !important;
 
-                    10mm
+        display: flex !important;
 
-                    15mm;
+        flex-direction: column !important;
 
-            }
+        align-items: center !important;
 
+        justify-content: center !important;
 
-            /* =================================================
-               LOGO
-               ================================================= */
+        padding:
+            5mm
+            15mm
+            5mm
+            15mm !important;
 
-            .capa-caixa-logo {
+        background: #ffffff !important;
 
-                position: absolute;
+    }
 
-                left: 18mm;
 
-                top: 50%;
+    /* =================================================
+       LOGO
+       ================================================= */
 
-                transform: translateY(-50%);
+    .capa-caixa-logo {
 
-                width: 24mm;
+        position: absolute !important;
 
-                height: auto;
+        right: 7mm !important;
 
-                object-fit: contain;
+        top: 5mm !important;
 
-            }
+        width: 21mm !important;
 
+        height: auto !important;
 
-            /* =================================================
-               CAIXA
-               ================================================= */
+        object-fit: contain !important;
 
-            .capa-caixa-numero {
+    }
 
-                text-align: center;
 
-                font-size: 13pt;
+    /* =================================================
+       NÚMERO DO CAIXA
+       ================================================= */
 
-                font-weight: 700;
+    .capa-caixa-numero {
 
-                font-style: italic;
+        text-align: center !important;
 
-                margin-bottom: 2mm;
+        font-size: 11pt !important;
 
-            }
+        font-weight: 700 !important;
 
+        font-style: italic !important;
 
-            /* =================================================
-               FUNCIONÁRIO
-               ================================================= */
+        color: #4d554f !important;
 
-            .capa-caixa-funcionario {
+        line-height: 1.1 !important;
 
-                text-align: center;
+        margin-bottom: 2.5mm !important;
 
-                font-size: 22pt;
+    }
 
-                font-weight: 800;
 
-                line-height: 1.1;
+    /* =================================================
+       FUNCIONÁRIO
+       ================================================= */
 
-                text-transform: uppercase;
+    .capa-caixa-funcionario {
 
-                margin-bottom: 2mm;
+        text-align: center !important;
 
-            }
+        font-size: 20pt !important;
 
+        font-weight: 800 !important;
 
-            /* =================================================
-               DATA
-               ================================================= */
+        line-height: 1.05 !important;
 
-            .capa-caixa-data {
+        text-transform: uppercase !important;
 
-                text-align: center;
+        color: #202020 !important;
 
-                font-size: 17pt;
+        margin-bottom: 2mm !important;
 
-                font-weight: 400;
+    }
 
-                line-height: 1.1;
 
-            }
+    /* =================================================
+       DATA
+       ================================================= */
 
-        }
+    .capa-caixa-data {
 
-    </style>
+        text-align: center !important;
+
+        font-size: 14pt !important;
+
+        font-weight: 400 !important;
+
+        color: #404040 !important;
+
+        line-height: 1.1 !important;
+
+    }
+
+}
+
+</style>
 
 </head>
 

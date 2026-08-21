@@ -64,29 +64,82 @@
     }
 
 
-    /* ---------------------------------------------
-       CAPA
-       --------------------------------------------- */
+ /* =====================================================
+   CAPA CAIXA - NOVO DESIGN
+   ===================================================== */
 
-    .capa-caixa-impressao {
+#capaCaixaImpressao {
+
+    display: none;
+
+}
+
+
+@media print {
+
+    @page {
+
+        size: A4 portrait;
+
+        margin: 0;
+
+    }
+
+
+    html,
+    body {
+
+        width: 210mm;
+
+        height: 297mm;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        background: #ffffff !important;
+
+    }
+
+
+    /* =================================================
+       ESCONDE O LOGBOOK
+       ================================================= */
+
+    body > *:not(#capaCaixaImpressao) {
+
+        display: none !important;
+
+    }
+
+
+    /* =================================================
+       CARTÃO DA CAPA
+       ================================================= */
+
+    #capaCaixaImpressao {
 
         display: flex !important;
 
         position: fixed;
 
-        left: 0;
+        left: 10mm;
 
-        bottom: 0;
+        bottom: 8mm;
 
-        width: 210mm;
+        width: 190mm;
 
-        height: 148.5mm;
+        height: 78mm;
 
-        background: white;
+        background: #ffffff;
+
+        border: 0.7mm solid #c9d0ca;
+
+        border-radius: 3mm;
 
         box-sizing: border-box;
 
-        border: 1px solid #000;
+        overflow: hidden;
 
         flex-direction: column;
 
@@ -95,47 +148,51 @@
             Helvetica,
             sans-serif;
 
-        color: #000;
+        color: #202020;
 
     }
 
 
-    /* ---------------------------------------------
-       TÍTULO PRETO
-       --------------------------------------------- */
+    /* =================================================
+       CABEÇALHO VERDE
+       ================================================= */
 
     .capa-caixa-titulo {
 
         width: 100%;
 
-        height: 13mm;
+        height: 18mm;
 
-        background: #000;
+        min-height: 18mm;
 
-        color: #fff;
+        background: #16733c;
+
+        color: #ffffff;
 
         display: flex;
 
         align-items: center;
 
-        justify-content: center;
+        padding-left: 8mm;
 
-        font-size: 13pt;
+        box-sizing: border-box;
+
+        font-size: 16pt;
 
         font-weight: 700;
 
         letter-spacing: 0.2px;
 
-        box-sizing: border-box;
-
     }
 
 
-    /* ---------------------------------------------
-       ÁREA DOS DADOS
-       --------------------------------------------- */
+    /* =================================================
+       CONTEÚDO
+       ================================================= */
 
     .capa-caixa-conteudo {
+
+        position: relative;
 
         flex: 1;
 
@@ -143,85 +200,40 @@
 
         flex-direction: column;
 
+        align-items: center;
+
         justify-content: center;
 
         box-sizing: border-box;
 
-        padding: 7mm 10mm 8mm 10mm;
+        padding:
+
+            5mm
+
+            12mm
+
+            6mm
+
+            12mm;
+
+        background: #ffffff;
 
     }
 
 
-    /* ---------------------------------------------
-       LINHA CAIXA
-       --------------------------------------------- */
-
-    .capa-caixa-numero {
-
-        text-align: center;
-
-        font-size: 12pt;
-
-        font-style: italic;
-
-        font-weight: 700;
-
-        margin-bottom: 1.5mm;
-
-    }
-
-
-    /* ---------------------------------------------
-       FUNCIONÁRIO
-       --------------------------------------------- */
-
-    .capa-caixa-funcionario {
-
-        text-align: center;
-
-        font-size: 22pt;
-
-        font-weight: 800;
-
-        line-height: 1.05;
-
-        text-transform: uppercase;
-
-        margin-bottom: 1mm;
-
-    }
-
-
-    /* ---------------------------------------------
-       DATA
-       --------------------------------------------- */
-
-    .capa-caixa-data {
-
-        text-align: center;
-
-        font-size: 17pt;
-
-        font-weight: 400;
-
-        line-height: 1.1;
-
-    }
-
-
-    /* ---------------------------------------------
+    /* =================================================
        LOGO
-       --------------------------------------------- */
+       ================================================= */
 
     .capa-caixa-logo {
 
         position: absolute;
 
-        left: 14mm;
+        right: 8mm;
 
-        top: 35mm;
+        top: 5mm;
 
-        width: 18mm;
+        width: 20mm;
 
         height: auto;
 
@@ -229,6 +241,72 @@
 
     }
 
+
+    /* =================================================
+       NÚMERO DO CAIXA
+       ================================================= */
+
+    .capa-caixa-numero {
+
+        text-align: center;
+
+        font-size: 11.5pt;
+
+        font-weight: 700;
+
+        font-style: italic;
+
+        color: #3e4640;
+
+        margin-bottom: 2mm;
+
+        line-height: 1.1;
+
+    }
+
+
+    /* =================================================
+       FUNCIONÁRIO
+       ================================================= */
+
+    .capa-caixa-funcionario {
+
+        text-align: center;
+
+        font-size: 21pt;
+
+        font-weight: 800;
+
+        line-height: 1.05;
+
+        text-transform: uppercase;
+
+        color: #202020;
+
+        margin-bottom: 2mm;
+
+    }
+
+
+    /* =================================================
+       DATA
+       ================================================= */
+
+    .capa-caixa-data {
+
+        text-align: center;
+
+        font-size: 15pt;
+
+        font-weight: 400;
+
+        color: #404040;
+
+        line-height: 1.1;
+
+    }
+
+}
 
     /* ---------------------------------------------
        BORDA

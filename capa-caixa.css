@@ -1,6 +1,5 @@
 /* =====================================================
    CAPA DE CAIXA
-   Não interfere no layout normal do LogBook
    ===================================================== */
 
 
@@ -9,7 +8,9 @@
    ===================================================== */
 
 .capa-caixa-campo {
+
     margin-top: 10px;
+
 }
 
 
@@ -18,7 +19,9 @@
    ===================================================== */
 
 .capa-caixa-impressao {
+
     display: none;
+
 }
 
 
@@ -28,54 +31,10 @@
 
 @media print {
 
-    @page {
 
-        size: A4 portrait;
-
-        margin: 0;
-
-    }
-
-
-    /* ---------------------------------------------
-       ESCONDE O LOGBOOK INTEIRO
-       --------------------------------------------- */
-
-    body > *:not(#capaCaixaImpressao) {
-
-        display: none !important;
-
-    }
-
-
-    html,
-    body {
-
-        width: 210mm;
-
-        height: 297mm;
-
-        margin: 0 !important;
-
-        padding: 0 !important;
-
-        background: white !important;
-
-    }
-
-
- /* =====================================================
-   CAPA CAIXA - NOVO DESIGN
-   ===================================================== */
-
-#capaCaixaImpressao {
-
-    display: none;
-
-}
-
-
-@media print {
+    /* =================================================
+       CONFIGURAÇÃO DA FOLHA
+       ================================================= */
 
     @page {
 
@@ -125,19 +84,19 @@
 
         left: 10mm;
 
-        bottom: 8mm;
+        bottom: 7mm;
 
         width: 190mm;
 
         height: 78mm;
+
+        box-sizing: border-box;
 
         background: #ffffff;
 
         border: 0.7mm solid #c9d0ca;
 
         border-radius: 3mm;
-
-        box-sizing: border-box;
 
         overflow: hidden;
 
@@ -173,7 +132,11 @@
 
         align-items: center;
 
+        justify-content: space-between;
+
         padding-left: 8mm;
+
+        padding-right: 7mm;
 
         box-sizing: border-box;
 
@@ -229,9 +192,9 @@
 
         position: absolute;
 
-        right: 8mm;
+        right: 7mm;
 
-        top: 5mm;
+        top: 4mm;
 
         width: 20mm;
 
@@ -303,18 +266,6 @@
         color: #404040;
 
         line-height: 1.1;
-
-    }
-
-}
-
-    /* ---------------------------------------------
-       BORDA
-       --------------------------------------------- */
-
-    .capa-caixa-impressao {
-
-        border: 1.2px solid #000;
 
     }
 

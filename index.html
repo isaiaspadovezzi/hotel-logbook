@@ -46,9 +46,248 @@
     <link
         rel="stylesheet"
         href="reports/reports.css">
-    <link
-    rel="stylesheet"
-    href="capa-caixa.css">
+
+
+    <!-- =====================================================
+    CSS - CAPA CAIXA
+    ====================================================== -->
+
+    <style>
+
+        /* =====================================================
+           CAPA CAIXA
+           ====================================================== */
+
+        #capaCaixaImpressao {
+
+            display: none;
+
+        }
+
+
+        /* =====================================================
+           IMPRESSÃO
+           ====================================================== */
+
+        @media print {
+
+            @page {
+
+                size: A4 portrait;
+
+                margin: 0;
+
+            }
+
+
+            html,
+            body {
+
+                width: 210mm;
+
+                height: 297mm;
+
+                margin: 0 !important;
+
+                padding: 0 !important;
+
+                background: white !important;
+
+            }
+
+
+            /*
+             * Esconde todo o LogBook
+             * durante a impressão.
+             */
+
+            body > *:not(#capaCaixaImpressao) {
+
+                display: none !important;
+
+            }
+
+
+            /*
+             * Mostra somente a capa.
+             */
+
+            #capaCaixaImpressao {
+
+                display: flex !important;
+
+                position: fixed;
+
+                left: 0;
+
+                bottom: 0;
+
+                width: 210mm;
+
+                height: 148.5mm;
+
+                box-sizing: border-box;
+
+                background: #ffffff;
+
+                border: 1px solid #000000;
+
+                flex-direction: column;
+
+                font-family:
+                    Arial,
+                    Helvetica,
+                    sans-serif;
+
+                color: #000000;
+
+            }
+
+
+            /* =================================================
+               TÍTULO
+               ================================================= */
+
+            .capa-caixa-titulo {
+
+                width: 100%;
+
+                height: 14mm;
+
+                background: #000000;
+
+                color: #ffffff;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                font-size: 15pt;
+
+                font-weight: 700;
+
+                letter-spacing: 0.2px;
+
+            }
+
+
+            /* =================================================
+               CONTEÚDO
+               ================================================= */
+
+            .capa-caixa-conteudo {
+
+                position: relative;
+
+                flex: 1;
+
+                display: flex;
+
+                flex-direction: column;
+
+                align-items: center;
+
+                justify-content: center;
+
+                box-sizing: border-box;
+
+                padding:
+
+                    8mm
+
+                    15mm
+
+                    10mm
+
+                    15mm;
+
+            }
+
+
+            /* =================================================
+               LOGO
+               ================================================= */
+
+            .capa-caixa-logo {
+
+                position: absolute;
+
+                left: 18mm;
+
+                top: 50%;
+
+                transform: translateY(-50%);
+
+                width: 24mm;
+
+                height: auto;
+
+                object-fit: contain;
+
+            }
+
+
+            /* =================================================
+               CAIXA
+               ================================================= */
+
+            .capa-caixa-numero {
+
+                text-align: center;
+
+                font-size: 13pt;
+
+                font-weight: 700;
+
+                font-style: italic;
+
+                margin-bottom: 2mm;
+
+            }
+
+
+            /* =================================================
+               FUNCIONÁRIO
+               ================================================= */
+
+            .capa-caixa-funcionario {
+
+                text-align: center;
+
+                font-size: 22pt;
+
+                font-weight: 800;
+
+                line-height: 1.1;
+
+                text-transform: uppercase;
+
+                margin-bottom: 2mm;
+
+            }
+
+
+            /* =================================================
+               DATA
+               ================================================= */
+
+            .capa-caixa-data {
+
+                text-align: center;
+
+                font-size: 17pt;
+
+                font-weight: 400;
+
+                line-height: 1.1;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
@@ -113,7 +352,7 @@ CONTEÚDO
 
                 <!-- DATA -->
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
 
                     <label
                         class="form-label">
@@ -136,7 +375,7 @@ CONTEÚDO
 
                 <!-- FUNCIONÁRIO -->
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
 
                     <label
                         class="form-label">
@@ -176,7 +415,7 @@ CONTEÚDO
 
                 <!-- TURNO -->
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
 
                     <label
                         class="form-label">
@@ -205,6 +444,31 @@ CONTEÚDO
                         </option>
 
                     </select>
+
+                </div>
+
+
+
+                <!-- CAIXA -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        class="form-label">
+
+                        <i class="bi bi-safe2"></i>
+
+                        Caixa
+
+                    </label>
+
+
+                    <input
+                        id="numeroCaixa"
+                        type="text"
+                        class="form-control"
+                        placeholder="Ex.: 1014732"
+                        autocomplete="off">
 
                 </div>
 
@@ -240,6 +504,8 @@ CONTEÚDO
         <div class="d-flex flex-wrap gap-2">
 
 
+            <!-- EXPORTAR PDF -->
+
             <button
                 class="btn btn-outline-success"
                 onclick="exportarPDF()">
@@ -250,6 +516,25 @@ CONTEÚDO
 
             </button>
 
+
+
+            <!-- CAPA CAIXA -->
+
+            <button
+                type="button"
+                id="btnCapaCaixa"
+                class="btn btn-outline-dark"
+                onclick="imprimirCapaCaixa()">
+
+                <i class="bi bi-printer"></i>
+
+                Capa Caixa
+
+            </button>
+
+
+
+            <!-- ARQUIVO -->
 
             <button
                 type="button"
@@ -269,7 +554,7 @@ CONTEÚDO
 
 
     <!-- =====================================================
-    PESQUISA
+    PESQUISA E FILTROS
     ====================================================== -->
 
     <div class="card shadow-sm border-0 mb-4">
@@ -277,10 +562,10 @@ CONTEÚDO
         <div class="card-body">
 
 
-            <!-- PESQUISA -->
-
             <div class="row g-3">
 
+
+                <!-- PESQUISA -->
 
                 <div class="col-lg-6">
 
@@ -317,7 +602,7 @@ CONTEÚDO
 
 
 
-                <!-- FILTRO POR ATIVIDADE -->
+                <!-- FILTRO -->
 
                 <div class="col-lg-3">
 
@@ -430,7 +715,7 @@ CONTEÚDO
 
 
 
-                <!-- ORDENAR POR -->
+                <!-- ORDENAR -->
 
                 <div class="col-lg-3">
 
@@ -473,10 +758,10 @@ CONTEÚDO
 
 
 
-            <!-- ORDEM + LIMPAR -->
-
             <div class="row g-3 mt-1">
 
+
+                <!-- ORDEM -->
 
                 <div class="col-lg-3">
 
@@ -513,8 +798,6 @@ CONTEÚDO
                     class="col-lg-9 d-flex align-items-end justify-content-between flex-wrap gap-2">
 
 
-                    <!-- CONTAGEM -->
-
                     <div
                         id="contadorFiltro"
                         class="text-secondary">
@@ -522,14 +805,14 @@ CONTEÚDO
                         <i class="bi bi-list-check"></i>
 
                         <span id="textoContadorFiltro">
+
                             Todos os registros
+
                         </span>
 
                     </div>
 
 
-
-                    <!-- LIMPAR -->
 
                     <button
                         type="button"
@@ -553,16 +836,15 @@ CONTEÚDO
 
 
     <!-- =====================================================
-    TABELA DE REGISTROS
+    TABELA
     ====================================================== -->
 
     <div class="card shadow-sm border-0">
 
 
-        <!-- CABEÇALHO -->
-
         <div
             class="card-header bg-success text-white">
+
 
             <div
                 class="d-flex justify-content-between align-items-center flex-wrap gap-2">
@@ -591,8 +873,6 @@ CONTEÚDO
 
 
 
-        <!-- TABELA -->
-
         <div class="table-responsive">
 
             <table
@@ -605,43 +885,28 @@ CONTEÚDO
                     <tr>
 
                         <th width="90">
-
                             Hora
-
                         </th>
-
 
                         <th width="180">
-
                             Atividade
-
                         </th>
-
 
                         <th width="90">
-
                             Quarto
-
                         </th>
-
 
                         <th>
-
                             Resumo
-
                         </th>
 
-
                         <th width="150">
-
                             Ações
-
                         </th>
 
                     </tr>
 
                 </thead>
-
 
 
                 <tbody
@@ -653,11 +918,9 @@ CONTEÚDO
                             colspan="5"
                             class="text-center text-muted py-5">
 
-
                             <i
                                 class="bi bi-inbox fs-1 d-block mb-2">
                             </i>
-
 
                             Nenhum registro encontrado.
 
@@ -695,8 +958,6 @@ MODAL NOVO REGISTRO
         <div class="modal-content">
 
 
-            <!-- CABEÇALHO -->
-
             <div
                 class="modal-header bg-success text-white">
 
@@ -719,8 +980,6 @@ MODAL NOVO REGISTRO
             </div>
 
 
-
-            <!-- CORPO -->
 
             <div class="modal-body">
 
@@ -770,106 +1029,85 @@ MODAL NOVO REGISTRO
                                 Check-in
                             </option>
 
-
                             <option value="Check-out">
                                 Check-out
                             </option>
-
 
                             <option value="Procedimentos">
                                 Procedimentos
                             </option>
 
-
                             <option value="Walk-in">
                                 Walk-in
                             </option>
-
 
                             <option value="No Show">
                                 No Show
                             </option>
 
-
                             <option value="Cancelamento">
                                 Cancelamento
                             </option>
-
 
                             <option value="Estorno">
                                 Estorno
                             </option>
 
-
                             <option value="Despertar">
                                 Despertar
                             </option>
-
 
                             <option value="Pagamento">
                                 Pagamento
                             </option>
 
-
                             <option value="Depósito">
                                 Depósito
                             </option>
-
 
                             <option value="Mudança de Quarto">
                                 Mudança de Quarto
                             </option>
 
-
                             <option value="Manutenção">
                                 Manutenção
                             </option>
-
 
                             <option value="Lost & Found">
                                 Lost & Found
                             </option>
 
-
                             <option value="Reclamação">
                                 Reclamação
                             </option>
-
 
                             <option value="Elogio">
                                 Elogio
                             </option>
 
-
                             <option value="Reservas">
                                 Reservas
                             </option>
-
 
                             <option value="Lavanderia">
                                 Lavanderia
                             </option>
 
-
                             <option value="Empréstimos">
                                 Empréstimos
                             </option>
-
 
                             <option value="Conferência">
                                 Conferência
                             </option>
 
-
                             <option value="Aviso">
                                 Aviso
                             </option>
 
-
                             <option value="Outro">
                                 Outro
                             </option>
-
 
                         </select>
 
@@ -898,13 +1136,12 @@ MODAL NOVO REGISTRO
 
 
 
-                    <!-- FORMA DE PAGAMENTO -->
+                    <!-- PAGAMENTO -->
 
                     <div
                         id="grupoPagamento"
                         class="col-md-6"
                         style="display:none;">
-
 
                         <label
                             class="form-label">
@@ -918,61 +1155,49 @@ MODAL NOVO REGISTRO
                             id="pagamento"
                             class="form-select">
 
-
                             <option value="">
                                 Selecione...
                             </option>
-
 
                             <option>
                                 Direto
                             </option>
 
-
                             <option>
                                 Cartão
                             </option>
-
 
                             <option>
                                 PIX
                             </option>
 
-
                             <option>
                                 Dinheiro
                             </option>
-
 
                             <option>
                                 Faturado
                             </option>
 
-
                             <option>
                                 Cortesia
                             </option>
-
 
                             <option>
                                 Cartão Virtual
                             </option>
 
-
                             <option>
                                 Voucher
                             </option>
-
 
                             <option>
                                 Depósito Antecipado
                             </option>
 
-
                             <option>
                                 Check-out Cartão Virtual
                             </option>
-
 
                         </select>
 
@@ -986,7 +1211,6 @@ MODAL NOVO REGISTRO
                         id="grupoValor"
                         class="col-md-3"
                         style="display:none;">
-
 
                         <label
                             class="form-label">
@@ -1014,7 +1238,6 @@ MODAL NOVO REGISTRO
                         class="col-md-4"
                         style="display:none;">
 
-
                         <label
                             class="form-label">
 
@@ -1038,7 +1261,6 @@ MODAL NOVO REGISTRO
                         id="grupoDespertar"
                         class="col-md-4"
                         style="display:none;">
-
 
                         <label
                             class="form-label">
@@ -1073,19 +1295,15 @@ MODAL NOVO REGISTRO
                             id="descricao"
                             rows="5"
                             class="form-control"
-                            placeholder="Descreva a ocorrência...">
-                        </textarea>
+                            placeholder="Descreva a ocorrência..."></textarea>
 
                     </div>
-
 
                 </div>
 
             </div>
 
 
-
-            <!-- RODAPÉ -->
 
             <div class="modal-footer">
 
@@ -1111,7 +1329,6 @@ MODAL NOVO REGISTRO
 
             </div>
 
-
         </div>
 
     </div>
@@ -1121,7 +1338,7 @@ MODAL NOVO REGISTRO
 
 
 <!-- =====================================================
-MODAL - ARQUIVO DO LOGBOOK
+MODAL ARQUIVO
 ====================================================== -->
 
 <div
@@ -1139,7 +1356,6 @@ MODAL - ARQUIVO DO LOGBOOK
 
 
             <div class="modal-header">
-
 
                 <h5 class="modal-title">
 
@@ -1162,7 +1378,6 @@ MODAL - ARQUIVO DO LOGBOOK
             </div>
 
 
-
             <div class="modal-body">
 
                 <div
@@ -1173,6 +1388,64 @@ MODAL - ARQUIVO DO LOGBOOK
 
             </div>
 
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+ÁREA DA CAPA CAIXA
+NÃO APARECE NO LOGBOOK NORMAL
+SÓ APARECE NA IMPRESSÃO
+====================================================== -->
+
+<div
+    id="capaCaixaImpressao"
+    aria-hidden="true">
+
+
+    <div class="capa-caixa-titulo">
+
+        FECHAMENTO DE CAIXA
+
+    </div>
+
+
+    <div class="capa-caixa-conteudo">
+
+
+        <img
+            src="img/logo.png"
+            class="capa-caixa-logo"
+            alt="ibis Styles">
+
+
+        <div
+            class="capa-caixa-numero"
+            id="capaCaixaNumero">
+
+            CAIXA -
+
+        </div>
+
+
+        <div
+            class="capa-caixa-funcionario"
+            id="capaCaixaFuncionario">
+
+            -
+
+        </div>
+
+
+        <div
+            class="capa-caixa-data"
+            id="capaCaixaData">
+
+            -
 
         </div>
 
@@ -1186,68 +1459,375 @@ MODAL - ARQUIVO DO LOGBOOK
 SCRIPTS
 ====================================================== -->
 
-
-<!-- Bootstrap -->
-
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
 </script>
 
-
-<!-- jsPDF -->
 
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
 </script>
 
 
-<!-- jsPDF AutoTable -->
-
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
 </script>
 
-
-<!-- html2canvas -->
 
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
 </script>
 
 
-<!-- CONFIG -->
-
 <script src="config.js"></script>
 
-
-<!-- SISTEMA PRINCIPAL -->
 
 <script src="script.js"></script>
 
 
-<!-- PDF -->
-
 <script src="pdf.js?v=8"></script>
 
 
-<!-- REPORTS -->
-
 <script src="reports/reports.js"></script>
 
-    <script src="capa-caixa.js"></script>
+
 
 <!-- =====================================================
-FILTROS E ORDENAÇÃO DA TABELA
+CAPA CAIXA
+====================================================== -->
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    /*
+     * =====================================================
+     * CONFIGURAÇÃO
+     * =====================================================
+     */
+
+    const STORAGE_CAIXA =
+        "logbook_numero_caixa";
+
+
+    /*
+     * =====================================================
+     * CARREGAR ÚLTIMO CAIXA
+     * =====================================================
+     */
+
+    function carregarNumeroCaixa() {
+
+        const campo =
+            document.getElementById(
+                "numeroCaixa"
+            );
+
+
+        if (!campo) {
+
+            return;
+
+        }
+
+
+        const salvo =
+            localStorage.getItem(
+                STORAGE_CAIXA
+            );
+
+
+        if (salvo) {
+
+            campo.value =
+                salvo;
+
+        }
+
+
+        campo.addEventListener(
+            "input",
+            function () {
+
+                localStorage.setItem(
+                    STORAGE_CAIXA,
+                    campo.value.trim()
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * =====================================================
+     * FORMATAR DATA
+     * =====================================================
+     */
+
+    function formatarDataCapa(
+        data
+    ) {
+
+        if (!data) {
+
+            return "";
+
+        }
+
+
+        const partes =
+            data.split("-");
+
+
+        if (
+            partes.length !== 3
+        ) {
+
+            return data;
+
+        }
+
+
+        return (
+
+            partes[2] +
+            "/" +
+            partes[1] +
+            "/" +
+            partes[0]
+
+        );
+
+    }
+
+
+    /*
+     * =====================================================
+     * IMPRIMIR CAPA CAIXA
+     * =====================================================
+     */
+
+    window.imprimirCapaCaixa =
+        function () {
+
+
+            /*
+             * ---------------------------------------------
+             * CAPTURA DATA
+             * ---------------------------------------------
+             */
+
+            const dataElemento =
+                document.getElementById(
+                    "data"
+                );
+
+
+            /*
+             * ---------------------------------------------
+             * CAPTURA FUNCIONÁRIO
+             * ---------------------------------------------
+             */
+
+            const funcionarioElemento =
+                document.getElementById(
+                    "funcionario"
+                );
+
+
+            /*
+             * ---------------------------------------------
+             * CAPTURA CAIXA
+             * ---------------------------------------------
+             */
+
+            const caixaElemento =
+                document.getElementById(
+                    "numeroCaixa"
+                );
+
+
+            const data =
+                dataElemento
+                    ? dataElemento.value
+                    : "";
+
+
+            const funcionario =
+                funcionarioElemento
+                    ? funcionarioElemento.value
+                    : "";
+
+
+            const caixa =
+                caixaElemento
+                    ? caixaElemento.value.trim()
+                    : "";
+
+
+            /*
+             * ---------------------------------------------
+             * VALIDA DATA
+             * ---------------------------------------------
+             */
+
+            if (!data) {
+
+                alert(
+                    "Informe a data antes de imprimir a Capa Caixa."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * ---------------------------------------------
+             * VALIDA FUNCIONÁRIO
+             * ---------------------------------------------
+             */
+
+            if (!funcionario) {
+
+                alert(
+                    "Selecione o funcionário antes de imprimir a Capa Caixa."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * ---------------------------------------------
+             * VALIDA CAIXA
+             * ---------------------------------------------
+             */
+
+            if (!caixa) {
+
+                alert(
+                    "Informe o número do caixa antes de imprimir a Capa Caixa."
+                );
+
+
+                if (caixaElemento) {
+
+                    caixaElemento.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            /*
+             * ---------------------------------------------
+             * PREENCHE A CAPA
+             * ---------------------------------------------
+             */
+
+            const numeroCapa =
+                document.getElementById(
+                    "capaCaixaNumero"
+                );
+
+
+            const funcionarioCapa =
+                document.getElementById(
+                    "capaCaixaFuncionario"
+                );
+
+
+            const dataCapa =
+                document.getElementById(
+                    "capaCaixaData"
+                );
+
+
+            numeroCapa.textContent =
+                "CAIXA - " + caixa;
+
+
+            funcionarioCapa.textContent =
+                funcionario;
+
+
+            dataCapa.textContent =
+                formatarDataCapa(
+                    data
+                );
+
+
+            /*
+             * ---------------------------------------------
+             * SALVA ÚLTIMO NÚMERO DE CAIXA
+             * ---------------------------------------------
+             */
+
+            localStorage.setItem(
+                STORAGE_CAIXA,
+                caixa
+            );
+
+
+            /*
+             * ---------------------------------------------
+             * IMPRIME
+             * ---------------------------------------------
+             */
+
+            setTimeout(
+                function () {
+
+                    window.print();
+
+                },
+                100
+            );
+
+        };
+
+
+    /*
+     * =====================================================
+     * INICIALIZAÇÃO
+     * =====================================================
+     */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            carregarNumeroCaixa();
+
+        }
+    );
+
+
+})();
+
+</script>
+
+
+<!-- =====================================================
+FILTROS E ORDENAÇÃO
 ====================================================== -->
 
 <script>
 
 (function() {
 
+    "use strict";
 
-    // =================================================
-    // ELEMENTOS
-    // =================================================
 
     const filtro =
         document.getElementById(
@@ -1291,13 +1871,148 @@ FILTROS E ORDENAÇÃO DA TABELA
         );
 
 
+    function obterValorOrdenacao(
+        registro,
+        campo
+    ) {
 
-    // =================================================
-    // APLICA FILTROS
-    // =================================================
+        switch (campo) {
+
+            case "hora":
+
+                return converterHora(
+                    registro.hora
+                );
+
+
+            case "atividade":
+
+                return (
+                    registro.atividade ||
+                    ""
+                );
+
+
+            case "quarto":
+
+                return converterNumero(
+                    registro.quarto
+                );
+
+
+            case "descricao":
+
+                return gerarResumo(
+                    registro
+                );
+
+
+            default:
+
+                return "";
+
+        }
+
+    }
+
+
+    function converterHora(hora) {
+
+        if (!hora) {
+
+            return 999999;
+
+        }
+
+
+        const partes =
+            String(hora).split(":");
+
+
+        if (
+            partes.length !== 2
+        ) {
+
+            return 999999;
+
+        }
+
+
+        return (
+
+            Number(partes[0]) * 60 +
+            Number(partes[1])
+
+        );
+
+    }
+
+
+    function converterNumero(valor) {
+
+        if (
+            valor ===
+                undefined ||
+            valor ===
+                null ||
+            valor === ""
+        ) {
+
+            return 999999999;
+
+        }
+
+
+        const numero =
+            Number(valor);
+
+
+        return Number.isNaN(
+            numero
+        )
+            ? 999999999
+            : numero;
+
+    }
+
+
+    function gerarResumo(
+        registro
+    ) {
+
+        return [
+
+            registro.descricao,
+
+            registro.pagamento,
+
+            registro.valor,
+
+            registro.reserva,
+
+            registro.despertar,
+
+            registro.quartoDestino
+
+        ]
+            .filter(
+                function(valor) {
+
+                    return (
+                        valor !==
+                            undefined &&
+                        valor !==
+                            null
+                    );
+
+                }
+            )
+            .join(" ");
+
+    }
+
 
     function aplicarFiltrosETabela() {
-
 
         if (
             typeof registros ===
@@ -1312,10 +2027,6 @@ FILTROS E ORDENAÇÃO DA TABELA
         let resultado =
             [...registros];
 
-
-        // =============================================
-        // PESQUISA
-        // =============================================
 
         const texto =
             (
@@ -1354,11 +2065,16 @@ FILTROS E ORDENAÇÃO DA TABELA
 
                         ]
                             .filter(
-                                valor =>
-                                    valor !==
-                                    undefined &&
-                                    valor !==
-                                    null
+                                function(valor) {
+
+                                    return (
+                                        valor !==
+                                            undefined &&
+                                        valor !==
+                                            null
+                                    );
+
+                                }
                             )
                             .join(" ")
                             .toLowerCase();
@@ -1374,13 +2090,9 @@ FILTROS E ORDENAÇÃO DA TABELA
         }
 
 
-
-        // =============================================
-        // FILTRO POR ATIVIDADE
-        // =============================================
-
         const atividade =
-            filtro?.value || "";
+            filtro?.value ||
+            "";
 
 
         if (atividade !== "") {
@@ -1400,11 +2112,6 @@ FILTROS E ORDENAÇÃO DA TABELA
         }
 
 
-
-        // =============================================
-        // ORDENAÇÃO
-        // =============================================
-
         const campo =
             ordenarPor?.value ||
             "hora";
@@ -1418,22 +2125,21 @@ FILTROS E ORDENAÇÃO DA TABELA
         resultado.sort(
             function(a, b) {
 
-
-                let valorA =
+                const valorA =
                     obterValorOrdenacao(
                         a,
                         campo
                     );
 
 
-                let valorB =
+                const valorB =
                     obterValorOrdenacao(
                         b,
                         campo
                     );
 
 
-                let comparacao = 0;
+                let comparacao;
 
 
                 if (
@@ -1463,20 +2169,17 @@ FILTROS E ORDENAÇÃO DA TABELA
                 }
 
 
-                return direcao === "desc"
-                    ? comparacao * -1
-                    : comparacao;
+                return (
+                    direcao === "desc"
+                        ? comparacao * -1
+                        : comparacao
+                );
 
             }
         );
 
 
-
-        // =============================================
-        // MOSTRA RESULTADO
-        // =============================================
-
-        atualizarTabelaComFiltro(
+        atualizarTabelaFiltro(
             resultado
         );
 
@@ -1488,177 +2191,9 @@ FILTROS E ORDENAÇÃO DA TABELA
     }
 
 
-
-    // =================================================
-    // VALOR PARA ORDENAÇÃO
-    // =================================================
-
-    function obterValorOrdenacao(
-        registro,
-        campo
-    ) {
-
-
-        switch (campo) {
-
-
-            case "hora":
-
-                return converterHora(
-                    registro.hora
-                );
-
-
-            case "atividade":
-
-                return (
-                    registro.atividade ||
-                    ""
-                );
-
-
-            case "quarto":
-
-                return converterNumero(
-                    registro.quarto
-                );
-
-
-            case "descricao":
-
-                return (
-                    gerarResumoFiltro(
-                        registro
-                    )
-                );
-
-
-            default:
-
-                return "";
-
-        }
-
-    }
-
-
-
-    // =================================================
-    // CONVERTER HORA
-    // =================================================
-
-    function converterHora(
-        hora
-    ) {
-
-        if (!hora) {
-
-            return 999999;
-
-        }
-
-
-        const partes =
-            String(hora).split(":");
-
-
-        if (
-            partes.length !== 2
-        ) {
-
-            return 999999;
-
-        }
-
-
-        return (
-            Number(partes[0]) * 60 +
-            Number(partes[1])
-        );
-
-    }
-
-
-
-    // =================================================
-    // CONVERTER NÚMERO
-    // =================================================
-
-    function converterNumero(
-        valor
-    ) {
-
-        if (
-            valor ===
-            undefined ||
-            valor ===
-            null ||
-            valor === ""
-        ) {
-
-            return 999999999;
-
-        }
-
-
-        const numero =
-            Number(valor);
-
-
-        return Number.isNaN(
-            numero
-        )
-            ? 999999999
-            : numero;
-
-    }
-
-
-
-    // =================================================
-    // RESUMO PARA ORDENAÇÃO
-    // =================================================
-
-    function gerarResumoFiltro(
-        registro
-    ) {
-
-        return [
-
-            registro.descricao,
-
-            registro.pagamento,
-
-            registro.valor,
-
-            registro.reserva,
-
-            registro.despertar,
-
-            registro.quartoDestino
-
-        ]
-            .filter(
-                valor =>
-                    valor !==
-                    undefined &&
-                    valor !==
-                    null
-            )
-            .join(" ");
-
-    }
-
-
-
-    // =================================================
-    // ATUALIZA TABELA
-    // =================================================
-
-    function atualizarTabelaComFiltro(
+    function atualizarTabelaFiltro(
         lista
     ) {
-
 
         const tbody =
             document.getElementById(
@@ -1701,16 +2236,13 @@ FILTROS E ORDENAÇÃO DA TABELA
 
             `;
 
-
             return;
 
         }
 
 
-
         lista.forEach(
             function(registro) {
-
 
                 const indiceOriginal =
                     registros.indexOf(
@@ -1720,10 +2252,6 @@ FILTROS E ORDENAÇÃO DA TABELA
 
                 let resumo = "";
 
-
-                // =====================================
-                // PAGAMENTO
-                // =====================================
 
                 if (
                     registro.pagamento
@@ -1737,10 +2265,6 @@ FILTROS E ORDENAÇÃO DA TABELA
                 }
 
 
-                // =====================================
-                // VALOR
-                // =====================================
-
                 if (
                     registro.valor
                 ) {
@@ -1752,10 +2276,6 @@ FILTROS E ORDENAÇÃO DA TABELA
 
                 }
 
-
-                // =====================================
-                // RESERVA
-                // =====================================
 
                 if (
                     registro.reserva
@@ -1769,10 +2289,6 @@ FILTROS E ORDENAÇÃO DA TABELA
                 }
 
 
-                // =====================================
-                // DESPERTAR
-                // =====================================
-
                 if (
                     registro.despertar
                 ) {
@@ -1784,10 +2300,6 @@ FILTROS E ORDENAÇÃO DA TABELA
 
                 }
 
-
-                // =====================================
-                // NOVO QUARTO
-                // =====================================
 
                 if (
                     registro.quartoDestino &&
@@ -1807,10 +2319,6 @@ FILTROS E ORDENAÇÃO DA TABELA
                 }
 
 
-                // =====================================
-                // DESCRIÇÃO
-                // =====================================
-
                 if (
                     registro.descricao
                 ) {
@@ -1819,8 +2327,7 @@ FILTROS E ORDENAÇÃO DA TABELA
                         resumo !== ""
                     ) {
 
-                        resumo +=
-                            "<br>";
+                        resumo += "<br>";
 
                     }
 
@@ -1840,188 +2347,152 @@ FILTROS E ORDENAÇÃO DA TABELA
                 }
 
 
-                // =====================================
-                // ÍCONE
-                // =====================================
-
-                let icone = `
-                    <i class="bi bi-clipboard"></i>
-                `;
+                let icone =
+                    '<i class="bi bi-clipboard"></i>';
 
 
                 switch (
                     registro.atividade
                 ) {
 
-
                     case "Check-in":
 
-                        icone = `
-                            <i class="bi bi-person-check"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-person-check"></i>';
 
                         break;
 
 
                     case "Check-out":
 
-                        icone = `
-                            <i class="bi bi-box-arrow-right"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-box-arrow-right"></i>';
 
                         break;
 
 
                     case "Walk-in":
 
-                        icone = `
-                            <i class="bi bi-person-plus"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-person-plus"></i>';
 
                         break;
 
 
                     case "Pagamento":
 
-                        icone = `
-                            <i class="bi bi-credit-card"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-credit-card"></i>';
 
                         break;
 
 
                     case "Estorno":
 
-                        icone = `
-                            <i class="bi bi-arrow-counterclockwise"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-arrow-counterclockwise"></i>';
 
                         break;
 
 
                     case "Cancelamento":
 
-                        icone = `
-                            <i class="bi bi-x-circle"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-x-circle"></i>';
 
                         break;
 
 
                     case "No Show":
 
-                        icone = `
-                            <i class="bi bi-person-x"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-person-x"></i>';
 
                         break;
 
 
                     case "Procedimentos":
 
-                        icone = `
-                            <i class="bi bi-clipboard-check"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-clipboard-check"></i>';
 
                         break;
 
 
                     case "Conferência":
 
-                        icone = `
-                            <i class="bi bi-clipboard-check"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-clipboard-check"></i>';
 
                         break;
 
 
                     case "Manutenção":
 
-                        icone = `
-                            <i class="bi bi-tools"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-tools"></i>';
 
                         break;
 
 
                     case "Mudança de Quarto":
 
-                        icone = `
-                            <i class="bi bi-door-open"></i>
-                        `;
-
-                        break;
-
-
                     case "Troca de Quarto":
 
-                        icone = `
-                            <i class="bi bi-door-open"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-door-open"></i>';
 
                         break;
 
 
                     case "Limpeza":
 
-                        icone = `
-                            <i class="bi bi-stars"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-stars"></i>';
 
                         break;
 
 
                     case "Aviso":
 
-                        icone = `
-                            <i class="bi bi-info-circle"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-info-circle"></i>';
 
                         break;
 
 
                     case "Reclamação":
 
-                        icone = `
-                            <i class="bi bi-exclamation-circle"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-exclamation-circle"></i>';
 
                         break;
 
 
                     case "Elogio":
 
-                        icone = `
-                            <i class="bi bi-hand-thumbs-up"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-hand-thumbs-up"></i>';
 
                         break;
 
 
                     case "Despertar":
 
-                        icone = `
-                            <i class="bi bi-alarm"></i>
-                        `;
+                        icone =
+                            '<i class="bi bi-alarm"></i>';
 
                         break;
 
                 }
 
 
-
-                // =====================================
-                // LINHA
-                // =====================================
-
                 tbody.innerHTML += `
 
                     <tr>
 
                         <td>
-
                             ${registro.hora || "-"}
-
                         </td>
 
 
@@ -2056,42 +2527,71 @@ FILTROS E ORDENAÇÃO DA TABELA
                         </td>
 
 
-              <td class="acoes-registro">
+                        <td
+                            class="acoes-registro"
+                            style="
+                                width:150px;
+                                min-width:150px;
+                                white-space:nowrap;
+                            ">
 
-    <div class="acoes-registro-container">
-
-        <button
-            class="btn btn-sm btn-outline-primary"
-            onclick="editarRegistro(${indiceOriginal})"
-            title="Editar">
-
-            <i class="bi bi-pencil"></i>
-
-        </button>
-
-
-        <button
-            class="btn btn-sm btn-outline-danger"
-            onclick="excluirRegistro(${indiceOriginal})"
-            title="Excluir">
-
-            <i class="bi bi-trash"></i>
-
-        </button>
+                            <div
+                                style="
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    gap:4px;
+                                    flex-wrap:nowrap;
+                                ">
 
 
-        <button
-            class="btn btn-sm btn-outline-success"
-            onclick="reportarRegistro(${indiceOriginal})"
-            title="Gerar Report">
+                                <button
+                                    class="btn btn-sm btn-outline-primary"
+                                    onclick="editarRegistro(${indiceOriginal})"
+                                    title="Editar"
+                                    style="
+                                        width:32px;
+                                        height:32px;
+                                        padding:0;
+                                    ">
 
-            <i class="bi bi-save"></i>
+                                    <i class="bi bi-pencil"></i>
 
-        </button>
+                                </button>
 
-    </div>
 
-</td>
+                                <button
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="excluirRegistro(${indiceOriginal})"
+                                    title="Excluir"
+                                    style="
+                                        width:32px;
+                                        height:32px;
+                                        padding:0;
+                                    ">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+
+                                <button
+                                    class="btn btn-sm btn-outline-success"
+                                    onclick="reportarRegistro(${indiceOriginal})"
+                                    title="Gerar Report"
+                                    style="
+                                        width:32px;
+                                        height:32px;
+                                        padding:0;
+                                    ">
+
+                                    <i class="bi bi-save"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
 
                     </tr>
 
@@ -2103,15 +2603,9 @@ FILTROS E ORDENAÇÃO DA TABELA
     }
 
 
-
-    // =================================================
-    // CONTADORES
-    // =================================================
-
     function atualizarContadores(
         quantidade
     ) {
-
 
         const total =
             registros.length;
@@ -2136,7 +2630,6 @@ FILTROS E ORDENAÇÃO DA TABELA
         if (
             contador
         ) {
-
 
             const temPesquisa =
                 (
@@ -2203,11 +2696,6 @@ FILTROS E ORDENAÇÃO DA TABELA
     }
 
 
-
-    // =================================================
-    // EVENTOS
-    // =================================================
-
     if (filtro) {
 
         filtro.addEventListener(
@@ -2254,7 +2742,6 @@ FILTROS E ORDENAÇÃO DA TABELA
             "click",
             function() {
 
-
                 if (pesquisa) {
 
                     pesquisa.value = "";
@@ -2293,35 +2780,10 @@ FILTROS E ORDENAÇÃO DA TABELA
     }
 
 
-
-    // =================================================
-    // ATUALIZA AUTOMATICAMENTE
-    // QUANDO A TABELA NORMAL FOR ATUALIZADA
-    // =================================================
-
-    const atualizarOriginal =
-        window.atualizarTabela;
-
-
-    if (
-        typeof atualizarOriginal ===
-        "function"
-    ) {
-
-        window.atualizarTabela =
-            function(lista) {
-
-                aplicarFiltrosETabela();
-
-            };
-
-    }
-
-
-
-    // =================================================
-    // OBSERVADOR
-    // =================================================
+    /*
+     * Atualização periódica para manter
+     * filtros e registros sincronizados.
+     */
 
     setInterval(
         function() {

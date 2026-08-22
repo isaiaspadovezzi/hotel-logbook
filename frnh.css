@@ -1,6 +1,7 @@
 /* =====================================================
    CAPA FRNH
-   FORMATO 18 CM
+   REGISTRO DE HÓSPEDES
+   FORMATO HORIZONTAL - 18 CM
    ROTACIONADA 90 GRAUS
    ===================================================== */
 
@@ -8,6 +9,10 @@
     display: none;
 }
 
+
+/* =====================================================
+   IMPRESSÃO
+   ===================================================== */
 
 @media print {
 
@@ -19,7 +24,6 @@
 
     html,
     body {
-
         width: 210mm;
         height: 297mm;
 
@@ -27,7 +31,6 @@
         padding: 0 !important;
 
         background: #ffffff !important;
-
     }
 
 
@@ -44,12 +47,12 @@
 
 
     /* =================================================
-       CAPA
-       
-       ORIGINAL:
+       CAPA FRNH
+
+       TAMANHO ORIGINAL:
        180mm x 65mm
 
-       APÓS ROTACIONAR:
+       APÓS A ROTAÇÃO:
        65mm x 180mm
        ================================================= */
 
@@ -80,7 +83,7 @@
         background: #ffffff !important;
 
         border:
-            0.6mm solid #bfc8c1 !important;
+            0.7mm solid #9eaaa2 !important;
 
         border-radius:
             2.5mm !important;
@@ -116,7 +119,7 @@
         background: #ffffff !important;
 
         border-bottom:
-            1mm solid #198754 !important;
+            1.2mm solid #198754 !important;
 
         display: flex !important;
 
@@ -198,8 +201,11 @@
 
         box-sizing: border-box !important;
 
+        border-top:
+            0.7mm solid #9eaaa2 !important;
+
         border-bottom:
-            0.5mm solid #bfc8c1 !important;
+            0.7mm solid #9eaaa2 !important;
 
     }
 
@@ -216,7 +222,7 @@
 
         justify-content: center !important;
 
-        background: #f1f5f2 !important;
+        background: #eef3ef !important;
 
         color: #198754 !important;
 
@@ -225,7 +231,9 @@
         font-weight: 700 !important;
 
         border-right:
-            0.5mm solid #bfc8c1 !important;
+            0.7mm solid #9eaaa2 !important;
+
+        box-sizing: border-box !important;
 
     }
 
@@ -249,6 +257,8 @@
         font-size: 15pt !important;
 
         font-weight: 800 !important;
+
+        box-sizing: border-box !important;
 
     }
 
@@ -279,6 +289,9 @@
         font-size: 11pt !important;
 
         font-weight: 700 !important;
+
+        border-bottom:
+            0.7mm solid #9eaaa2 !important;
 
     }
 

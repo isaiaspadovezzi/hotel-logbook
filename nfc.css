@@ -1,0 +1,204 @@
+/* =====================================================
+   CAPA NF-C
+   CUPONS FISCAIS - NF-C
+   ===================================================== */
+
+#capaNfcImpressao {
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   IMPRESSÃO
+   ===================================================== */
+
+@media print {
+
+    @page {
+
+        size: A4 portrait;
+
+        margin: 0;
+
+    }
+
+
+    html,
+    body {
+
+        width: 210mm;
+
+        height: 297mm;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        background: #ffffff !important;
+
+    }
+
+
+    /* =================================================
+       ESCONDE O LOGBOOK
+       ================================================= */
+
+    body.imprimindo-nfc
+    > *:not(#capaNfcImpressao) {
+
+        display: none !important;
+
+    }
+
+
+    /* =================================================
+       CAPA NF-C
+
+       MESMO PADRÃO DA CAPA CAIXA
+       ================================================= */
+
+    body.imprimindo-nfc
+    #capaNfcImpressao {
+
+        display: flex !important;
+
+        position: fixed !important;
+
+        left: 10mm !important;
+
+        bottom: 8mm !important;
+
+        width: 190mm !important;
+
+        height: 55mm !important;
+
+        box-sizing: border-box !important;
+
+        background: #ffffff !important;
+
+        border:
+            0.6mm solid #bfc8c1 !important;
+
+        border-radius:
+            3mm !important;
+
+        overflow: hidden !important;
+
+        flex-direction: column !important;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif !important;
+
+        color: #202020 !important;
+
+    }
+
+
+    /* =================================================
+       CABEÇALHO VERDE
+       ================================================= */
+
+    .nfc-titulo {
+
+        width: 100% !important;
+
+        height: 16mm !important;
+
+        min-height: 16mm !important;
+
+        box-sizing: border-box !important;
+
+        background: #198754 !important;
+
+        color: #ffffff !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: flex-start !important;
+
+        padding:
+            0 7mm !important;
+
+        font-size: 14pt !important;
+
+        font-weight: 700 !important;
+
+        letter-spacing: 0.1px !important;
+
+    }
+
+
+    /* =================================================
+       CONTEÚDO
+       ================================================= */
+
+    .nfc-conteudo {
+
+        position: relative !important;
+
+        flex: 1 !important;
+
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        background: #ffffff !important;
+
+        padding:
+            4mm 20mm !important;
+
+    }
+
+
+    /* =================================================
+       DATA
+       ================================================= */
+
+    .nfc-data {
+
+        text-align: center !important;
+
+        font-size: 19pt !important;
+
+        font-weight: 800 !important;
+
+        color: #202020 !important;
+
+        line-height: 1.1 !important;
+
+    }
+
+
+    /* =================================================
+       LOGO
+       ================================================= */
+
+    .nfc-logo {
+
+        position: absolute !important;
+
+        right: 7mm !important;
+
+        top: 4mm !important;
+
+        width: 21mm !important;
+
+        height: auto !important;
+
+        object-fit: contain !important;
+
+    }
+
+}

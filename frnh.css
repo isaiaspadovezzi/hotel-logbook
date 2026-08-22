@@ -1,43 +1,28 @@
 /* =====================================================
    CAPA FRNH
-   REGISTRO DE HÓSPEDES
+   FORMATO HORIZONTAL - 18 CM
    ===================================================== */
 
 #capaFrnhImpressao {
-
     display: none;
-
 }
 
-
-/* =====================================================
-   IMPRESSÃO
-   ===================================================== */
 
 @media print {
 
     @page {
-
         size: A4 portrait;
-
         margin: 0;
-
     }
 
 
     html,
     body {
-
         width: 210mm;
-
         height: 297mm;
-
         margin: 0 !important;
-
         padding: 0 !important;
-
         background: #ffffff !important;
-
     }
 
 
@@ -47,14 +32,14 @@
 
     body.imprimindo-frnh
     > *:not(#capaFrnhImpressao) {
-
         display: none !important;
-
     }
 
 
     /* =================================================
-       CAPA
+       CAPA FRNH
+       180mm x 65mm
+       CENTRALIZADA NA A4
        ================================================= */
 
     body.imprimindo-frnh
@@ -64,13 +49,15 @@
 
         position: fixed !important;
 
-        left: 10mm !important;
+        left: 50% !important;
 
         bottom: 8mm !important;
 
-        width: 190mm !important;
+        transform: translateX(-50%) !important;
 
-        height: 95mm !important;
+        width: 180mm !important;
+
+        height: 65mm !important;
 
         box-sizing: border-box !important;
 
@@ -78,7 +65,7 @@
 
         border: 0.6mm solid #bfc8c1 !important;
 
-        border-radius: 2mm !important;
+        border-radius: 2.5mm !important;
 
         overflow: hidden !important;
 
@@ -102,9 +89,9 @@
 
         width: 100% !important;
 
-        height: 35mm !important;
+        height: 25mm !important;
 
-        min-height: 35mm !important;
+        min-height: 25mm !important;
 
         box-sizing: border-box !important;
 
@@ -122,7 +109,7 @@
 
         padding:
             0
-            10mm !important;
+            8mm !important;
 
     }
 
@@ -135,11 +122,11 @@
 
         position: absolute !important;
 
-        left: 12mm !important;
+        left: 7mm !important;
 
-        top: 6mm !important;
+        top: 4mm !important;
 
-        width: 28mm !important;
+        width: 22mm !important;
 
         height: auto !important;
 
@@ -160,17 +147,17 @@
 
         color: #202020 !important;
 
-        font-size: 19pt !important;
+        font-size: 15pt !important;
 
         font-weight: 800 !important;
 
-        line-height: 1.2 !important;
+        line-height: 1.15 !important;
 
         text-transform: uppercase !important;
 
         padding:
             0
-            5mm !important;
+            4mm !important;
 
     }
 
@@ -183,9 +170,9 @@
 
         width: 100% !important;
 
-        height: 22mm !important;
+        height: 17mm !important;
 
-        min-height: 22mm !important;
+        min-height: 17mm !important;
 
         display: grid !important;
 
@@ -217,7 +204,7 @@
 
         color: #198754 !important;
 
-        font-size: 16pt !important;
+        font-size: 12pt !important;
 
         font-weight: 700 !important;
 
@@ -243,7 +230,7 @@
 
         color: #202020 !important;
 
-        font-size: 19pt !important;
+        font-size: 15pt !important;
 
         font-weight: 800 !important;
 
@@ -267,14 +254,14 @@
         align-items: flex-start !important;
 
         padding:
-            6mm
-            7mm !important;
+            4mm
+            5mm !important;
 
         background: #ffffff !important;
 
         color: #3f4842 !important;
 
-        font-size: 15pt !important;
+        font-size: 11pt !important;
 
         font-weight: 700 !important;
 

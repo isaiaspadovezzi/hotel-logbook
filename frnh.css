@@ -1,0 +1,282 @@
+/* =====================================================
+   CAPA FRNH
+   REGISTRO DE HÓSPEDES
+   ===================================================== */
+
+
+/* =====================================================
+   CAPA ESCONDIDA NA TELA
+   ===================================================== */
+
+#capaFrnhImpressao {
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   IMPRESSÃO
+   ===================================================== */
+
+@media print {
+
+    @page {
+
+        size: A4 portrait;
+
+        margin: 0;
+
+    }
+
+
+    html,
+    body {
+
+        width: 210mm;
+
+        height: 297mm;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        background: #ffffff !important;
+
+    }
+
+
+    /* =================================================
+       ESCONDE O LOGBOOK
+       ================================================= */
+
+    body.imprimindo-frnh
+    > *:not(#capaFrnhImpressao) {
+
+        display: none !important;
+
+    }
+
+
+    /* =================================================
+       CAPA FRNH
+       ================================================= */
+
+    body.imprimindo-frnh
+    #capaFrnhImpressao {
+
+        display: flex !important;
+
+        position: fixed !important;
+
+        left: 10mm !important;
+
+        bottom: 8mm !important;
+
+        width: 190mm !important;
+
+        height: 88mm !important;
+
+        box-sizing: border-box !important;
+
+        background: #ffffff !important;
+
+        border: 0.6mm solid #bfc8c1 !important;
+
+        border-radius: 3mm !important;
+
+        overflow: hidden !important;
+
+        flex-direction: column !important;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif !important;
+
+        color: #202020 !important;
+
+    }
+
+
+    /* =================================================
+       CABEÇALHO
+       ================================================= */
+
+    .frnh-cabecalho {
+
+        width: 100% !important;
+
+        height: 28mm !important;
+
+        min-height: 28mm !important;
+
+        box-sizing: border-box !important;
+
+        background: #198754 !important;
+
+        color: #ffffff !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: space-between !important;
+
+        padding:
+            0
+            8mm
+            0
+            8mm !important;
+
+    }
+
+
+    /* =================================================
+       TÍTULO
+       ================================================= */
+
+    .frnh-titulo {
+
+        flex: 1 !important;
+
+        text-align: center !important;
+
+        font-size: 18pt !important;
+
+        font-weight: 800 !important;
+
+        line-height: 1.15 !important;
+
+        text-transform: uppercase !important;
+
+        padding:
+            0
+            5mm !important;
+
+    }
+
+
+    /* =================================================
+       LOGO
+       ================================================= */
+
+    .frnh-logo {
+
+        width: 24mm !important;
+
+        height: auto !important;
+
+        object-fit: contain !important;
+
+        flex-shrink: 0 !important;
+
+    }
+
+
+    /* =================================================
+       LINHA CHECK OUT + DATA
+       ================================================= */
+
+    .frnh-checkout {
+
+        width: 100% !important;
+
+        height: 20mm !important;
+
+        min-height: 20mm !important;
+
+        display: grid !important;
+
+        grid-template-columns:
+            1fr
+            1.2fr !important;
+
+        box-sizing: border-box !important;
+
+        border-top:
+            0.5mm solid #bfc8c1 !important;
+
+        border-bottom:
+            0.5mm solid #bfc8c1 !important;
+
+    }
+
+
+    /* =================================================
+       TEXTO CHECK OUT
+       ================================================= */
+
+    .frnh-checkout-label {
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        font-size: 15pt !important;
+
+        font-weight: 700 !important;
+
+        color: #198754 !important;
+
+        background: #ffffff !important;
+
+    }
+
+
+    /* =================================================
+       DATA
+       ================================================= */
+
+    .frnh-data {
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+        background: #198754 !important;
+
+        color: #ffffff !important;
+
+        font-size: 19pt !important;
+
+        font-weight: 800 !important;
+
+    }
+
+
+    /* =================================================
+       ASSINATURA
+       ================================================= */
+
+    .frnh-assinatura {
+
+        flex: 1 !important;
+
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+
+        display: flex !important;
+
+        align-items: flex-start !important;
+
+        padding:
+            5mm
+            6mm !important;
+
+        background: #ffffff !important;
+
+        font-size: 14pt !important;
+
+        font-weight: 700 !important;
+
+        color: #303530 !important;
+
+    }
+
+}

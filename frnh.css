@@ -1,6 +1,7 @@
 /* =====================================================
    CAPA FRNH
-   FORMATO HORIZONTAL - 18 CM
+   FORMATO 18 CM
+   ROTACIONADA 90 GRAUS
    ===================================================== */
 
 #capaFrnhImpressao {
@@ -18,11 +19,15 @@
 
     html,
     body {
+
         width: 210mm;
         height: 297mm;
+
         margin: 0 !important;
         padding: 0 !important;
+
         background: #ffffff !important;
+
     }
 
 
@@ -32,14 +37,20 @@
 
     body.imprimindo-frnh
     > *:not(#capaFrnhImpressao) {
+
         display: none !important;
+
     }
 
 
     /* =================================================
-       CAPA FRNH
+       CAPA
+       
+       ORIGINAL:
        180mm x 65mm
-       CENTRALIZADA NA A4
+
+       APÓS ROTACIONAR:
+       65mm x 180mm
        ================================================= */
 
     body.imprimindo-frnh
@@ -49,23 +60,30 @@
 
         position: fixed !important;
 
-        left: 50% !important;
-
-        bottom: 8mm !important;
-
-        transform: translateX(-50%) !important;
-
         width: 180mm !important;
 
         height: 65mm !important;
+
+        left: 50% !important;
+
+        top: 50% !important;
+
+        transform:
+            translate(-50%, -50%)
+            rotate(90deg) !important;
+
+        transform-origin:
+            center center !important;
 
         box-sizing: border-box !important;
 
         background: #ffffff !important;
 
-        border: 0.6mm solid #bfc8c1 !important;
+        border:
+            0.6mm solid #bfc8c1 !important;
 
-        border-radius: 2.5mm !important;
+        border-radius:
+            2.5mm !important;
 
         overflow: hidden !important;
 
@@ -97,7 +115,8 @@
 
         background: #ffffff !important;
 
-        border-bottom: 1mm solid #198754 !important;
+        border-bottom:
+            1mm solid #198754 !important;
 
         display: flex !important;
 
@@ -108,8 +127,7 @@
         position: relative !important;
 
         padding:
-            0
-            8mm !important;
+            0 8mm !important;
 
     }
 
@@ -156,8 +174,7 @@
         text-transform: uppercase !important;
 
         padding:
-            0
-            4mm !important;
+            0 4mm !important;
 
     }
 
@@ -177,8 +194,7 @@
         display: grid !important;
 
         grid-template-columns:
-            1fr
-            1fr !important;
+            1fr 1fr !important;
 
         box-sizing: border-box !important;
 
@@ -254,8 +270,7 @@
         align-items: flex-start !important;
 
         padding:
-            4mm
-            5mm !important;
+            4mm 5mm !important;
 
         background: #ffffff !important;
 

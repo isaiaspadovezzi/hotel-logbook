@@ -105,7 +105,7 @@
        ESCONDE TODO O LOGBOOK
        ------------------------------------------------- */
 
-    body > *:not(#capaCaixaImpressao) {
+    body.imprimindo-caixa > *:not(#capaCaixaImpressao) {
 
         display: none !important;
 
@@ -117,6 +117,7 @@
        FICA NA PARTE INFERIOR DA FOLHA
        ================================================= */
 
+    body.imprimindo-caixa
     #capaCaixaImpressao {
 
         display: flex !important;
@@ -1487,6 +1488,44 @@ SÓ APARECE NA IMPRESSÃO
 
 
 <!-- =====================================================
+ÁREA DA CAPA NF-C
+NÃO APARECE NO LOGBOOK NORMAL
+SÓ APARECE NA IMPRESSÃO
+====================================================== -->
+
+<div
+    id="capaNfcImpressao"
+    aria-hidden="true">
+
+    <div class="nfc-titulo">
+
+        CUPONS FISCAIS - NF-C
+
+    </div>
+
+
+    <div class="nfc-conteudo">
+
+        <div
+            class="nfc-data"
+            id="nfcData">
+
+            -
+
+        </div>
+
+
+        <img
+            src="img/logo.png"
+            class="nfc-logo"
+            alt="ibis Styles">
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
 SCRIPTS
 ====================================================== -->
 
@@ -1812,6 +1851,22 @@ CAPA CAIXA
 
             /*
              * ---------------------------------------------
+             * ATIVA MODO DE IMPRESSÃO DA CAPA CAIXA
+             * ---------------------------------------------
+             */
+
+            document.body.classList.remove(
+                "imprimindo-frnh",
+                "imprimindo-nfc"
+            );
+
+            document.body.classList.add(
+                "imprimindo-caixa"
+            );
+
+
+            /*
+             * ---------------------------------------------
              * IMPRIME
              * ---------------------------------------------
              */
@@ -1845,6 +1900,26 @@ CAPA CAIXA
 
 
 })();
+
+</script>
+
+
+<!-- =====================================================
+LIMPA MODO DE IMPRESSÃO DA CAPA CAIXA
+====================================================== -->
+
+<script>
+
+window.addEventListener(
+    "afterprint",
+    function () {
+
+        document.body.classList.remove(
+            "imprimindo-caixa"
+        );
+
+    }
+);
 
 </script>
 

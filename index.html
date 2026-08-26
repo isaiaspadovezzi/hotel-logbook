@@ -319,7 +319,150 @@
 </style>
 <link rel="stylesheet" href="frnh.css">
     <link rel="stylesheet" href="nfc.css">
+<style>
 
+/* =====================================================
+   LISTA DE SUGESTÕES DE QUARTOS
+   ===================================================== */
+
+.lista-sugestoes-quartos {
+
+    position: absolute;
+
+    top: 100%;
+
+    left: 0;
+
+    width: 100%;
+
+    max-height: 210px;
+
+    overflow-y: auto;
+
+    margin-top: 4px;
+
+    background: #ffffff;
+
+    border: 1px solid #ced4da;
+
+    border-radius: 6px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.12);
+
+    z-index: 1055;
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   CADA QUARTO
+   ===================================================== */
+
+.sugestao-quarto {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 7px 12px;
+
+    min-height: 48px;
+
+    cursor: pointer;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+    background: #ffffff;
+
+    transition:
+        background-color 0.15s ease;
+
+}
+
+
+.sugestao-quarto:last-child {
+
+    border-bottom: none;
+
+}
+
+
+/* =====================================================
+   NÚMERO DO QUARTO
+   ===================================================== */
+
+.sugestao-quarto-numero {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    color: #212529;
+
+}
+
+
+/* =====================================================
+   TIPO DO QUARTO
+   ===================================================== */
+
+.sugestao-quarto-tipo {
+
+    margin-top: 2px;
+
+    font-size: 11px;
+
+    line-height: 1.1;
+
+    color: #6c757d;
+
+}
+
+
+/* =====================================================
+   EFEITO AO PASSAR O MOUSE
+   ===================================================== */
+
+.sugestao-quarto:hover {
+
+    background: #f1f7f3;
+
+}
+
+
+.sugestao-quarto:hover
+.sugestao-quarto-numero {
+
+    color: #198754;
+
+}
+
+
+/* =====================================================
+   QUANDO NÃO HÁ RESULTADOS
+   ===================================================== */
+
+.sugestao-quarto-vazio {
+
+    padding: 10px 12px;
+
+    font-size: 13px;
+
+    color: #6c757d;
+
+    text-align: center;
+
+}
+
+</style>
 
 </head>
 

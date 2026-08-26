@@ -547,14 +547,56 @@ function atualizarTabela(
 
             </td>
 
-            <td>
+           <td>
 
-                <strong>
-                    ${registro.quarto || "-"}
-                </strong>
+    ${
+        registro.quarto
+            ? `
+                <div class="quarto-card">
 
-            </td>
+                    <strong
+                        class="quarto-card-numero">
 
+                        ${registro.quarto}
+
+                    </strong>
+
+
+                    ${
+                        typeof QUARTOS_HOTEL !== "undefined"
+                            ? (
+                                QUARTOS_HOTEL.find(
+                                    function(q) {
+                                        return q.numero ===
+                                            String(registro.quarto);
+                                    }
+                                )?.tipo
+                                ? `
+                                    <div
+                                        class="quarto-card-tipo">
+
+                                        ${
+                                            QUARTOS_HOTEL.find(
+                                                function(q) {
+                                                    return q.numero ===
+                                                        String(registro.quarto);
+                                                }
+                                            ).tipo
+                                        }
+
+                                    </div>
+                                `
+                                : ""
+                            )
+                            : ""
+                    }
+
+                </div>
+            `
+            : "-"
+    }
+
+</td>
             <td>
                 ${resumo}
             </td>

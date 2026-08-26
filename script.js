@@ -1236,3 +1236,93 @@ function abrirDiaArquivo(data) {
     );
 
 }
+/* =====================================================
+   PROCEDIMENTO PADRÃO
+   Mostra o segundo campo somente quando a atividade
+   selecionada for "Procedimentos"
+   ===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const atividade =
+            document.getElementById(
+                "atividade"
+            );
+
+        const grupoProcedimento =
+            document.getElementById(
+                "grupoProcedimento"
+            );
+
+        const procedimentoPadrao =
+            document.getElementById(
+                "procedimentoPadrao"
+            );
+
+
+        /* ---------------------------------------------
+           VERIFICA SE OS CAMPOS EXISTEM
+           --------------------------------------------- */
+
+        if (
+            !atividade ||
+            !grupoProcedimento ||
+            !procedimentoPadrao
+        ) {
+
+            console.warn(
+                "Campos de Procedimento padrão não encontrados."
+            );
+
+            return;
+
+        }
+
+
+        /* ---------------------------------------------
+           MOSTRA / ESCONDE O CAMPO
+           --------------------------------------------- */
+
+        function atualizarProcedimento() {
+
+            if (
+                atividade.value ===
+                "Procedimentos"
+            ) {
+
+                grupoProcedimento.style.display =
+                    "block";
+
+            } else {
+
+                grupoProcedimento.style.display =
+                    "none";
+
+                procedimentoPadrao.value =
+                    "";
+
+            }
+
+        }
+
+
+        /* ---------------------------------------------
+           QUANDO A ATIVIDADE MUDA
+           --------------------------------------------- */
+
+        atividade.addEventListener(
+            "change",
+            atualizarProcedimento
+        );
+
+
+        /* ---------------------------------------------
+           VERIFICA O ESTADO INICIAL
+           --------------------------------------------- */
+
+        atualizarProcedimento();
+
+    }
+);

@@ -1238,8 +1238,6 @@ function abrirDiaArquivo(data) {
 }
 /* =====================================================
    PROCEDIMENTO PADRÃO
-   Mostra o segundo campo somente quando a atividade
-   selecionada for "Procedimentos"
    ===================================================== */
 
 document.addEventListener(
@@ -1261,6 +1259,11 @@ document.addEventListener(
                 "procedimentoPadrao"
             );
 
+        const descricao =
+            document.getElementById(
+                "descricao"
+            );
+
 
         /* ---------------------------------------------
            VERIFICA SE OS CAMPOS EXISTEM
@@ -1269,7 +1272,8 @@ document.addEventListener(
         if (
             !atividade ||
             !grupoProcedimento ||
-            !procedimentoPadrao
+            !procedimentoPadrao ||
+            !descricao
         ) {
 
             console.warn(
@@ -1282,7 +1286,7 @@ document.addEventListener(
 
 
         /* ---------------------------------------------
-           MOSTRA / ESCONDE O CAMPO
+           MOSTRAR / ESCONDER PROCEDIMENTO
            --------------------------------------------- */
 
         function atualizarProcedimento() {
@@ -1319,10 +1323,73 @@ document.addEventListener(
 
 
         /* ---------------------------------------------
-           VERIFICA O ESTADO INICIAL
+           QUANDO O PROCEDIMENTO MUDA
+           --------------------------------------------- */
+
+        procedimentoPadrao.addEventListener(
+            "change",
+            function () {
+
+                const valor =
+                    procedimentoPadrao.value;
+
+
+                /*
+                 * "Outro" não deve aparecer
+                 * na descrição.
+                 *
+                 * Deixamos a descrição livre.
+                 */
+
+                if (
+                    valor === "Outro"
+                ) {
+
+                    descricao.value = "";
+
+                    descricao.focus();
+
+                    return;
+
+                }
+
+
+                /*
+                 * Se o usuário voltar para
+                 * "Selecione um procedimento...",
+                 * limpa a descrição.
+                 */
+
+                if (
+                    valor === ""
+                ) {
+
+                    descricao.value = "";
+
+                    return;
+
+                }
+
+
+                /*
+                 * Procedimento padrão:
+                 * coloca automaticamente
+                 * o texto na descrição.
+                 */
+
+                descricao.value =
+                    valor;
+
+            }
+        );
+
+
+        /* ---------------------------------------------
+           ESTADO INICIAL
            --------------------------------------------- */
 
         atualizarProcedimento();
 
     }
+);
 );

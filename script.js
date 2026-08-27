@@ -479,6 +479,20 @@ function atualizarTabela(
 
     lista.forEach(
         (registro, indice) => {
+            const quartoInfo =
+    Array.isArray(QUARTOS_HOTEL)
+        ? QUARTOS_HOTEL.find(
+            function(quarto) {
+                return String(quarto.numero) ===
+                    String(registro.quarto);
+            }
+        )
+        : null;
+
+const tipoQuarto =
+    registro.tipoQuarto ||
+    quartoInfo?.tipo ||
+    "";
 
             let resumo = "";
 
@@ -550,7 +564,7 @@ function atualizarTabela(
 
             </td>
 
-           <td>
+         <td>
 
     ${
         registro.quarto
@@ -565,12 +579,12 @@ function atualizarTabela(
                     </strong>
 
                     ${
-                        registro.tipoQuarto
+                        tipoQuarto
                             ? `
                                 <div
                                     class="quarto-card-tipo">
 
-                                    ${registro.tipoQuarto}
+                                    ${tipoQuarto}
 
                                 </div>
                             `

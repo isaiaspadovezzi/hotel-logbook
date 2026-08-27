@@ -94,266 +94,245 @@ const QUARTOS_HOTEL = [
     { numero: "861", tipo: "DBB" }
 
 ];
+
+
 /* =====================================================
-   PESQUISA DE QUARTOS
+   INICIALIZAÇÃO
    ===================================================== */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+function iniciarPesquisaQuartos() {
 
-        const campoQuarto =
-            document.getElementById(
-                "quarto"
-            );
+    const campoQuarto =
+        document.getElementById("quarto");
 
-        const listaSugestoes =
-            document.getElementById(
-                "listaSugestoesQuartos"
-            );
+    const listaSugestoes =
+        document.getElementById(
+            "listaSugestoesQuartos"
+        );
 
 
-        /* ---------------------------------------------
-           VERIFICA SE OS ELEMENTOS EXISTEM
-           --------------------------------------------- */
+    if (
+        !campoQuarto ||
+        !listaSugestoes
+    ) {
 
-        if (
-            !campoQuarto ||
-            !listaSugestoes ||
-            !Array.isArray(QUARTOS_HOTEL)
-        ) {
+        console.warn(
+            "Campo de quarto não encontrado."
+        );
 
-            console.warn(
-                "Sistema de quartos não encontrado."
-            );
+        return;
+
+    }
+
+
+    /* =================================================
+       MOSTRAR SUGESTÕES
+       ================================================= */
+
+    function mostrarSugestoes() {
+
+        const busca =
+            campoQuarto.value
+                .trim()
+                .toLowerCase();
+
+
+        listaSugestoes.innerHTML = "";
+
+
+        if (busca === "") {
+
+            listaSugestoes.style.display =
+                "none";
 
             return;
 
         }
 
 
-        /* ---------------------------------------------
-           MOSTRAR SUGESTÕES
-           --------------------------------------------- */
+        const resultados =
+            QUARTOS_HOTEL.filter(
+                function(quarto) {
 
-        function mostrarSugestoes() {
-
-            const busca =
-                campoQuarto.value
-                    .trim()
-                    .toLowerCase();
-
-
-            listaSugestoes.innerHTML = "";
-
-
-            /*
-             * Se não digitou nada,
-             * não mostra a lista.
-             */
-
-            if (busca === "") {
-
-                listaSugestoes.style.display =
-                    "none";
-
-                return;
-
-            }
-
-
-            /*
-             * Procura pelo número do quarto.
-             */
-
-            const resultados =
-                QUARTOS_HOTEL.filter(
-                    function (quarto) {
-
-                        return quarto.numero
-                            .toLowerCase()
-                            .startsWith(busca);
-
-                    }
-                );
-
-
-            /*
-             * Nenhum resultado.
-             */
-
-            if (
-                resultados.length === 0
-            ) {
-
-                listaSugestoes.innerHTML = `
-
-                    <div
-                        class="sugestao-quarto-vazio">
-
-                        Nenhum quarto encontrado.
-
-                    </div>
-
-                `;
-
-                listaSugestoes.style.display =
-                    "block";
-
-                return;
-
-            }
-
-
-            /*
-             * Cria as opções.
-             */
-
-            resultados.forEach(
-                function (quarto) {
-
-                    const item =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    item.className =
-                        "sugestao-quarto";
-
-
-                    item.innerHTML = `
-
-                        <span
-                            class="sugestao-quarto-numero">
-
-                            ${quarto.numero}
-
-                        </span>
-
-
-                        <span
-                            class="sugestao-quarto-tipo">
-
-                            ${quarto.tipo}
-
-                        </span>
-
-                    `;
-
-
-                    /*
-                     * Quando clicar no quarto.
-                     */
-
-                    item.addEventListener(
-                        "mousedown",
-                        function (evento) {
-
-                            evento.preventDefault();
-
-                            selecionarQuarto(
-                                quarto
-                            );
-
-                        }
-                    );
-
-
-                    listaSugestoes.appendChild(
-                        item
-                    );
+                    return quarto.numero
+                        .toLowerCase()
+                        .startsWith(busca);
 
                 }
             );
 
 
+        if (
+            resultados.length === 0
+        ) {
+
+            listaSugestoes.innerHTML = `
+
+                <div
+                    class="sugestao-quarto-vazio">
+
+                    Nenhum quarto encontrado.
+
+                </div>
+
+            `;
+
             listaSugestoes.style.display =
                 "block";
 
-        }
-
-
-        /* ---------------------------------------------
-           SELECIONAR QUARTO
-           --------------------------------------------- */
-
-        function selecionarQuarto(
-            quarto
-        ) {
-
-            campoQuarto.value =
-                quarto.numero;
-
-
-            /*
-             * Guarda o tipo do quarto
-             * sem mostrar outro campo.
-             */
-
-            campoQuarto.dataset.tipo =
-                quarto.tipo;
-
-
-            listaSugestoes.innerHTML =
-                "";
-
-            listaSugestoes.style.display =
-                "none";
+            return;
 
         }
 
 
-        /* ---------------------------------------------
-           DIGITAÇÃO
-           --------------------------------------------- */
+        resultados.forEach(
+            function(quarto) {
 
-        campoQuarto.addEventListener(
-            "input",
-            mostrarSugestoes
-        );
-
-
-        /* ---------------------------------------------
-           FOCO NO CAMPO
-           --------------------------------------------- */
-
-        campoQuarto.addEventListener(
-            "focus",
-            function () {
-
-                if (
-                    campoQuarto.value.trim() !== ""
-                ) {
-
-                    mostrarSugestoes();
-
-                }
-
-            }
-        );
+                const item =
+                    document.createElement(
+                        "div"
+                    );
 
 
-        /* ---------------------------------------------
-           PERDEU O FOCO
-           --------------------------------------------- */
+                item.className =
+                    "sugestao-quarto";
 
-        campoQuarto.addEventListener(
-            "blur",
-            function () {
 
-                setTimeout(
-                    function () {
+                item.innerHTML = `
+
+                    <span
+                        class="sugestao-quarto-numero">
+
+                        ${quarto.numero}
+
+                    </span>
+
+                    <span
+                        class="sugestao-quarto-tipo">
+
+                        ${quarto.tipo}
+
+                    </span>
+
+                `;
+
+
+                item.addEventListener(
+                    "mousedown",
+                    function(evento) {
+
+                        evento.preventDefault();
+
+                        campoQuarto.value =
+                            quarto.numero;
+
+                        campoQuarto.dataset.tipo =
+                            quarto.tipo;
+
+                        listaSugestoes.innerHTML =
+                            "";
 
                         listaSugestoes.style.display =
                             "none";
 
-                    },
-                    150
+                    }
+                );
+
+
+                listaSugestoes.appendChild(
+                    item
                 );
 
             }
         );
 
+
+        listaSugestoes.style.display =
+            "block";
+
     }
-);
+
+
+    /* =================================================
+       DIGITAÇÃO
+       ================================================= */
+
+    campoQuarto.addEventListener(
+        "input",
+        function() {
+
+            /*
+             * Se o usuário alterar o número
+             * manualmente, apagamos o tipo anterior.
+             */
+
+            delete campoQuarto.dataset.tipo;
+
+            mostrarSugestoes();
+
+        }
+    );
+
+
+    /* =================================================
+       FOCO
+       ================================================= */
+
+    campoQuarto.addEventListener(
+        "focus",
+        function() {
+
+            if (
+                campoQuarto.value.trim() !== ""
+            ) {
+
+                mostrarSugestoes();
+
+            }
+
+        }
+    );
+
+
+    /* =================================================
+       PERDEU O FOCO
+       ================================================= */
+
+    campoQuarto.addEventListener(
+        "blur",
+        function() {
+
+            setTimeout(
+                function() {
+
+                    listaSugestoes.style.display =
+                        "none";
+
+                },
+                200
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   INICIA O SISTEMA
+   ===================================================== */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        iniciarPesquisaQuartos
+    );
+
+} else {
+
+    iniciarPesquisaQuartos();
+
+}

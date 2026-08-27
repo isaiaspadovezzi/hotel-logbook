@@ -259,18 +259,19 @@ function htmlQuartoReport(registro) {
                     tipo
                         ? `
 
-                            <span
-                                style="
-                                    margin-top: 6px;
-                                    font-size: 13px;
-                                    line-height: 1;
-                                    font-weight: 600;
-                                    color: #6c757d;
-                                    letter-spacing: 0.5px;
-                                "
-                            >
-                                ${tipo}
-                            </span>
+                        <span style="
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 600;
+    color: #6c757d;
+    letter-spacing: 0.5px;
+    text-align: center;
+">
+    ${tipo}
+</span>
 
                         `
                         : ""

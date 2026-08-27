@@ -1,7 +1,7 @@
 // =====================================================
 // LOGBOOK - REPORTS
 // Sistema de notificações
-// Versão 1.1
+// Versão 1.2
 // =====================================================
 
 
@@ -19,8 +19,276 @@ const REPORTS_CONFIG = {
 
 
 // =====================================================
+// OBTER TIPO DO QUARTO
+// =====================================================
+
+function obterTipoQuartoReport(registro) {
+
+    if (!registro) {
+        return "";
+    }
+
+    // 1. Tipo já salvo no registro
+    if (
+        registro.tipoQuarto !== undefined &&
+        registro.tipoQuarto !== null &&
+        String(registro.tipoQuarto).trim() !== ""
+    ) {
+        return String(registro.tipoQuarto).trim();
+    }
+
+    const numero =
+        String(registro.quarto || "").trim();
+
+    if (!numero) {
+        return "";
+    }
+
+
+    // 2. Tipo atualmente associado ao campo de quarto
+
+    const campoQuarto =
+        document.getElementById("quarto");
+
+    if (
+        campoQuarto &&
+        String(campoQuarto.value || "").trim() === numero &&
+        campoQuarto.dataset &&
+        campoQuarto.dataset.tipo
+    ) {
+        return String(
+            campoQuarto.dataset.tipo
+        ).trim();
+    }
+
+
+    // 3. Tabela carregada pelo quartos.js
+
+    const fontes = [
+
+        window.quartos,
+
+        window.QUARTOS,
+
+        window.listaQuartos,
+
+        window.dadosQuartos,
+
+        window.quartosHotel
+
+    ];
+
+
+    for (const fonte of fontes) {
+
+        if (!fonte) {
+            continue;
+        }
+
+
+        // -------------------------------------------------
+        // FORMATO:
+        // { 456: "DBC" }
+        // -------------------------------------------------
+
+        if (
+            typeof fonte === "object" &&
+            !Array.isArray(fonte) &&
+            fonte[numero] !== undefined
+        ) {
+
+            const valor =
+                fonte[numero];
+
+
+            if (typeof valor === "string") {
+
+                return valor.trim();
+
+            }
+
+
+            if (
+                valor &&
+                typeof valor === "object"
+            ) {
+
+                const tipo =
+                    valor.tipoQuarto ||
+                    valor.tipo ||
+                    valor.codigo ||
+                    valor.code ||
+                    "";
+
+
+                if (
+                    String(tipo).trim() !== ""
+                ) {
+
+                    return String(
+                        tipo
+                    ).trim();
+
+                }
+
+            }
+
+        }
+
+
+        // -------------------------------------------------
+        // FORMATO:
+        // [
+        //     {
+        //         numero: 456,
+        //         tipo: "DBC"
+        //     }
+        // ]
+        // -------------------------------------------------
+
+        if (Array.isArray(fonte)) {
+
+            const item =
+                fonte.find(
+                    function(item) {
+
+                        if (
+                            !item ||
+                            typeof item !== "object"
+                        ) {
+                            return false;
+                        }
+
+
+                        const n =
+                            item.numero ??
+                            item.quarto ??
+                            item.room ??
+                            item.number;
+
+
+                        return (
+                            String(
+                                n ?? ""
+                            ).trim() === numero
+                        );
+
+                    }
+                );
+
+
+            if (item) {
+
+                const tipo =
+                    item.tipoQuarto ||
+                    item.tipo ||
+                    item.codigo ||
+                    item.code ||
+                    "";
+
+
+                if (
+                    String(tipo).trim() !== ""
+                ) {
+
+                    return String(
+                        tipo
+                    ).trim();
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+// =====================================================
+// HTML DO QUARTO NO CARD
+// =====================================================
+
+function htmlQuartoReport(registro) {
+
+    const numero =
+        registro && registro.quarto
+            ? String(registro.quarto)
+            : "-";
+
+
+    const tipo =
+        obterTipoQuartoReport(
+            registro
+        );
+
+
+    return `
+
+        <div class="report-room-box">
+
+            <span class="report-room-label">
+                QUARTO
+            </span>
+
+
+            <strong
+                class="report-room"
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    line-height: 1;
+                "
+            >
+
+                <span
+                    style="
+                        font-size: inherit;
+                        line-height: 1;
+                    "
+                >
+                    ${numero}
+                </span>
+
+
+                ${
+                    tipo
+                        ? `
+
+                            <span
+                                style="
+                                    margin-top: 6px;
+                                    font-size: 13px;
+                                    line-height: 1;
+                                    font-weight: 600;
+                                    color: #6c757d;
+                                    letter-spacing: 0.5px;
+                                "
+                            >
+                                ${tipo}
+                            </span>
+
+                        `
+                        : ""
+                }
+
+            </strong>
+
+        </div>
+
+    `;
+
+}
+
+
+// =====================================================
 // REPORTAR REGISTRO
 // =====================================================
+
 
 // =====================================================
 // REPORTAR / COPIAR CARD DIRETAMENTE
@@ -28,11 +296,15 @@ const REPORTS_CONFIG = {
 
 async function reportarRegistro(indice) {
 
-    const registro = registros[indice];
+    const registro =
+        registros[indice];
+
 
     if (!registro) {
 
-        alert("Registro não encontrado.");
+        alert(
+            "Registro não encontrado."
+        );
 
         return;
 
@@ -40,10 +312,15 @@ async function reportarRegistro(indice) {
 
 
     const funcionarioElemento =
-        document.getElementById("funcionario");
+        document.getElementById(
+            "funcionario"
+        );
+
 
     const dataElemento =
-        document.getElementById("data");
+        document.getElementById(
+            "data"
+        );
 
 
     const funcionario =
@@ -54,7 +331,9 @@ async function reportarRegistro(indice) {
 
     const data =
         dataElemento
-            ? formatarDataReport(dataElemento.value)
+            ? formatarDataReport(
+                dataElemento.value
+            )
             : "";
 
 
@@ -63,120 +342,142 @@ async function reportarRegistro(indice) {
     // =================================================
 
     const container =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-    container.style.position = "fixed";
-    container.style.left = "-10000px";
-    container.style.top = "0";
-    container.style.background = "transparent";
+    container.style.position =
+        "fixed";
+
+    container.style.left =
+        "-10000px";
+
+    container.style.top =
+        "0";
+
+    container.style.background =
+        "transparent";
 
 
     container.innerHTML = `
 
-        <div class="report-card report-card-${classeAtividadeReport(registro.atividade)}">
+        <div
+            class="report-card report-card-${classeAtividadeReport(registro.atividade)}"
+        >
 
             <div class="report-header">
 
-            <div class="report-header-title">
+                <div class="report-header-title">
 
-    ${iconeAtividadeReport(registro.atividade)}
-    ${registro.atividade || "OCORRÊNCIA"}
+                    ${iconeAtividadeReport(
+                        registro.atividade
+                    )}
 
-</div>
+                    ${registro.atividade || "OCORRÊNCIA"}
+
+                </div>
+
 
                 <img
                     src="img/logo.png"
                     class="report-logo"
-                    alt="ibis Styles">
+                    alt="ibis Styles"
+                >
 
             </div>
 
 
             <div class="report-body">
 
-<div class="report-main">
+                <div class="report-main">
 
-    ${
-        registro.atividade === "Procedimentos" ||
-        registro.atividade === "Conferência"
+                    ${
+                        registro.atividade === "Procedimentos" ||
+                        registro.atividade === "Conferência"
 
-        ? `
-            <div
-    class="report-description report-description-full"
-    style="
-        width: 100% !important;
-        max-width: none !important;
-        min-width: 0 !important;
-        min-height: 90px !important;
-        box-sizing: border-box !important;
-        display: block !important;
-        flex: 1 1 100% !important;
-        grid-column: 1 / -1 !important;
-        margin: 0 !important;
-        padding: 20px !important;
-        font-size: 20px !important;
-        line-height: 1.4 !important;
-    "
->
+                        ? `
 
-    ${registro.descricao || "-"}
+                            <div
+                                class="report-description report-description-full"
+                                style="
+                                    width: 100% !important;
+                                    max-width: none !important;
+                                    min-width: 0 !important;
+                                    min-height: 90px !important;
+                                    box-sizing: border-box !important;
+                                    display: block !important;
+                                    flex: 1 1 100% !important;
+                                    grid-column: 1 / -1 !important;
+                                    margin: 0 !important;
+                                    padding: 20px !important;
+                                    font-size: 20px !important;
+                                    line-height: 1.4 !important;
+                                "
+                            >
 
-</div>
-        `
+                                ${registro.descricao || "-"}
 
-        : `
+                            </div>
 
-            <div class="report-room-box">
+                        `
 
-                <span class="report-room-label">
-                    QUARTO
-                </span>
+                        : `
 
-                <strong class="report-room">
-                    ${registro.quarto || "-"}
-                </strong>
-
-            </div>
-
-       <div class="report-description">
-
-    ${
-        registro.descricao
-            ? registro.descricao
-            : ""
-    }
-
-    ${
-        registro.quartoDestino &&
-        (
-            registro.atividade === "Mudança de Quarto" ||
-            registro.atividade === "Troca de Quarto"
-        )
-            ? `
-                <br><br>
-                <strong>
-                    Novo quarto: ${registro.quartoDestino}
-                </strong>
-              `
-            : ""
-    }
-
-    ${
-        !registro.descricao &&
-        !registro.quartoDestino
-            ? "-"
-            : ""
-    }
-
-</div>
-        `
-    }
-
-</div>
+                            ${htmlQuartoReport(
+                                registro
+                            )}
 
 
-<div class="report-info">
+                            <div class="report-description">
+
+                                ${
+                                    registro.descricao
+                                        ? registro.descricao
+                                        : ""
+                                }
+
+
+                                ${
+                                    registro.quartoDestino &&
+                                    (
+                                        registro.atividade === "Mudança de Quarto" ||
+                                        registro.atividade === "Troca de Quarto"
+                                    )
+
+                                        ? `
+
+                                            <br><br>
+
+                                            <strong>
+                                                Novo quarto:
+                                                ${registro.quartoDestino}
+                                            </strong>
+
+                                          `
+
+                                        : ""
+                                }
+
+
+                                ${
+                                    !registro.descricao &&
+                                    !registro.quartoDestino
+
+                                        ? "-"
+
+                                        : ""
+                                }
+
+                            </div>
+
+                        `
+                    }
+
+                </div>
+
+
+                <div class="report-info">
 
                     <div class="report-info-item">
 
@@ -221,6 +522,7 @@ async function reportarRegistro(indice) {
                     ibis Styles
                 </span>
 
+
                 <span>
                     Comunicação interna
                 </span>
@@ -232,7 +534,9 @@ async function reportarRegistro(indice) {
     `;
 
 
-    document.body.appendChild(container);
+    document.body.appendChild(
+        container
+    );
 
 
     // =================================================
@@ -242,21 +546,26 @@ async function reportarRegistro(indice) {
     try {
 
         const card =
-            container.querySelector(".report-card");
+            container.querySelector(
+                ".report-card"
+            );
 
 
         const canvas =
-            await html2canvas(card, {
+            await html2canvas(
+                card,
+                {
 
-                scale: 2,
+                    scale: 2,
 
-                backgroundColor: null,
+                    backgroundColor: null,
 
-                useCORS: true,
+                    useCORS: true,
 
-                logging: false
+                    logging: false
 
-            });
+                }
+            );
 
 
         // =================================================
@@ -264,17 +573,19 @@ async function reportarRegistro(indice) {
         // =================================================
 
         const blob =
-            await new Promise(function(resolve) {
+            await new Promise(
+                function(resolve) {
 
-                canvas.toBlob(
+                    canvas.toBlob(
 
-                    resolve,
+                        resolve,
 
-                    "image/png"
+                        "image/png"
 
-                );
+                    );
 
-            });
+                }
+            );
 
 
         if (!blob) {
@@ -294,7 +605,9 @@ async function reportarRegistro(indice) {
             });
 
 
-        await navigator.clipboard.write([item]);
+        await navigator.clipboard.write([
+            item
+        ]);
 
 
         container.remove();
@@ -309,19 +622,30 @@ async function reportarRegistro(indice) {
         if (botao) {
 
             botao.innerHTML = `
+
                 <i class="bi bi-check-lg"></i>
+
                 <span>Copiado</span>
+
             `;
 
 
-            setTimeout(function() {
+            setTimeout(
+                function() {
 
-                botao.innerHTML = `
-                    <i class="bi bi-clipboard"></i>
-                    <span>Copiar Card</span>
-                `;
+                    botao.innerHTML = `
 
-            }, 2000);
+                        <i class="bi bi-clipboard"></i>
+
+                        <span>
+                            Copiar Card
+                        </span>
+
+                    `;
+
+                },
+                2000
+            );
 
         }
 
@@ -400,7 +724,9 @@ console.log(
 // CLASSE DE COR DO REPORT
 // =====================================================
 
-function classeAtividadeReport(atividade) {
+function classeAtividadeReport(
+    atividade
+) {
 
     switch (atividade) {
 
@@ -459,37 +785,45 @@ function classeAtividadeReport(atividade) {
 // ÍCONE DA ATIVIDADE NO CARD
 // =====================================================
 
-function iconeAtividadeReport(atividade) {
+function iconeAtividadeReport(
+    atividade
+) {
 
     switch (atividade) {
 
         case "Check-in":
 
             return `
+
                 <i
                     class="bi bi-person-check"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
         case "Check-out":
 
             return `
+
                 <i
                     class="bi bi-box-arrow-right"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
         case "Manutenção":
 
             return `
+
                 <i
                     class="bi bi-tools"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
@@ -498,60 +832,72 @@ function iconeAtividadeReport(atividade) {
         case "Mudança de Quarto":
 
             return `
+
                 <i
                     class="bi bi-door-open"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
         case "Limpeza":
 
             return `
+
                 <i
                     class="bi bi-stars"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
         case "Procedimentos":
 
             return `
+
                 <i
                     class="bi bi-clipboard-check"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
         case "Aviso":
 
             return `
+
                 <i
                     class="bi bi-info-circle"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
         case "Reclamação":
 
             return `
+
                 <i
                     class="bi bi-exclamation-circle"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
 
         default:
 
             return `
+
                 <i
                     class="bi bi-clipboard"
                     style="margin-right: 6px;"
                 ></i>
+
             `;
 
     }
@@ -563,7 +909,9 @@ function iconeAtividadeReport(atividade) {
 // PRÉVIA DO REPORT
 // =====================================================
 
-function abrirPreviewReport(registro) {
+function abrirPreviewReport(
+    registro
+) {
 
     // ============================================
     // INFORMAÇÃO DO NOVO QUARTO
@@ -581,19 +929,28 @@ function abrirPreviewReport(registro) {
         )
     ) {
 
-        if (descricaoReport.trim() !== "") {
+        if (
+            descricaoReport.trim() !== ""
+        ) {
 
             descricaoReport +=
+
                 "<br><br>" +
+
                 "<strong>Novo quarto: " +
+
                 registro.quartoDestino +
+
                 "</strong>";
 
         } else {
 
             descricaoReport =
+
                 "<strong>Novo quarto: " +
+
                 registro.quartoDestino +
+
                 "</strong>";
 
         }
@@ -612,15 +969,21 @@ function abrirPreviewReport(registro) {
 
 
     const funcionarioElemento =
-        document.getElementById("funcionario");
+        document.getElementById(
+            "funcionario"
+        );
 
 
     const turnoElemento =
-        document.getElementById("turno");
+        document.getElementById(
+            "turno"
+        );
 
 
     const dataElemento =
-        document.getElementById("data");
+        document.getElementById(
+            "data"
+        );
 
 
     const funcionario =
@@ -637,14 +1000,18 @@ function abrirPreviewReport(registro) {
 
     const data =
         dataElemento
-            ? formatarDataReport(dataElemento.value)
+            ? formatarDataReport(
+                dataElemento.value
+            )
             : "";
 
 
     // Remove uma prévia anterior
 
     const anterior =
-        document.getElementById("reportPreview");
+        document.getElementById(
+            "reportPreview"
+        );
 
 
     if (anterior) {
@@ -657,7 +1024,9 @@ function abrirPreviewReport(registro) {
     // Cria a janela
 
     const overlay =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     overlay.id =
@@ -682,7 +1051,8 @@ function abrirPreviewReport(registro) {
                 <button
                     type="button"
                     class="report-preview-close"
-                    onclick="fecharPreviewReport()">
+                    onclick="fecharPreviewReport()"
+                >
 
                     ×
 
@@ -693,183 +1063,184 @@ function abrirPreviewReport(registro) {
 
             <div class="report-preview-content">
 
-            <div class="report-card report-card-${classeAtividadeReport(registro.atividade)}">
+                <div
+                    class="report-card report-card-${classeAtividadeReport(registro.atividade)}"
+                >
 
-    <!-- CABEÇALHO -->
+                    <!-- CABEÇALHO -->
 
-    <div class="report-header">
+                    <div class="report-header">
 
-        <div class="report-header-title">
+                        <div class="report-header-title">
 
-            REGISTRO DE TURNO
+                            REGISTRO DE TURNO
+
+                        </div>
+
+
+                        <img
+                            src="img/logo.png"
+                            class="report-logo"
+                            alt="ibis Styles"
+                        >
+
+                    </div>
+
+
+                    <!-- CONTEÚDO -->
+
+                    <div class="report-body">
+
+                        <div class="report-type">
+
+                            ${registro.atividade || "OCORRÊNCIA"}
+
+                        </div>
+
+
+                        <!-- QUARTO + DESCRIÇÃO -->
+
+                        <div class="report-main">
+
+                            ${
+                                registro.atividade === "Procedimentos" ||
+                                registro.atividade === "Conferência"
+
+                                ? `
+
+                                    <div
+                                        class="report-description"
+                                        style="
+                                            width: 100%;
+                                            max-width: 100%;
+                                            flex: 1 1 100%;
+                                            box-sizing: border-box;
+                                            grid-column: 1 / -1;
+                                            min-height: 80px;
+                                        "
+                                    >
+
+                                        ${descricaoReport}
+
+                                    </div>
+
+                                `
+
+                                : `
+
+                                    ${htmlQuartoReport(
+                                        registro
+                                    )}
+
+
+                                    <div class="report-description">
+
+                                        ${descricaoReport}
+
+                                    </div>
+
+                                `
+                            }
+
+                        </div>
+
+
+                        <!-- INFORMAÇÕES -->
+
+                        <div class="report-info">
+
+                            <div class="report-info-item">
+
+                                <span class="report-info-label">
+                                    Funcionário
+                                </span>
+
+                                ${funcionario || "-"}
+
+                            </div>
+
+
+                            <div class="report-info-item">
+
+                                <span class="report-info-label">
+                                    Data
+                                </span>
+
+                                ${data || "-"}
+
+                            </div>
+
+
+                            <div class="report-info-item">
+
+                                <span class="report-info-label">
+                                    Hora
+                                </span>
+
+                                ${registro.hora || "-"}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RODAPÉ -->
+
+                    <div class="report-footer">
+
+                        <span>
+                            ibis Styles
+                        </span>
+
+
+                        <span>
+                            Comunicação interna
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="report-preview-footer">
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="fecharPreviewReport()"
+                    >
+
+                        Cancelar
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        onclick="gerarCardReport()"
+                    >
+
+                        <i class="bi bi-save"></i>
+
+                        Gerar Card
+
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
-
-
-        <img
-            src="img/logo.png"
-            class="report-logo"
-            alt="ibis Styles">
-
-    </div>
-
-
-    <!-- CONTEÚDO -->
-
-    <div class="report-body">
-
-        <div class="report-type">
-
-            ${registro.atividade || "OCORRÊNCIA"}
-
-        </div>
-
-
-        <!-- QUARTO + DESCRIÇÃO -->
-
-        <div class="report-main">
-
-    ${
-        registro.atividade === "Procedimentos" ||
-        registro.atividade === "Conferência"
-
-        ? `
-
-            <div
-                class="report-description"
-                style="
-                    width: 100%;
-                    max-width: 100%;
-                    flex: 1 1 100%;
-                    box-sizing: border-box;
-                    grid-column: 1 / -1;
-                    min-height: 80px;
-                "
-            >
-
-                ${descricaoReport}
-
-            </div>
-
-        `
-
-        : `
-
-            <div class="report-room-box">
-
-                <span class="report-room-label">
-                    QUARTO
-                </span>
-
-
-                <strong class="report-room">
-
-                    ${registro.quarto || "-"}
-
-                </strong>
-
-            </div>
-
-
-            <div class="report-description">
-
-                ${descricaoReport}
-
-            </div>
-
-        `
-    }
-
-</div>
-
-
-        <!-- INFORMAÇÕES -->
-
-        <div class="report-info">
-
-            <div class="report-info-item">
-
-                <span class="report-info-label">
-                    Funcionário
-                </span>
-
-                ${funcionario || "-"}
-
-            </div>
-
-
-            <div class="report-info-item">
-
-                <span class="report-info-label">
-                    Data
-                </span>
-
-                ${data || "-"}
-
-            </div>
-
-
-            <div class="report-info-item">
-
-                <span class="report-info-label">
-                    Hora
-                </span>
-
-                ${registro.hora || "-"}
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- RODAPÉ -->
-
-    <div class="report-footer">
-
-        <span>
-            ibis Styles
-        </span>
-
-        <span>
-            Comunicação interna
-        </span>
-
-    </div>
-
-</div>
-
-
-            <div class="report-preview-footer">
-
-    <button
-        type="button"
-        class="btn btn-secondary"
-        onclick="fecharPreviewReport()">
-
-        Cancelar
-
-    </button>
-
-
-    <button
-        type="button"
-        class="btn btn-success"
-        onclick="gerarCardReport()">
-
-        <i class="bi bi-save"></i>
-
-        Gerar Card
-
-    </button>
-
-</div>
 
     `;
 
 
-    document.body.appendChild(overlay);
+    document.body.appendChild(
+        overlay
+    );
 
 }
 
@@ -881,7 +1252,9 @@ function abrirPreviewReport(registro) {
 function fecharPreviewReport() {
 
     const preview =
-        document.getElementById("reportPreview");
+        document.getElementById(
+            "reportPreview"
+        );
 
 
     if (preview) {
@@ -907,14 +1280,19 @@ async function gerarCardReport() {
 
     if (!card) {
 
-        alert("Não foi possível encontrar o card.");
+        alert(
+            "Não foi possível encontrar o card."
+        );
 
         return;
 
     }
 
 
-    if (typeof html2canvas === "undefined") {
+    if (
+        typeof html2canvas ===
+        "undefined"
+    ) {
 
         alert(
             "O gerador de imagem ainda não foi carregado."
@@ -928,28 +1306,34 @@ async function gerarCardReport() {
     try {
 
         const canvas =
-            await html2canvas(card, {
+            await html2canvas(
+                card,
+                {
 
-                scale: 2,
+                    scale: 2,
 
-                backgroundColor: null,
+                    backgroundColor: null,
 
-                useCORS: true,
+                    useCORS: true,
 
-                logging: false
+                    logging: false
 
-            });
+                }
+            );
 
 
         // Guarda a imagem para os outros botões
 
-        window.reportCardCanvas = canvas;
+        window.reportCardCanvas =
+            canvas;
 
 
         // Converte para PNG
 
         const imagem =
-            canvas.toDataURL("image/png");
+            canvas.toDataURL(
+                "image/png"
+            );
 
 
         // Remove botões antigos
@@ -970,7 +1354,9 @@ async function gerarCardReport() {
         // Cria os novos botões
 
         const acoes =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         acoes.id =
@@ -983,36 +1369,42 @@ async function gerarCardReport() {
 
         acoes.innerHTML = `
 
-        <button
-            type="button"
-            class="btn btn-outline-success"
-            onclick="baixarCardReport()">
+            <button
+                type="button"
+                class="btn btn-outline-success"
+                onclick="baixarCardReport()"
+            >
 
-            <i class="bi bi-download"></i>
+                <i class="bi bi-download"></i>
 
-            Baixar Card
+                Baixar Card
 
-        </button>
+            </button>
 
 
-        <button
-            type="button"
-            id="btnCopiarCardReport"
-            class="btn btn-success"
-            onclick="copiarCardReport()">
+            <button
+                type="button"
+                id="btnCopiarCardReport"
+                class="btn btn-success"
+                onclick="copiarCardReport()"
+            >
 
-            <i class="bi bi-clipboard"></i>
+                <i class="bi bi-clipboard"></i>
 
-            <span>Copiar Card</span>
+                <span>
+                    Copiar Card
+                </span>
 
-        </button>
+            </button>
 
-    `;
+        `;
 
 
         // Coloca os botões depois do card
 
-        card.parentElement.appendChild(acoes);
+        card.parentElement.appendChild(
+            acoes
+        );
 
 
         console.log(
@@ -1043,7 +1435,9 @@ async function gerarCardReport() {
 
 function baixarCardReport() {
 
-    if (!window.reportCardCanvas) {
+    if (
+        !window.reportCardCanvas
+    ) {
 
         alert(
             "Primeiro clique em Gerar Card."
@@ -1055,7 +1449,9 @@ function baixarCardReport() {
 
 
     const link =
-        document.createElement("a");
+        document.createElement(
+            "a"
+        );
 
 
     link.download =
@@ -1084,7 +1480,9 @@ function baixarCardReport() {
 
 async function copiarCardReport() {
 
-    if (!window.reportCardCanvas) {
+    if (
+        !window.reportCardCanvas
+    ) {
 
         alert(
             "Primeiro clique em Gerar Card."
@@ -1108,14 +1506,19 @@ async function copiarCardReport() {
 
 
         const blob =
-            await new Promise(function(resolve) {
+            await new Promise(
+                function(resolve) {
 
-                canvas.toBlob(
-                    resolve,
-                    "image/png"
-                );
+                    canvas.toBlob(
 
-            });
+                        resolve,
+
+                        "image/png"
+
+                    );
+
+                }
+            );
 
 
         if (!blob) {
@@ -1161,10 +1564,12 @@ async function copiarCardReport() {
         if (botao) {
 
             botao.innerHTML = `
-                
+
                 <i class="bi bi-check-lg"></i>
 
-                <span>Copiado</span>
+                <span>
+                    Copiado
+                </span>
 
             `;
 
@@ -1188,31 +1593,36 @@ async function copiarCardReport() {
 
         // Volta ao estado original depois de 2 segundos
 
-        setTimeout(function() {
+        setTimeout(
+            function() {
 
-            if (botao) {
+                if (botao) {
 
-                botao.innerHTML = `
-                    
-                    <i class="bi bi-clipboard"></i>
+                    botao.innerHTML = `
 
-                    <span>Copiar Card</span>
+                        <i class="bi bi-clipboard"></i>
 
-                `;
+                        <span>
+                            Copiar Card
+                        </span>
 
-
-                botao.classList.remove(
-                    "btn-dark"
-                );
+                    `;
 
 
-                botao.classList.add(
-                    "btn-success"
-                );
+                    botao.classList.remove(
+                        "btn-dark"
+                    );
 
-            }
 
-        }, 2000);
+                    botao.classList.add(
+                        "btn-success"
+                    );
+
+                }
+
+            },
+            2000
+        );
 
 
     } catch (erro) {

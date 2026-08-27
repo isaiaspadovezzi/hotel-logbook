@@ -253,7 +253,10 @@ function salvarRegistro() {
             document.getElementById("atividade").value,
 
         quarto:
-            document.getElementById("quarto").value,
+    document.getElementById("quarto").value,
+
+tipoQuarto:
+    document.getElementById("quarto").dataset.tipo || "",
 
         quartoDestino:
             document.getElementById("quartoDestino")?.value || "",
@@ -561,33 +564,16 @@ function atualizarTabela(
 
                     </strong>
 
-
                     ${
-                        typeof QUARTOS_HOTEL !== "undefined"
-                            ? (
-                                QUARTOS_HOTEL.find(
-                                    function(q) {
-                                        return q.numero ===
-                                            String(registro.quarto);
-                                    }
-                                )?.tipo
-                                ? `
-                                    <div
-                                        class="quarto-card-tipo">
+                        registro.tipoQuarto
+                            ? `
+                                <div
+                                    class="quarto-card-tipo">
 
-                                        ${
-                                            QUARTOS_HOTEL.find(
-                                                function(q) {
-                                                    return q.numero ===
-                                                        String(registro.quarto);
-                                                }
-                                            ).tipo
-                                        }
+                                    ${registro.tipoQuarto}
 
-                                    </div>
-                                `
-                                : ""
-                            )
+                                </div>
+                            `
                             : ""
                     }
 
@@ -597,7 +583,6 @@ function atualizarTabela(
     }
 
 </td>
-            <td>
                 ${resumo}
             </td>
 

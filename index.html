@@ -470,6 +470,21 @@
 
 </style>
 
+<style>
+/* =====================================================
+   CAPA NF-C
+   OCULTA NO LOGBOOK NORMAL
+   VISÍVEL SOMENTE DURANTE A CAPTURA
+   ===================================================== */
+#capaNfcImpressao {
+    display: none !important;
+}
+
+#capaNfcImpressao.capture-capa {
+    display: flex !important;
+}
+</style>
+
 <link rel="stylesheet" href="frnh.css">
 
 <style>
@@ -1940,7 +1955,8 @@ SÓ APARECE NA IMPRESSÃO
 
 <div
     id="capaNfcImpressao"
-    aria-hidden="true">
+    aria-hidden="true"
+    style="display: none;">
 
     <div class="nfc-titulo">
 
@@ -2153,12 +2169,8 @@ IMPRESSÃO COMO IMAGEM
          */
 
         elemento.classList.add("capture-capa");
-        /*
-         * A capa deve continuar escondida na página normal.
-         * O valor original era "", que faria o elemento voltar a
-         * aparecer no final do LogBook depois da captura.
-         */
-        elemento.style.display = "none";
+        elemento.style.display =
+    estadoOriginal.display;
 
         elemento.style.position = "fixed";
 
@@ -2285,9 +2297,6 @@ IMPRESSÃO COMO IMAGEM
         elemento.style.visibility =
             estadoOriginal.visibility;
 
-        /* Remove a classe usada somente durante a captura. */
-        elemento.classList.remove("capture-capa");
-
 
         /*
          * CRIA UMA JANELA EXCLUSIVA
@@ -2413,10 +2422,11 @@ janela.onload = function () {
 };
 
 janela.document.close();
+            function () {
 
-        janela.onafterprint = function () {
-            janela.close();
-        };
+                janela.close();
+
+            };
 
     }
 

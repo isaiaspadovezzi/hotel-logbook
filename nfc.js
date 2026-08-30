@@ -10,7 +10,7 @@
 
 
     /* =================================================
-       CRIA A CAPA
+       CRIA A CAPA ORIGINAL
        ================================================= */
 
     function criarCapaNfc() {
@@ -64,12 +64,6 @@
         `;
 
 
-        /*
-         * IMPORTANTE:
-         * A capa original fica escondida.
-         * A impressão usa uma cópia temporária.
-         */
-
         capa.style.display =
             "none";
 
@@ -85,7 +79,7 @@
 
 
     /* =================================================
-       OBTÉM A DATA DO LOGBOOK
+       OBTÉM A DATA
        ================================================= */
 
     function obterDataNfc() {
@@ -174,15 +168,26 @@
 
 
     /* =================================================
-       PREENCHE A DATA
+       ATUALIZA A DATA DA CAPA
        ================================================= */
 
-    function preencherDataNfc(
-        elementoCapa
-    ) {
+    function preencherDataNfc() {
+
+        const capa =
+            document.getElementById(
+                "capaNfcImpressao"
+            );
+
+
+        if (!capa) {
+
+            return;
+
+        }
+
 
         const elemento =
-            elementoCapa.querySelector(
+            capa.querySelector(
                 "#nfcData"
             );
 
@@ -194,237 +199,395 @@
         }
 
 
-        const data =
-            obterDataNfc();
-
-
         elemento.textContent =
-            data || "—";
+            obterDataNfc() || "—";
 
     }
 
 
     /* =================================================
-       PREPARA CÓPIA PARA CAPTURA
+       CRIA UMA CAPA EXCLUSIVA PARA CAPTURA
        ================================================= */
 
-    function prepararCopiaNfc(
-        original
-    ) {
+    function criarCapaParaCaptura() {
 
-        const copia =
-            original.cloneNode(
-                true
+        const captura =
+            document.createElement(
+                "div"
             );
 
 
-        /*
-         * ID não pode ficar duplicado
-         * no documento.
-         */
-
-        copia.id =
-            "capaNfcCapturaTemporaria";
+        captura.id =
+            "nfcCapturaTemporaria";
 
 
         /*
-         * Posicionamento fora da tela.
+         * =================================================
+         * TAMANHO DA CAPA
+         * =================================================
          */
 
-        copia.style.display =
-            "flex";
-
-        copia.style.position =
+        captura.style.position =
             "fixed";
 
-        copia.style.left =
+        captura.style.left =
             "-10000px";
 
-        copia.style.top =
+        captura.style.top =
             "0";
 
-
-        /*
-         * TAMANHO EXATO DA CAPA.
-         */
-
-        copia.style.width =
+        captura.style.width =
             "190mm";
 
-        copia.style.height =
+        captura.style.height =
             "65mm";
 
-
-        copia.style.minWidth =
-            "190mm";
-
-        copia.style.minHeight =
-            "65mm";
-
-
-        copia.style.maxWidth =
-            "190mm";
-
-        copia.style.maxHeight =
-            "65mm";
-
-
-        copia.style.boxSizing =
+        captura.style.boxSizing =
             "border-box";
 
-
-        copia.style.margin =
+        captura.style.margin =
             "0";
 
-        copia.style.padding =
+        captura.style.padding =
             "0";
 
-
-        copia.style.background =
+        captura.style.background =
             "#ffffff";
 
-
-        copia.style.overflow =
+        captura.style.overflow =
             "hidden";
 
+        captura.style.display =
+            "flex";
 
-        /*
-         * Layout da capa.
-         */
-
-        copia.style.flexDirection =
+        captura.style.flexDirection =
             "column";
 
-
-        /*
-         * Garante que a captura
-         * fique acima de outros elementos.
-         */
-
-        copia.style.zIndex =
-            "-1";
+        captura.style.fontFamily =
+            "Arial, Helvetica, sans-serif";
 
 
         /*
-         * Impede que o elemento
-         * temporário apareça na página.
+         * =================================================
+         * CABEÇALHO
+         * =================================================
          */
 
-        copia.style.visibility =
-            "visible";
+        const titulo =
+            document.createElement(
+                "div"
+            );
+
+
+        titulo.textContent =
+            "CUPONS FISCAIS - NF-C";
+
+
+        titulo.style.width =
+            "100%";
+
+        titulo.style.height =
+            "15mm";
+
+        titulo.style.minHeight =
+            "15mm";
+
+        titulo.style.boxSizing =
+            "border-box";
+
+        titulo.style.background =
+            "#198754";
+
+        titulo.style.color =
+            "#ffffff";
+
+        titulo.style.display =
+            "flex";
+
+        titulo.style.alignItems =
+            "center";
+
+        titulo.style.paddingLeft =
+            "7mm";
+
+        titulo.style.paddingRight =
+            "7mm";
+
+        titulo.style.fontSize =
+            "15pt";
+
+        titulo.style.fontWeight =
+            "700";
+
+        titulo.style.lineHeight =
+            "1";
+
+
+        captura.appendChild(
+            titulo
+        );
+
+
+        /*
+         * =================================================
+         * ÁREA INTERNA
+         * =================================================
+         */
+
+        const conteudo =
+            document.createElement(
+                "div"
+            );
+
+
+        conteudo.style.position =
+            "relative";
+
+        conteudo.style.width =
+            "100%";
+
+        conteudo.style.height =
+            "50mm";
+
+        conteudo.style.boxSizing =
+            "border-box";
+
+        conteudo.style.background =
+            "#ffffff";
+
+        conteudo.style.display =
+            "flex";
+
+        conteudo.style.flexDirection =
+            "column";
+
+        conteudo.style.alignItems =
+            "center";
+
+        conteudo.style.justifyContent =
+            "center";
+
+
+        captura.appendChild(
+            conteudo
+        );
+
+
+        /*
+         * =================================================
+         * DATA
+         * =================================================
+         */
+
+        const data =
+            document.createElement(
+                "div"
+            );
+
+
+        data.textContent =
+            obterDataNfc() || "—";
+
+
+        data.style.position =
+            "absolute";
+
+        data.style.left =
+            "7mm";
+
+        data.style.top =
+            "5mm";
+
+        data.style.fontSize =
+            "11pt";
+
+        data.style.fontWeight =
+            "400";
+
+        data.style.color =
+            "#333333";
+
+        data.style.lineHeight =
+            "1.2";
+
+
+        conteudo.appendChild(
+            data
+        );
+
+
+        /*
+         * =================================================
+         * LOGO
+         * =================================================
+         */
+
+        const logo =
+            document.createElement(
+                "img"
+            );
+
+
+        logo.src =
+            "img/logo.png";
+
+
+        logo.alt =
+            "ibis Styles";
+
+
+        logo.style.position =
+            "absolute";
+
+        logo.style.right =
+            "7mm";
+
+        logo.style.top =
+            "5mm";
+
+        logo.style.width =
+            "21mm";
+
+        logo.style.height =
+            "auto";
+
+        logo.style.maxWidth =
+            "21mm";
+
+        logo.style.maxHeight =
+            "40mm";
+
+        logo.style.objectFit =
+            "contain";
+
+
+        conteudo.appendChild(
+            logo
+        );
 
 
         document.body.appendChild(
-            copia
+            captura
         );
 
 
-        return copia;
+        return captura;
 
     }
 
 
     /* =================================================
-       AGUARDA IMAGENS
+       AGUARDA A LOGO
        ================================================= */
 
-    function aguardarImagens(
-        elemento
+    function aguardarLogo(
+        logo
     ) {
 
-        const imagens =
-            Array.from(
-                elemento.querySelectorAll(
-                    "img"
-                )
-            );
+        return new Promise(
+            function (resolve) {
 
+                if (
+                    logo.complete &&
+                    logo.naturalWidth > 0
+                ) {
 
-        return Promise.all(
+                    resolve();
 
-            imagens.map(
-                function (imagem) {
-
-                    if (
-                        imagem.complete
-                    ) {
-
-                        return Promise.resolve();
-
-                    }
-
-
-                    return new Promise(
-                        function (resolve) {
-
-                            imagem.onload =
-                                resolve;
-
-                            imagem.onerror =
-                                resolve;
-
-                        }
-                    );
+                    return;
 
                 }
-            )
 
+
+                logo.onload =
+                    function () {
+
+                        resolve();
+
+                    };
+
+
+                logo.onerror =
+                    function () {
+
+                        resolve();
+
+                    };
+
+            }
         );
 
     }
 
 
     /* =================================================
-       IMPRIMIR CAPA NF-C
+       IMPRIMIR NF-C
        ================================================= */
 
     async function imprimirNfc() {
 
-        let copia = null;
+        let captura = null;
 
 
         try {
 
             /*
-             * Cria a capa original somente
-             * se ainda não existir.
+             * Garante que a capa original exista.
              */
 
-            const original =
-                criarCapaNfc();
+            criarCapaNfc();
 
 
             /*
              * Atualiza a data.
              */
 
-            preencherDataNfc(
-                original
-            );
+            preencherDataNfc();
 
 
             /*
-             * Gera uma CÓPIA temporária.
+             * Verifica html2canvas.
              */
 
-            copia =
-                prepararCopiaNfc(
-                    original
+            if (
+                typeof html2canvas ===
+                "undefined"
+            ) {
+
+                throw new Error(
+                    "html2canvas não está disponível."
+                );
+
+            }
+
+
+            /*
+             * Cria uma capa completamente
+             * independente para captura.
+             */
+
+            captura =
+                criarCapaParaCaptura();
+
+
+            /*
+             * Aguarda a logo.
+             */
+
+            const logo =
+                captura.querySelector(
+                    "img"
                 );
 
 
-            /*
-             * Atualiza a data também na cópia.
-             */
-
-            preencherDataNfc(
-                copia
+            await aguardarLogo(
+                logo
             );
 
 
             /*
-             * Aguarda o navegador montar
-             * completamente o layout.
+             * Dá tempo para o navegador
+             * calcular todas as dimensões.
              */
 
             await new Promise(
@@ -445,26 +608,22 @@
 
 
             /*
-             * Aguarda a logo carregar.
-             */
-
-            await aguardarImagens(
-                copia
-            );
-
-
-            /*
              * =================================================
              * CAPTURA
-             * =================================================
-             */
+             * ================================================= */
 
             const canvas =
                 await html2canvas(
-                    copia,
+                    captura,
                     {
 
                         scale: 3,
+
+                        width:
+                            captura.offsetWidth,
+
+                        height:
+                            captura.offsetHeight,
 
                         backgroundColor:
                             "#ffffff",
@@ -476,13 +635,7 @@
                             false,
 
                         logging:
-                            false,
-
-                        width:
-                            copia.offsetWidth,
-
-                        height:
-                            copia.offsetHeight
+                            false
 
                     }
                 );
@@ -496,35 +649,38 @@
 
             /*
              * =================================================
-             * REMOVE IMEDIATAMENTE A CÓPIA
-             * =================================================
+             * REMOVE A CAPTURA
+             * ================================================= */
+
+            captura.remove();
+
+            captura =
+                null;
+
+
+            /*
+             * Garante que a capa original
+             * permaneça escondida.
              */
 
-            if (copia) {
+            const original =
+                document.getElementById(
+                    "capaNfcImpressao"
+                );
 
-                copia.remove();
 
-                copia = null;
+            if (original) {
+
+                original.style.display =
+                    "none";
 
             }
 
 
             /*
              * =================================================
-             * GARANTE QUE A CAPA ORIGINAL
-             * CONTINUE ESCONDIDA
-             * =================================================
-             */
-
-            original.style.display =
-                "none";
-
-
-            /*
-             * =================================================
-             * ABRE JANELA EXCLUSIVA
-             * =================================================
-             */
+             * ABRE JANELA DE IMPRESSÃO
+             * ================================================= */
 
             const janela =
                 window.open(
@@ -612,7 +768,7 @@
                         }
 
 
-                        .capa-impressao {
+                        .folha {
 
                             position:
                                 absolute;
@@ -629,13 +785,16 @@
                             height:
                                 65mm;
 
-                            display:
-                                block;
+                            margin:
+                                0;
+
+                            padding:
+                                0;
 
                         }
 
 
-                        .capa-impressao img {
+                        .folha img {
 
                             display:
                                 block;
@@ -646,8 +805,11 @@
                             height:
                                 65mm;
 
-                            object-fit:
-                                contain;
+                            margin:
+                                0;
+
+                            padding:
+                                0;
 
                         }
 
@@ -658,7 +820,7 @@
 
                 <body>
 
-                    <div class="capa-impressao">
+                    <div class="folha">
 
                         <img
                             src="${imagem}"
@@ -678,51 +840,45 @@
 
 
             /*
-             * =================================================
-             * IMPRIME SOMENTE A IMAGEM
-             * ================================================= */
+             * Aguarda a janela terminar
+             * de carregar antes de imprimir.
+             */
 
-            setTimeout(
+            janela.onload =
                 function () {
 
-                    try {
+                    setTimeout(
+                        function () {
 
-                        janela.focus();
+                            janela.focus();
 
-                        janela.print();
+                            janela.print();
 
-                    } catch (erro) {
+                        },
+                        500
+                    );
 
-                        console.error(
-                            "Erro ao abrir impressão NF-C:",
-                            erro
-                        );
-
-                    }
-
-                },
-                500
-            );
+                };
 
 
         } catch (erro) {
 
             /*
-             * Se alguma coisa der errado,
-             * remove a cópia temporária.
+             * Remove captura se houver erro.
              */
 
-            if (copia) {
+            if (captura) {
 
-                copia.remove();
+                captura.remove();
 
-                copia = null;
+                captura =
+                    null;
 
             }
 
 
             /*
-             * Mantém a capa original escondida.
+             * Mantém capa original escondida.
              */
 
             const original =
@@ -847,11 +1003,6 @@
        ================================================= */
 
     function iniciarNfc() {
-
-        /*
-         * Cria a capa e garante
-         * que ela fique escondida.
-         */
 
         const capa =
             criarCapaNfc();

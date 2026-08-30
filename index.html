@@ -472,6 +472,8 @@
 
 <link rel="stylesheet" href="frnh.css">
 
+<style>
+
 /* =====================================================
    LISTA DE SUGESTÕES DE QUARTOS
    ===================================================== */
@@ -2279,8 +2281,6 @@ IMPRESSÃO COMO IMAGEM
         elemento.style.visibility =
             estadoOriginal.visibility;
 
-        elemento.classList.remove("capture-capa");
-
 
         /*
          * CRIA UMA JANELA EXCLUSIVA
@@ -2406,6 +2406,11 @@ janela.onload = function () {
 };
 
 janela.document.close();
+            function () {
+
+                janela.close();
+
+            };
 
     }
 

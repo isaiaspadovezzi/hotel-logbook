@@ -2937,10 +2937,14 @@ IMPRESSÃO COMO IMAGEM
 
         /*
          * RESTAURA A CAPA ORIGINAL
+         * E REMOVE O MODO DE CAPTURA
+         * PARA A CAPA NÃO FICAR VISÍVEL NO LOGBOOK.
          */
 
+        elemento.classList.remove("capture-capa");
+
         elemento.style.display =
-            estadoOriginal.display;
+            "none";
 
         elemento.style.position =
             estadoOriginal.position;
@@ -3312,6 +3316,25 @@ window.addEventListener(
         document.body.classList.remove(
             "imprimindo-caixa"
         );
+
+        const capaCaixa =
+            document.getElementById(
+                "capaCaixaImpressao"
+            );
+
+        if (capaCaixa) {
+
+            capaCaixa.classList.remove(
+                "capture-capa"
+            );
+
+            capaCaixa.style.display =
+                "none";
+
+            capaCaixa.style.visibility =
+                "hidden";
+
+        }
 
     }
 );

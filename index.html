@@ -2252,16 +2252,6 @@ IMPRESSÃO COMO IMAGEM
 
 
         /*
-         * REMOVE O MODO DE CAPTURA
-         * para a capa não ficar presa na página.
-         */
-
-        elemento.classList.remove(
-            "capture-capa"
-        );
-
-
-        /*
          * RESTAURA A CAPA ORIGINAL
          */
 
@@ -2288,6 +2278,8 @@ IMPRESSÃO COMO IMAGEM
 
         elemento.style.visibility =
             estadoOriginal.visibility;
+
+        elemento.classList.remove("capture-capa");
 
 
         /*
@@ -2414,11 +2406,6 @@ janela.onload = function () {
 };
 
 janela.document.close();
-            function () {
-
-                janela.close();
-
-            };
 
     }
 

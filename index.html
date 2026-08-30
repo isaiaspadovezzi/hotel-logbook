@@ -470,32 +470,7 @@
 
 </style>
 
-
-<style>
-/* =====================================================
-   CAPA NF-C
-   FICA OCULTA NO LOGBOOK NORMAL
-   E SÓ É MOSTRADA DURANTE A CAPTURA PARA IMPRESSÃO
-   ===================================================== */
-
-#capaNfcImpressao {
-    display: none !important;
-}
-
-/*
- * Durante a captura, o nfc.js pode adicionar
- * a classe "capture-capa".
- * Nesse momento a capa volta a ficar visível
- * apenas para o html2canvas.
- */
-#capaNfcImpressao.capture-capa {
-    display: flex !important;
-}
-</style>
-
 <link rel="stylesheet" href="frnh.css">
-
-<style>
 
 /* =====================================================
    LISTA DE SUGESTÕES DE QUARTOS
@@ -1963,8 +1938,7 @@ SÓ APARECE NA IMPRESSÃO
 
 <div
     id="capaNfcImpressao"
-    aria-hidden="true"
-    style="display: none;">
+    aria-hidden="true">
 
     <div class="nfc-titulo">
 
@@ -2278,6 +2252,16 @@ IMPRESSÃO COMO IMAGEM
 
 
         /*
+         * REMOVE O MODO DE CAPTURA
+         * para a capa não ficar presa na página.
+         */
+
+        elemento.classList.remove(
+            "capture-capa"
+        );
+
+
+        /*
          * RESTAURA A CAPA ORIGINAL
          */
 
@@ -2429,13 +2413,12 @@ janela.onload = function () {
 
 };
 
-janela.onafterprint = function () {
-
-    janela.close();
-
-};
-
 janela.document.close();
+            function () {
+
+                janela.close();
+
+            };
 
     }
 

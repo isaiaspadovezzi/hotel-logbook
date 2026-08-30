@@ -1,0 +1,3637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>LogBook | ibis Styles</title>
+
+
+    <!-- =====================================================
+    BOOTSTRAP
+    ====================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+
+    <!-- =====================================================
+    BOOTSTRAP ICONS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+
+    <!-- =====================================================
+    CSS PRINCIPAL
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+
+    <!-- =====================================================
+    CSS DOS REPORTS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="reports/reports.css">
+
+
+    <!-- =====================================================
+    CSS - CAPA CAIXA
+    ====================================================== -->
+
+  <style>
+
+/* =====================================================
+   CAPA CAIXA
+   DESIGN PARA IMPRESSÃO
+   ===================================================== */
+
+#capaCaixaImpressao {
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   IMPRESSÃO
+   ===================================================== */
+
+@media print {
+
+    /* -------------------------------------------------
+       FOLHA A4
+       ------------------------------------------------- */
+
+    @page {
+
+        size: A4 portrait;
+
+        margin: 0;
+
+    }
+
+
+    html,
+    body {
+
+        width: 210mm;
+
+        height: 297mm;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        background: #ffffff !important;
+
+    }
+
+
+    /* -------------------------------------------------
+       ESCONDE TODO O LOGBOOK
+       ------------------------------------------------- */
+
+    body.imprimindo-caixa > *:not(#capaCaixaImpressao) {
+
+        display: none !important;
+
+    }
+
+
+    /* =================================================
+       CAPA
+       FICA NA PARTE INFERIOR DA FOLHA
+       ================================================= */
+
+    body.imprimindo-caixa
+    #capaCaixaImpressao {
+
+        display: flex !important;
+
+        position: fixed !important;
+
+        left: 10mm !important;
+
+        bottom: 8mm !important;
+
+        width: 190mm !important;
+
+        height: 65mm !important;
+
+        box-sizing: border-box !important;
+
+        background: #ffffff !important;
+
+        border: 0.6mm solid #bfc8c1 !important;
+
+        border-radius: 3mm !important;
+
+        overflow: hidden !important;
+
+        flex-direction: column !important;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif !important;
+
+        color: #202020 !important;
+
+    }
+
+
+    /* =================================================
+       CABEÇALHO
+       PADRÃO VERDE DO LOGBOOK
+       ================================================= */
+
+    .capa-caixa-titulo {
+
+        width: 100% !important;
+
+        height: 15mm !important;
+
+        min-height: 15mm !important;
+
+        box-sizing: border-box !important;
+
+        background: #198754 !important;
+
+        color: #ffffff !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+
+        justify-content: space-between !important;
+
+        padding:
+            0
+            7mm
+            0
+            7mm !important;
+
+        font-size: 15pt !important;
+
+        font-weight: 700 !important;
+
+        letter-spacing: 0.2px !important;
+
+    }
+
+
+    /* =================================================
+       CONTEÚDO
+       ================================================= */
+
+    .capa-caixa-conteudo {
+
+        position: relative !important;
+
+        flex: 1 !important;
+
+        width: 100% !important;
+
+        box-sizing: border-box !important;
+
+        display: flex !important;
+
+        flex-direction: column !important;
+
+        align-items: center !important;
+
+        justify-content: center !important;
+
+     padding:
+    3mm
+    15mm
+    3mm
+    15mm !important;
+
+        background: #ffffff !important;
+
+    }
+
+
+    /* =================================================
+       LOGO
+       ================================================= */
+
+    .capa-caixa-logo {
+
+        position: absolute !important;
+
+        right: 7mm !important;
+
+        top: 5mm !important;
+
+        width: 21mm !important;
+
+        height: auto !important;
+
+        object-fit: contain !important;
+
+    }
+
+
+    /* =================================================
+       NÚMERO DO CAIXA
+       ================================================= */
+
+    .capa-caixa-numero {
+
+        text-align: center !important;
+
+        font-size: 11pt !important;
+
+        font-weight: 700 !important;
+
+        font-style: italic !important;
+
+        color: #4d554f !important;
+
+        line-height: 1.1 !important;
+
+        margin-bottom: 2.5mm !important;
+
+    }
+
+
+    /* =================================================
+       FUNCIONÁRIO
+       ================================================= */
+
+    .capa-caixa-funcionario {
+
+        text-align: center !important;
+
+        font-size: 20pt !important;
+
+        font-weight: 800 !important;
+
+        line-height: 1.05 !important;
+
+        text-transform: uppercase !important;
+
+        color: #202020 !important;
+
+        margin-bottom: 2mm !important;
+
+    }
+
+
+    /* =================================================
+       DATA
+       ================================================= */
+
+   .capa-caixa-data {
+
+    text-align: center !important;
+
+    font-size: 18pt !important;
+
+    font-weight: 700 !important;
+
+    color: #202020 !important;
+
+    line-height: 1.1 !important;
+
+    margin-top: 1mm !important;
+
+}
+
+
+
+</style>
+
+<style>
+
+/* =====================================================
+   CAPA CAIXA - CAPTURA PARA IMAGEM
+   ===================================================== */
+
+#capaCaixaImpressao.capture-capa {
+
+    display: flex !important;
+
+    width: 190mm !important;
+
+    height: 65mm !important;
+
+    box-sizing: border-box;
+
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 0.6mm solid #bfc8c1;
+
+    border-radius: 3mm;
+
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #202020;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-titulo {
+
+    width: 100%;
+
+    height: 15mm;
+
+    min-height: 15mm;
+
+    box-sizing: border-box;
+
+    background: #198754;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 7mm;
+
+    font-size: 15pt;
+
+    font-weight: 700;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-conteudo {
+
+    position: relative;
+
+    flex: 1;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 3mm 15mm;
+
+    background: #ffffff;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-logo {
+
+    position: absolute;
+
+    right: 7mm;
+
+    top: 5mm;
+
+    width: 21mm;
+
+    height: auto;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-numero {
+
+    text-align: center;
+
+    font-size: 11pt;
+
+    font-weight: 700;
+
+    font-style: italic;
+
+    color: #4d554f;
+
+    margin-bottom: 2.5mm;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-funcionario {
+
+    text-align: center;
+
+    font-size: 20pt;
+
+    font-weight: 800;
+
+    color: #202020;
+
+    margin-bottom: 2mm;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-data {
+
+    text-align: center;
+
+    font-size: 18pt;
+
+    font-weight: 700;
+
+    color: #202020;
+
+}
+
+</style>
+
+<link rel="stylesheet" href="frnh.css">
+
+<style>
+
+/* =====================================================
+   LISTA DE SUGESTÕES DE QUARTOS
+   ===================================================== */
+
+.lista-sugestoes-quartos {
+
+    position: absolute;
+
+    top: 100%;
+
+    left: 0;
+
+    width: 100%;
+
+    max-height: 210px;
+
+    overflow-y: auto;
+
+    margin-top: 4px;
+
+    background: #ffffff;
+
+    border: 1px solid #ced4da;
+
+    border-radius: 6px;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.12);
+
+    z-index: 1055;
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   CADA QUARTO
+   ===================================================== */
+
+.sugestao-quarto {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    padding: 7px 12px;
+
+    min-height: 48px;
+
+    cursor: pointer;
+
+    border-bottom:
+        1px solid #eeeeee;
+
+    background: #ffffff;
+
+    transition:
+        background-color 0.15s ease;
+
+}
+
+
+.sugestao-quarto:last-child {
+
+    border-bottom: none;
+
+}
+
+
+/* =====================================================
+   NÚMERO DO QUARTO
+   ===================================================== */
+
+.sugestao-quarto-numero {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    color: #212529;
+
+}
+
+
+/* =====================================================
+   TIPO DO QUARTO
+   ===================================================== */
+
+.sugestao-quarto-tipo {
+
+    margin-top: 2px;
+
+    font-size: 11px;
+
+    line-height: 1.1;
+
+    color: #6c757d;
+
+}
+
+
+/* =====================================================
+   EFEITO AO PASSAR O MOUSE
+   ===================================================== */
+
+.sugestao-quarto:hover {
+
+    background: #f1f7f3;
+
+}
+
+
+.sugestao-quarto:hover
+.sugestao-quarto-numero {
+
+    color: #198754;
+
+}
+
+
+/* =====================================================
+   QUANDO NÃO HÁ RESULTADOS
+   ===================================================== */
+
+.sugestao-quarto-vazio {
+
+    padding: 10px 12px;
+
+    font-size: 13px;
+
+    color: #6c757d;
+
+    text-align: center;
+
+}
+
+</style>
+<style>
+
+/* =====================================================
+   QUARTO NO CARD
+   ===================================================== */
+
+.quarto-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    line-height: 1;
+
+}
+
+
+/* =====================================================
+   NÚMERO
+   ===================================================== */
+
+.quarto-card-numero {
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+}
+
+
+/* =====================================================
+   TIPO
+   ===================================================== */
+
+.quarto-card-tipo {
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    line-height: 1;
+
+    color: #6c757d;
+
+    letter-spacing: 0.3px;
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+CABECALHO
+====================================================== -->
+
+<header class="topo shadow-sm">
+
+    <div class="container">
+
+        <div class="text-center py-4">
+
+            <img
+                src="img/logo.png"
+                class="logo mb-3"
+                alt="ibis Styles">
+
+
+            <h1 class="fw-bold">
+
+                LogBook
+
+            </h1>
+
+
+            <p class="text-secondary">
+
+                Registro de Ocorrências da Recepção
+
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+CONTEÚDO
+====================================================== -->
+
+<main class="container my-4">
+
+
+    <!-- =====================================================
+    INFORMAÇÕES DO TURNO
+    ====================================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <div class="row g-3">
+
+
+                <!-- DATA -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        class="form-label">
+
+                        <i class="bi bi-calendar3"></i>
+
+                        Data
+
+                    </label>
+
+
+                    <input
+                        id="data"
+                        type="date"
+                        class="form-control">
+
+                </div>
+
+
+
+                <!-- FUNCIONÁRIO -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        class="form-label">
+
+                        <i class="bi bi-person-circle"></i>
+
+                        Funcionário
+
+                    </label>
+
+
+                    <select
+                        id="funcionario"
+                        class="form-select">
+
+                        <option>
+                            Isaias Padovezzi
+                        </option>
+
+                        <option>
+                            Carol Ortiz
+                        </option>
+
+                        <option>
+                            Filipe Morais
+                        </option>
+
+                        <option>
+                            Cleberson Souza
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- TURNO -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        class="form-label">
+
+                        <i class="bi bi-clock"></i>
+
+                        Turno
+
+                    </label>
+
+
+                    <select
+                        id="turno"
+                        class="form-select">
+
+                        <option>
+                            11h-23h
+                        </option>
+
+                        <option>
+                            15h-23h
+                        </option>
+
+                        <option>
+                            7h-19h
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- CAIXA -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        class="form-label">
+
+                        <i class="bi bi-safe2"></i>
+
+                        Caixa
+
+                    </label>
+
+
+                    <input
+                        id="numeroCaixa"
+                        type="text"
+                        class="form-control"
+                        placeholder="Ex.: 1014732"
+                        autocomplete="off">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+    BOTÕES
+    ====================================================== -->
+
+    <div
+        class="d-flex justify-content-between flex-wrap gap-3 mb-4">
+
+
+        <button
+            class="btn btn-success btn-lg"
+            data-bs-toggle="modal"
+            data-bs-target="#modalRegistro">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Novo Registro
+
+        </button>
+
+
+
+        <div class="d-flex flex-wrap gap-2">
+
+
+            <!-- EXPORTAR PDF -->
+
+            <button
+                class="btn btn-outline-success"
+                onclick="exportarPDF()">
+
+                <i class="bi bi-file-earmark-pdf"></i>
+
+                Exportar PDF
+
+            </button>
+
+
+
+            <!-- CAPA CAIXA -->
+
+            <button
+                type="button"
+                id="btnCapaCaixa"
+                class="btn btn-outline-dark"
+                onclick="imprimirCapaCaixa()">
+
+                <i class="bi bi-printer"></i>
+
+                Capa Caixa
+
+            </button>
+
+
+
+            <!-- ARQUIVO -->
+
+            <button
+                type="button"
+                class="btn btn-outline-success"
+                onclick="abrirArquivoLogbook()">
+
+                <i class="bi bi-folder2-open"></i>
+
+                Arquivo
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+    PESQUISA E FILTROS
+    ====================================================== -->
+
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+
+            <div class="row g-3">
+
+
+                <!-- PESQUISA -->
+
+                <div class="col-lg-6">
+
+                    <label
+                        for="pesquisa"
+                        class="form-label">
+
+                        <i class="bi bi-search"></i>
+
+                        Pesquisar
+
+                    </label>
+
+
+                    <div class="input-group">
+
+                        <span
+                            class="input-group-text">
+
+                            <i class="bi bi-search"></i>
+
+                        </span>
+
+
+                        <input
+                            id="pesquisa"
+                            type="text"
+                            class="form-control"
+                            placeholder="Pesquisar quarto, atividade ou descrição...">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FILTRO -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        for="filtroAtividade"
+                        class="form-label">
+
+                        <i class="bi bi-funnel"></i>
+
+                        Filtrar atividade
+
+                    </label>
+
+
+                    <select
+                        id="filtroAtividade"
+                        class="form-select">
+
+                        <option value="">
+                            Todas as atividades
+                        </option>
+
+                        <option value="Check-in">
+                            Check-in
+                        </option>
+
+                     <option value="Check-out">
+    Check-out
+</option>
+
+<option value="Renovação">
+    Renovação
+</option>
+
+<option value="Open Folio">
+    Open Folio
+</option>
+
+<option value="Procedimentos">
+    Procedimentos
+</option>
+
+                        <option value="Walk-in">
+                            Walk-in
+                        </option>
+
+                        <option value="No Show">
+                            No Show
+                        </option>
+
+                        <option value="Cancelamento">
+                            Cancelamento
+                        </option>
+
+                        <option value="Estorno">
+                            Estorno
+                        </option>
+
+                        <option value="Despertar">
+                            Despertar
+                        </option>
+
+                        <option value="Pagamento">
+                            Pagamento
+                        </option>
+
+                        <option value="Depósito">
+                            Depósito
+                        </option>
+
+                        <option value="Mudança de Quarto">
+                            Mudança de Quarto
+                        </option>
+
+                        <option value="Manutenção">
+                            Manutenção
+                        </option>
+
+                        <option value="Lost & Found">
+                            Lost & Found
+                        </option>
+
+                        <option value="Reclamação">
+                            Reclamação
+                        </option>
+
+                        <option value="Elogio">
+                            Elogio
+                        </option>
+
+                        <option value="Reservas">
+                            Reservas
+                        </option>
+
+                        <option value="Lavanderia">
+                            Lavanderia
+                        </option>
+
+                        <option value="Empréstimos">
+                            Empréstimos
+                        </option>
+
+                        <option value="Conferência">
+                            Conferência
+                        </option>
+
+                        <option value="Aviso">
+                            Aviso
+                        </option>
+
+                        <option value="Outro">
+                            Outro
+                        </option>
+                        
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ORDENAR -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        for="ordenarPor"
+                        class="form-label">
+
+                        <i class="bi bi-sort-alpha-down"></i>
+
+                        Ordenar por
+
+                    </label>
+
+
+                    <select
+                        id="ordenarPor"
+                        class="form-select">
+
+                        <option value="hora">
+                            Hora
+                        </option>
+
+                        <option value="atividade">
+                            Atividade
+                        </option>
+
+                        <option value="quarto">
+                            Quarto
+                        </option>
+
+                        <option value="descricao">
+                            Resumo
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="row g-3 mt-1">
+
+
+                <!-- ORDEM -->
+
+                <div class="col-lg-3">
+
+                    <label
+                        for="ordem"
+                        class="form-label">
+
+                        <i class="bi bi-arrow-down-up"></i>
+
+                        Ordem
+
+                    </label>
+
+
+                    <select
+                        id="ordem"
+                        class="form-select">
+
+                        <option value="asc">
+                            Crescente ↑
+                        </option>
+
+                        <option value="desc">
+                            Decrescente ↓
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <div
+                    class="col-lg-9 d-flex align-items-end justify-content-between flex-wrap gap-2">
+
+
+                    <div
+                        id="contadorFiltro"
+                        class="text-secondary">
+
+                        <i class="bi bi-list-check"></i>
+
+                        <span id="textoContadorFiltro">
+
+                            Todos os registros
+
+                        </span>
+
+                    </div>
+
+
+
+                    <button
+                        type="button"
+                        id="btnLimparFiltros"
+                        class="btn btn-outline-secondary">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Limpar filtros
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+    TABELA
+    ====================================================== -->
+
+    <div class="card shadow-sm border-0">
+
+
+        <div
+            class="card-header bg-success text-white">
+
+
+            <div
+                class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+
+                <h5 class="mb-0">
+
+                    <i class="bi bi-journal-text"></i>
+
+                    Registros do Turno
+
+                </h5>
+
+
+                <span
+                    id="contadorRegistros"
+                    class="badge bg-light text-success">
+
+                    0 registros
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="table-responsive">
+
+            <table
+                class="table table-hover align-middle mb-0">
+
+
+                <thead
+                    class="table-success">
+
+                    <tr>
+
+                        <th width="90">
+                            Hora
+                        </th>
+
+                        <th width="180">
+                            Atividade
+                        </th>
+
+                        <th width="90">
+                            Quarto
+                        </th>
+
+                        <th>
+                            Resumo
+                        </th>
+
+                        <th width="150">
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody
+                    id="listaRegistros">
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="text-center text-muted py-5">
+
+                            <i
+                                class="bi bi-inbox fs-1 d-block mb-2">
+                            </i>
+
+                            Nenhum registro encontrado.
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- =====================================================
+MODAL NOVO REGISTRO
+====================================================== -->
+
+<div
+    class="modal fade"
+    id="modalRegistro"
+    tabindex="-1"
+    aria-hidden="true">
+
+
+    <div
+        class="modal-dialog modal-lg modal-dialog-centered">
+
+
+        <div class="modal-content">
+
+
+            <div
+                class="modal-header bg-success text-white">
+
+
+                <h5 class="modal-title">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    Novo Registro
+
+                </h5>
+
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+
+
+            <div class="modal-body">
+
+
+                <div class="row g-3">
+
+
+                    <!-- HORA -->
+
+                    <div class="col-md-3">
+
+                        <label
+                            class="form-label">
+
+                            Hora
+
+                        </label>
+
+
+                        <input
+                            id="hora"
+                            type="time"
+                            class="form-control">
+
+                    </div>
+
+
+
+                    <!-- ATIVIDADE -->
+
+                    <div class="col-md-5">
+
+                        <label
+                            class="form-label">
+
+                            Atividade
+
+                        </label>
+
+
+                        <select
+                            id="atividade"
+                            class="form-select">
+
+
+                            <option value="Check-in">
+                                Check-in
+                            </option>
+
+                            <option value="Check-out">
+                                Check-out
+                            </option>
+
+                          <option value="Renovação">
+    Renovação
+</option>
+
+<option value="Open Folio">
+    Open Folio
+</option>
+
+<option value="Procedimentos">
+    Procedimentos
+</option>
+                            <option value="Walk-in">
+                                Walk-in
+                            </option>
+
+                            <option value="No Show">
+                                No Show
+                            </option>
+
+                            <option value="Cancelamento">
+                                Cancelamento
+                            </option>
+
+                            <option value="Estorno">
+                                Estorno
+                            </option>
+
+                            <option value="Despertar">
+                                Despertar
+                            </option>
+
+                            <option value="Pagamento">
+                                Pagamento
+                            </option>
+
+                            <option value="Depósito">
+                                Depósito
+                            </option>
+
+                            <option value="Mudança de Quarto">
+                                Mudança de Quarto
+                            </option>
+
+                            <option value="Manutenção">
+                                Manutenção
+                            </option>
+
+                            <option value="Lost & Found">
+                                Lost & Found
+                            </option>
+
+                            <option value="Reclamação">
+                                Reclamação
+                            </option>
+
+                            <option value="Elogio">
+                                Elogio
+                            </option>
+
+                            <option value="Reservas">
+                                Reservas
+                            </option>
+
+                            <option value="Lavanderia">
+                                Lavanderia
+                            </option>
+
+                            <option value="Empréstimos">
+                                Empréstimos
+                            </option>
+
+                            <option value="Conferência">
+                                Conferência
+                            </option>
+
+                            <option value="Aviso">
+                                Aviso
+                            </option>
+
+                            <option value="Outro">
+                                Outro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                                      <!-- PROCEDIMENTO PADRÃO -->
+
+                    <div
+                        class="col-md-7"
+                        id="grupoProcedimento"
+                        style="display: none;">
+
+                        <label
+                            class="form-label">
+
+                            Procedimento padrão
+
+                        </label>
+
+
+                        <select
+                            id="procedimentoPadrao"
+                            class="form-select">
+
+
+                            <option value="">
+
+                                Selecione um procedimento...
+
+                            </option>
+
+
+                            <option
+                                value="Todas as saídas previstas para hoje foram concluídas">
+
+                                Todas as saídas previstas para hoje foram concluídas
+
+                            </option>
+
+
+                            <option
+                                value="Limpeza de Back realizada">
+
+                                Limpeza de Back realizada
+
+                            </option>
+
+
+                            <option
+                                value="Contagem e Reposição realizada">
+
+                                Contagem e Reposição realizada
+
+                            </option>
+
+
+                            <option
+                                value="Outro">
+
+                                Outro
+
+                            </option>
+
+
+                        </select>
+
+                    </div>
+
+              
+
+                    <!-- QUARTO -->
+
+<div class="col-md-4">
+
+    <label
+        class="form-label">
+
+        Quarto
+
+    </label>
+
+
+    <div
+        class="position-relative">
+
+        <input
+            id="quarto"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            class="form-control"
+            placeholder="Digite o quarto">
+
+
+        <!-- SUGESTÕES DE QUARTOS -->
+
+        <div
+            id="listaSugestoesQuartos"
+            class="lista-sugestoes-quartos">
+
+        </div>
+
+    </div>
+
+</div>
+
+
+                    <!-- PAGAMENTO -->
+
+                    <div
+                        id="grupoPagamento"
+                        class="col-md-6"
+                        style="display:none;">
+
+                        <label
+                            class="form-label">
+
+                            Forma de Pagamento
+
+                        </label>
+
+
+                        <select
+                            id="pagamento"
+                            class="form-select">
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
+                            <option>
+                                Direto
+                            </option>
+
+                            <option>
+                                Cartão
+                            </option>
+
+                            <option>
+                                PIX
+                            </option>
+
+                            <option>
+                                Dinheiro
+                            </option>
+
+                            <option>
+                                Faturado
+                            </option>
+
+                            <option>
+                                Cortesia
+                            </option>
+
+                            <option>
+                                Cartão Virtual
+                            </option>
+
+                            <option>
+                                Voucher
+                            </option>
+
+                            <option>
+                                Depósito Antecipado
+                            </option>
+
+                            <option>
+                                Check-out Cartão Virtual
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- VALOR -->
+
+                    <div
+                        id="grupoValor"
+                        class="col-md-3"
+                        style="display:none;">
+
+                        <label
+                            class="form-label">
+
+                            Valor
+
+                        </label>
+
+
+                        <input
+                            id="valor"
+                            type="number"
+                            step="0.01"
+                            class="form-control"
+                            placeholder="0,00">
+
+                    </div>
+
+
+
+                    <!-- RESERVA -->
+
+                    <div
+                        id="grupoReserva"
+                        class="col-md-4"
+                        style="display:none;">
+
+                        <label
+                            class="form-label">
+
+                            Nº Reserva
+
+                        </label>
+
+
+                        <input
+                            id="reserva"
+                            type="text"
+                            class="form-control">
+
+                    </div>
+
+
+
+                    <!-- DESPERTAR -->
+
+                    <div
+                        id="grupoDespertar"
+                        class="col-md-4"
+                        style="display:none;">
+
+                        <label
+                            class="form-label">
+
+                            Horário do Despertar
+
+                        </label>
+
+
+                        <input
+                            id="horaDespertar"
+                            type="time"
+                            class="form-control">
+
+                    </div>
+
+
+
+                    <!-- DESCRIÇÃO -->
+
+                    <div class="col-12">
+
+                        <label
+                            class="form-label">
+
+                            Descrição
+
+                        </label>
+
+
+                        <textarea
+                            id="descricao"
+                            rows="5"
+                            class="form-control"
+                            placeholder="Descreva a ocorrência..."></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="modal-footer">
+
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Cancelar
+
+                </button>
+
+
+                <button
+                    id="btnSalvar"
+                    class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Salvar Registro
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+MODAL ARQUIVO
+====================================================== -->
+
+<div
+    class="modal fade"
+    id="modalArquivoLogbook"
+    tabindex="-1"
+    aria-hidden="true">
+
+
+    <div
+        class="modal-dialog modal-dialog-centered">
+
+
+        <div class="modal-content">
+
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+
+                    <i
+                        class="bi bi-folder2-open text-success">
+                    </i>
+
+                    Arquivo do LogBook
+
+                </h5>
+
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Fechar">
+                </button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <div
+                    id="listaArquivoLogbook"
+                    class="list-group">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+ÁREA DA CAPA CAIXA
+NÃO APARECE NO LOGBOOK NORMAL
+SÓ APARECE NA IMPRESSÃO
+====================================================== -->
+
+<div
+    id="capaCaixaImpressao"
+    aria-hidden="true">
+
+
+    <div class="capa-caixa-titulo">
+
+        FECHAMENTO DE CAIXA
+
+    </div>
+
+
+    <div class="capa-caixa-conteudo">
+
+
+        <img
+            src="img/logo.png"
+            class="capa-caixa-logo"
+            alt="ibis Styles">
+
+
+        <div
+            class="capa-caixa-numero"
+            id="capaCaixaNumero">
+
+            CAIXA -
+
+        </div>
+
+
+        <div
+            class="capa-caixa-funcionario"
+            id="capaCaixaFuncionario">
+
+            -
+
+        </div>
+
+
+        <div
+            class="capa-caixa-data"
+            id="capaCaixaData">
+
+            -
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+ÁREA DA CAPA NF-C
+NÃO APARECE NO LOGBOOK NORMAL
+SÓ APARECE NA IMPRESSÃO
+====================================================== -->
+
+<div
+    id="capaNfcImpressao"
+    aria-hidden="true">
+
+    <div class="nfc-titulo">
+
+        CUPONS FISCAIS - NF-C
+
+    </div>
+
+
+    <div class="nfc-conteudo">
+
+        <div
+            class="nfc-data"
+            id="nfcData">
+
+            -
+
+        </div>
+
+
+        <img
+            src="img/logo.png"
+            class="nfc-logo"
+            alt="ibis Styles">
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+SCRIPTS
+====================================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+</script>
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js">
+</script>
+
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+</script>
+
+<script src="config.js"></script>
+
+<script src="quartos.js"></script>
+
+<script src="script.js"></script>
+
+
+<script src="pdf.js?v=8"></script>
+
+
+<script src="reports/reports.js"></script>
+
+
+
+<!-- =====================================================
+CAPA CAIXA
+IMPRESSÃO COMO IMAGEM
+===================================================== -->
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    const STORAGE_CAIXA =
+        "logbook_numero_caixa";
+
+
+    /* =====================================================
+       CARREGAR ÚLTIMO CAIXA
+       ===================================================== */
+
+    function carregarNumeroCaixa() {
+
+        const campo =
+            document.getElementById("numeroCaixa");
+
+
+        if (!campo) {
+            return;
+        }
+
+
+        const salvo =
+            localStorage.getItem(
+                STORAGE_CAIXA
+            );
+
+
+        if (salvo) {
+
+            campo.value = salvo;
+
+        }
+
+
+        campo.addEventListener(
+            "input",
+            function () {
+
+                localStorage.setItem(
+                    STORAGE_CAIXA,
+                    campo.value.trim()
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       FORMATAR DATA
+       ===================================================== */
+
+    function formatarDataCapa(data) {
+
+        if (!data) {
+            return "";
+        }
+
+
+        const partes =
+            data.split("-");
+
+
+        if (partes.length !== 3) {
+            return data;
+        }
+
+
+        return (
+            partes[2] +
+            "/" +
+            partes[1] +
+            "/" +
+            partes[0]
+        );
+
+    }
+
+
+    /* =====================================================
+       IMPRIMIR ELEMENTO COMO IMAGEM
+       ===================================================== */
+
+    async function imprimirElementoComoImagem(elemento) {
+
+        if (!elemento) {
+
+            alert(
+                "Não foi possível encontrar a capa para impressão."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Guarda o estado original
+         */
+
+        const estadoOriginal = {
+
+            display:
+                elemento.style.display,
+
+            position:
+                elemento.style.position,
+
+            left:
+                elemento.style.left,
+
+            top:
+                elemento.style.top,
+
+            width:
+                elemento.style.width,
+
+            height:
+                elemento.style.height,
+
+            zIndex:
+                elemento.style.zIndex,
+
+            visibility:
+                elemento.style.visibility
+
+        };
+
+
+        /*
+         * Coloca a capa temporariamente
+         * fora da tela para gerar a imagem.
+         */
+
+        elemento.classList.add("capture-capa");
+        elemento.style.display =
+    estadoOriginal.display;
+
+        elemento.style.position = "fixed";
+
+        elemento.style.left = "-10000px";
+
+        elemento.style.top = "0";
+
+        elemento.style.width = "190mm";
+
+        elemento.style.height = "65mm";
+
+        elemento.style.zIndex = "-1";
+
+        elemento.style.visibility = "visible";
+
+
+        /*
+         * Força o navegador a terminar
+         * o layout antes da captura.
+         */
+
+        await new Promise(function (resolve) {
+
+            requestAnimationFrame(function () {
+
+                requestAnimationFrame(resolve);
+
+            });
+
+        });
+
+
+        /*
+         * Espera a logo carregar.
+         */
+
+        const imagens =
+            elemento.querySelectorAll("img");
+
+
+        await Promise.all(
+
+            Array.from(imagens).map(
+
+                function (img) {
+
+                    if (img.complete) {
+
+                        return Promise.resolve();
+
+                    }
+
+
+                    return new Promise(
+
+                        function (resolve) {
+
+                            img.onload = resolve;
+
+                            img.onerror = resolve;
+
+                        }
+
+                    );
+
+                }
+
+            )
+
+        );
+
+
+        /*
+         * GERA A IMAGEM
+         */
+
+        const canvas =
+            await html2canvas(
+                elemento,
+                {
+                    scale: 3,
+
+                    backgroundColor:
+                        "#ffffff",
+
+                    useCORS: true,
+
+                    logging: false
+                }
+            );
+
+
+        const imagem =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+
+        /*
+         * RESTAURA A CAPA ORIGINAL
+         */
+
+        elemento.style.display =
+            estadoOriginal.display;
+
+        elemento.style.position =
+            estadoOriginal.position;
+
+        elemento.style.left =
+            estadoOriginal.left;
+
+        elemento.style.top =
+            estadoOriginal.top;
+
+        elemento.style.width =
+            estadoOriginal.width;
+
+        elemento.style.height =
+            estadoOriginal.height;
+
+        elemento.style.zIndex =
+            estadoOriginal.zIndex;
+
+        elemento.style.visibility =
+            estadoOriginal.visibility;
+
+
+        /*
+         * CRIA UMA JANELA EXCLUSIVA
+         * PARA IMPRESSÃO
+         */
+
+        const janela =
+            window.open(
+                "",
+                "_blank"
+            );
+
+
+        if (!janela) {
+
+            alert(
+                "O navegador bloqueou a janela de impressão. Permita pop-ups para este site."
+            );
+
+            return;
+
+        }
+
+
+        janela.document.open();
+
+
+        janela.document.write(`
+
+            <!DOCTYPE html>
+
+            <html lang="pt-BR">
+
+            <head>
+
+                <meta charset="UTF-8">
+
+                <title>Capa Caixa</title>
+
+                <style>
+
+                    @page {
+
+                        size: A4 portrait;
+
+                        margin: 0;
+
+                    }
+
+
+                    html,
+                    body {
+
+                        width: 210mm;
+
+                        height: 297mm;
+
+                        margin: 0;
+
+                        padding: 0;
+
+                        background: #ffffff;
+
+                    }
+
+
+                    body {
+
+                        position: relative;
+
+                    }
+
+
+                    img {
+
+                        position: absolute;
+
+                        left: 10mm;
+
+                        bottom: 8mm;
+
+                        width: 190mm;
+
+                        height: 65mm;
+
+                        display: block;
+
+                    }
+
+                </style>
+
+            </head>
+
+
+            <body>
+
+                <img
+                    src="${imagem}"
+                    alt="Capa Caixa">
+
+            </body>
+
+            </html>
+
+        `);
+
+
+        /*
+ * Aguarda a imagem aparecer
+ * antes de imprimir.
+ */
+
+janela.onload = function () {
+
+    setTimeout(function () {
+
+        janela.focus();
+
+        janela.print();
+
+    }, 500);
+
+};
+
+janela.onafterprint = function () {
+
+    janela.close();
+
+};
+
+janela.document.close();
+
+    }
+
+
+    /* =====================================================
+       FUNÇÃO PÚBLICA
+       ===================================================== */
+
+    window.imprimirCapaCaixa =
+        async function () {
+
+
+            const dataElemento =
+                document.getElementById(
+                    "data"
+                );
+
+
+            const funcionarioElemento =
+                document.getElementById(
+                    "funcionario"
+                );
+
+
+            const caixaElemento =
+                document.getElementById(
+                    "numeroCaixa"
+                );
+
+
+            const data =
+                dataElemento
+                    ? dataElemento.value
+                    : "";
+
+
+            const funcionario =
+                funcionarioElemento
+                    ? funcionarioElemento.value
+                    : "";
+
+
+            const caixa =
+                caixaElemento
+                    ? caixaElemento.value.trim()
+                    : "";
+
+
+            /* ---------------------------------------------
+               VALIDAÇÕES
+               --------------------------------------------- */
+
+            if (!data) {
+
+                alert(
+                    "Informe a data antes de imprimir a Capa Caixa."
+                );
+
+                return;
+
+            }
+
+
+            if (!funcionario) {
+
+                alert(
+                    "Selecione o funcionário antes de imprimir a Capa Caixa."
+                );
+
+                return;
+
+            }
+
+
+            if (!caixa) {
+
+                alert(
+                    "Informe o número do caixa antes de imprimir a Capa Caixa."
+                );
+
+
+                if (caixaElemento) {
+
+                    caixaElemento.focus();
+
+                }
+
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               ELEMENTOS DA CAPA
+               --------------------------------------------- */
+
+            const capa =
+                document.getElementById(
+                    "capaCaixaImpressao"
+                );
+
+
+            const numeroCapa =
+                document.getElementById(
+                    "capaCaixaNumero"
+                );
+
+
+            const funcionarioCapa =
+                document.getElementById(
+                    "capaCaixaFuncionario"
+                );
+
+
+            const dataCapa =
+                document.getElementById(
+                    "capaCaixaData"
+                );
+
+
+            if (
+                !capa ||
+                !numeroCapa ||
+                !funcionarioCapa ||
+                !dataCapa
+            ) {
+
+                alert(
+                    "Elementos da Capa Caixa não encontrados."
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               PREENCHE A CAPA
+               --------------------------------------------- */
+
+            numeroCapa.textContent =
+                "CAIXA - " + caixa;
+
+
+            funcionarioCapa.textContent =
+                funcionario;
+
+
+            dataCapa.textContent =
+                formatarDataCapa(data);
+
+
+            /* ---------------------------------------------
+               SALVA O CAIXA
+               --------------------------------------------- */
+
+            localStorage.setItem(
+                STORAGE_CAIXA,
+                caixa
+            );
+
+
+            /* ---------------------------------------------
+               GERA E IMPRIME A IMAGEM
+               --------------------------------------------- */
+
+            try {
+
+                await imprimirElementoComoImagem(
+                    capa
+                );
+
+            }
+
+            catch (erro) {
+
+                console.error(
+                    "Erro ao gerar Capa Caixa:",
+                    erro
+                );
+
+
+                alert(
+                    "Não foi possível gerar a Capa Caixa para impressão."
+                );
+
+            }
+
+        };
+
+
+    /* =====================================================
+       INICIALIZAÇÃO
+       ===================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            carregarNumeroCaixa();
+
+        }
+    );
+
+
+})();
+
+</script>
+
+
+<!-- =====================================================
+LIMPA MODO DE IMPRESSÃO DA CAPA CAIXA
+====================================================== -->
+
+<script>
+
+window.addEventListener(
+    "afterprint",
+    function () {
+
+        document.body.classList.remove(
+            "imprimindo-caixa"
+        );
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+FILTROS E ORDENAÇÃO
+====================================================== -->
+
+<script>
+
+(function() {
+
+    "use strict";
+
+
+    const filtro =
+        document.getElementById(
+            "filtroAtividade"
+        );
+
+
+    const ordenarPor =
+        document.getElementById(
+            "ordenarPor"
+        );
+
+
+    const ordem =
+        document.getElementById(
+            "ordem"
+        );
+
+
+    const pesquisa =
+        document.getElementById(
+            "pesquisa"
+        );
+
+
+    const btnLimpar =
+        document.getElementById(
+            "btnLimparFiltros"
+        );
+
+
+    const contador =
+        document.getElementById(
+            "textoContadorFiltro"
+        );
+
+
+    const contadorRegistros =
+        document.getElementById(
+            "contadorRegistros"
+        );
+
+
+    function obterValorOrdenacao(
+        registro,
+        campo
+    ) {
+
+        switch (campo) {
+
+            case "hora":
+
+                return converterHora(
+                    registro.hora
+                );
+
+
+            case "atividade":
+
+                return (
+                    registro.atividade ||
+                    ""
+                );
+
+
+            case "quarto":
+
+                return converterNumero(
+                    registro.quarto
+                );
+
+
+            case "descricao":
+
+                return gerarResumo(
+                    registro
+                );
+
+
+            default:
+
+                return "";
+
+        }
+
+    }
+
+
+    function converterHora(hora) {
+
+        if (!hora) {
+
+            return 999999;
+
+        }
+
+
+        const partes =
+            String(hora).split(":");
+
+
+        if (
+            partes.length !== 2
+        ) {
+
+            return 999999;
+
+        }
+
+
+        return (
+
+            Number(partes[0]) * 60 +
+            Number(partes[1])
+
+        );
+
+    }
+
+
+    function converterNumero(valor) {
+
+        if (
+            valor ===
+                undefined ||
+            valor ===
+                null ||
+            valor === ""
+        ) {
+
+            return 999999999;
+
+        }
+
+
+        const numero =
+            Number(valor);
+
+
+        return Number.isNaN(
+            numero
+        )
+            ? 999999999
+            : numero;
+
+    }
+
+
+    function gerarResumo(
+        registro
+    ) {
+
+        return [
+
+            registro.descricao,
+
+            registro.pagamento,
+
+            registro.valor,
+
+            registro.reserva,
+
+            registro.despertar,
+
+            registro.quartoDestino
+
+        ]
+            .filter(
+                function(valor) {
+
+                    return (
+                        valor !==
+                            undefined &&
+                        valor !==
+                            null
+                    );
+
+                }
+            )
+            .join(" ");
+
+    }
+
+
+    function aplicarFiltrosETabela() {
+
+        if (
+            typeof registros ===
+            "undefined"
+        ) {
+
+            return;
+
+        }
+
+
+        let resultado =
+            [...registros];
+
+
+        const texto =
+            (
+                pesquisa?.value ||
+                ""
+            )
+                .trim()
+                .toLowerCase();
+
+
+        if (texto !== "") {
+
+            resultado =
+                resultado.filter(
+                    function(registro) {
+
+                        const conteudo = [
+
+                            registro.hora,
+
+                            registro.atividade,
+
+                            registro.quarto,
+
+                            registro.quartoDestino,
+
+                            registro.descricao,
+
+                            registro.pagamento,
+
+                            registro.valor,
+
+                            registro.reserva,
+
+                            registro.despertar
+
+                        ]
+                            .filter(
+                                function(valor) {
+
+                                    return (
+                                        valor !==
+                                            undefined &&
+                                        valor !==
+                                            null
+                                    );
+
+                                }
+                            )
+                            .join(" ")
+                            .toLowerCase();
+
+
+                        return conteudo.includes(
+                            texto
+                        );
+
+                    }
+                );
+
+        }
+
+
+        const atividade =
+            filtro?.value ||
+            "";
+
+
+        if (atividade !== "") {
+
+            resultado =
+                resultado.filter(
+                    function(registro) {
+
+                        return (
+                            registro.atividade ===
+                            atividade
+                        );
+
+                    }
+                );
+
+        }
+
+
+        const campo =
+            ordenarPor?.value ||
+            "hora";
+
+
+        const direcao =
+            ordem?.value ||
+            "asc";
+
+
+        resultado.sort(
+            function(a, b) {
+
+                const valorA =
+                    obterValorOrdenacao(
+                        a,
+                        campo
+                    );
+
+
+                const valorB =
+                    obterValorOrdenacao(
+                        b,
+                        campo
+                    );
+
+
+                let comparacao;
+
+
+                if (
+                    typeof valorA ===
+                        "number" &&
+                    typeof valorB ===
+                        "number"
+                ) {
+
+                    comparacao =
+                        valorA -
+                        valorB;
+
+                } else {
+
+                    comparacao =
+                        String(valorA)
+                            .localeCompare(
+                                String(valorB),
+                                "pt-BR",
+                                {
+                                    numeric: true,
+                                    sensitivity: "base"
+                                }
+                            );
+
+                }
+
+
+                return (
+                    direcao === "desc"
+                        ? comparacao * -1
+                        : comparacao
+                );
+
+            }
+        );
+
+
+        atualizarTabelaFiltro(
+            resultado
+        );
+
+
+        atualizarContadores(
+            resultado.length
+        );
+
+    }
+
+
+    function atualizarTabelaFiltro(
+        lista
+    ) {
+
+        const tbody =
+            document.getElementById(
+                "listaRegistros"
+            );
+
+
+        if (!tbody) {
+
+            return;
+
+        }
+
+
+        tbody.innerHTML = "";
+
+
+        if (
+            lista.length === 0
+        ) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="text-center text-muted py-5">
+
+                        <i
+                            class="bi bi-search fs-1 d-block mb-2">
+                        </i>
+
+                        Nenhum registro encontrado
+                        com os filtros selecionados.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        lista.forEach(
+            function(registro) {
+
+                const indiceOriginal =
+                    registros.indexOf(
+                        registro
+                    );
+
+
+                let resumo = "";
+
+
+                if (
+                    registro.pagamento
+                ) {
+
+                    resumo +=
+                        "💳 " +
+                        registro.pagamento +
+                        " ";
+
+                }
+
+
+                if (
+                    registro.valor
+                ) {
+
+                    resumo +=
+                        "R$ " +
+                        registro.valor +
+                        " ";
+
+                }
+
+
+                if (
+                    registro.reserva
+                ) {
+
+                    resumo +=
+                        "Reserva: " +
+                        registro.reserva +
+                        " ";
+
+                }
+
+
+                if (
+                    registro.despertar
+                ) {
+
+                    resumo +=
+                        "Despertar: " +
+                        registro.despertar +
+                        " ";
+
+                }
+
+
+                if (
+                    registro.quartoDestino &&
+                    (
+                        registro.atividade ===
+                            "Mudança de Quarto" ||
+                        registro.atividade ===
+                            "Troca de Quarto"
+                    )
+                ) {
+
+                    resumo +=
+                        "Novo quarto: " +
+                        registro.quartoDestino +
+                        " ";
+
+                }
+
+
+                if (
+                    registro.descricao
+                ) {
+
+                    if (
+                        resumo !== ""
+                    ) {
+
+                        resumo += "<br>";
+
+                    }
+
+
+                    resumo +=
+                        registro.descricao;
+
+                }
+
+
+                if (
+                    resumo === ""
+                ) {
+
+                    resumo = "-";
+
+                }
+
+
+                let icone =
+                    '<i class="bi bi-clipboard"></i>';
+
+
+                switch (
+                    registro.atividade
+                ) {
+
+                    case "Check-in":
+
+                        icone =
+                            '<i class="bi bi-person-check"></i>';
+
+                        break;
+
+
+                    case "Check-out":
+
+                        icone =
+                            '<i class="bi bi-box-arrow-right"></i>';
+
+                        break;
+
+
+                    case "Walk-in":
+
+                        icone =
+                            '<i class="bi bi-person-plus"></i>';
+
+                        break;
+
+
+                    case "Pagamento":
+
+                        icone =
+                            '<i class="bi bi-credit-card"></i>';
+
+                        break;
+
+
+                    case "Estorno":
+
+                        icone =
+                            '<i class="bi bi-arrow-counterclockwise"></i>';
+
+                        break;
+
+
+                    case "Cancelamento":
+
+                        icone =
+                            '<i class="bi bi-x-circle"></i>';
+
+                        break;
+
+
+                    case "No Show":
+
+                        icone =
+                            '<i class="bi bi-person-x"></i>';
+
+                        break;
+
+
+                    case "Procedimentos":
+
+                        icone =
+                            '<i class="bi bi-clipboard-check"></i>';
+
+                        break;
+
+
+                    case "Conferência":
+
+                        icone =
+                            '<i class="bi bi-clipboard-check"></i>';
+
+                        break;
+
+
+                    case "Manutenção":
+
+                        icone =
+                            '<i class="bi bi-tools"></i>';
+
+                        break;
+
+
+                    case "Mudança de Quarto":
+
+                    case "Troca de Quarto":
+
+                        icone =
+                            '<i class="bi bi-door-open"></i>';
+
+                        break;
+
+
+                    case "Limpeza":
+
+                        icone =
+                            '<i class="bi bi-stars"></i>';
+
+                        break;
+
+
+                    case "Aviso":
+
+                        icone =
+                            '<i class="bi bi-info-circle"></i>';
+
+                        break;
+
+
+                    case "Reclamação":
+
+                        icone =
+                            '<i class="bi bi-exclamation-circle"></i>';
+
+                        break;
+
+
+                    case "Elogio":
+
+                        icone =
+                            '<i class="bi bi-hand-thumbs-up"></i>';
+
+                        break;
+
+
+                    case "Despertar":
+
+                        icone =
+                            '<i class="bi bi-alarm"></i>';
+
+                        break;
+
+                }
+
+
+                tbody.innerHTML += `
+
+                    <tr>
+
+                        <td>
+                            ${registro.hora || "-"}
+                        </td>
+
+
+                        <td>
+
+                            ${icone}
+
+                            <span class="ms-1">
+
+                                ${registro.atividade || "-"}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+
+                                ${registro.quarto || "-"}
+
+                            </strong>
+
+                        </td>
+
+
+                        <td>
+
+                            ${resumo}
+
+                        </td>
+
+
+                        <td
+                            class="acoes-registro"
+                            style="
+                                width:150px;
+                                min-width:150px;
+                                white-space:nowrap;
+                            ">
+
+                            <div
+                                style="
+                                    display:flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    gap:4px;
+                                    flex-wrap:nowrap;
+                                ">
+
+
+                                <button
+                                    class="btn btn-sm btn-outline-primary"
+                                    onclick="editarRegistro(${indiceOriginal})"
+                                    title="Editar"
+                                    style="
+                                        width:32px;
+                                        height:32px;
+                                        padding:0;
+                                    ">
+
+                                    <i class="bi bi-pencil"></i>
+
+                                </button>
+
+
+                                <button
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="excluirRegistro(${indiceOriginal})"
+                                    title="Excluir"
+                                    style="
+                                        width:32px;
+                                        height:32px;
+                                        padding:0;
+                                    ">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+
+                                <button
+                                    class="btn btn-sm btn-outline-success"
+                                    onclick="reportarRegistro(${indiceOriginal})"
+                                    title="Gerar Report"
+                                    style="
+                                        width:32px;
+                                        height:32px;
+                                        padding:0;
+                                    ">
+
+                                    <i class="bi bi-save"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+    function atualizarContadores(
+        quantidade
+    ) {
+
+        const total =
+            registros.length;
+
+
+        if (
+            contadorRegistros
+        ) {
+
+            contadorRegistros.textContent =
+
+                quantidade +
+                (
+                    quantidade === 1
+                        ? " registro"
+                        : " registros"
+                );
+
+        }
+
+
+        if (
+            contador
+        ) {
+
+            const temPesquisa =
+                (
+                    pesquisa?.value ||
+                    ""
+                ).trim() !== "";
+
+
+            const temFiltro =
+                (
+                    filtro?.value ||
+                    ""
+                ) !== "";
+
+
+            if (
+                !temPesquisa &&
+                !temFiltro
+            ) {
+
+                contador.innerHTML = `
+
+                    <strong>
+                        ${total}
+                    </strong>
+
+                    ${
+                        total === 1
+                            ? "registro no turno"
+                            : "registros no turno"
+                    }
+
+                `;
+
+                return;
+
+            }
+
+
+            contador.innerHTML = `
+
+                <strong>
+                    ${quantidade}
+                </strong>
+
+                de
+
+                <strong>
+                    ${total}
+                </strong>
+
+                ${
+                    quantidade === 1
+                        ? "registro"
+                        : "registros"
+                }
+
+                encontrados
+
+            `;
+
+        }
+
+    }
+
+
+    if (filtro) {
+
+        filtro.addEventListener(
+            "change",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (ordenarPor) {
+
+        ordenarPor.addEventListener(
+            "change",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (ordem) {
+
+        ordem.addEventListener(
+            "change",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (pesquisa) {
+
+        pesquisa.addEventListener(
+            "input",
+            aplicarFiltrosETabela
+        );
+
+    }
+
+
+    if (btnLimpar) {
+
+        btnLimpar.addEventListener(
+            "click",
+            function() {
+
+                if (pesquisa) {
+
+                    pesquisa.value = "";
+
+                }
+
+
+                if (filtro) {
+
+                    filtro.value = "";
+
+                }
+
+
+                if (ordenarPor) {
+
+                    ordenarPor.value =
+                        "hora";
+
+                }
+
+
+                if (ordem) {
+
+                    ordem.value =
+                        "asc";
+
+                }
+
+
+                aplicarFiltrosETabela();
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Atualização periódica para manter
+     * filtros e registros sincronizados.
+     */
+
+    setInterval(
+        function() {
+
+            if (
+                typeof registros !==
+                "undefined"
+            ) {
+
+                aplicarFiltrosETabela();
+
+            }
+
+        },
+        500
+    );
+
+
+})();
+
+</script>
+<script src="frnh.js"></script>
+<script src="nfc.js"></script>
+</body>
+
+</html>

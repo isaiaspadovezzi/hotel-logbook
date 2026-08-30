@@ -483,6 +483,18 @@
 #capaNfcImpressao.capture-capa {
     display: flex !important;
 }
+
+@media print {
+    /* A capa NF-C não deve aparecer no LogBook nem na impressão da Capa Caixa. */
+    #capaNfcImpressao {
+        display: none !important;
+    }
+
+    /* Só aparece se uma rotina específica de captura a habilitar. */
+    #capaNfcImpressao.capture-capa {
+        display: flex !important;
+    }
+}
 </style>
 
 <link rel="stylesheet" href="frnh.css">
@@ -2170,7 +2182,7 @@ IMPRESSÃO COMO IMAGEM
 
         elemento.classList.add("capture-capa");
         elemento.style.display =
-    estadoOriginal.display;
+    "flex";
 
         elemento.style.position = "fixed";
 
@@ -2422,11 +2434,6 @@ janela.onload = function () {
 };
 
 janela.document.close();
-            function () {
-
-                janela.close();
-
-            };
 
     }
 

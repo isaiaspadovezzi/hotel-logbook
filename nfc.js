@@ -1,6 +1,7 @@
 /* =====================================================
    CAPA NF-C
    CUPONS FISCAIS - NF-C
+   IMPRESSÃO COMO IMAGEM
    ===================================================== */
 
 (function () {
@@ -76,11 +77,6 @@
 
     function obterDataNfc() {
 
-        /*
-         * Primeiro tenta encontrar o campo
-         * de data pelo ID.
-         */
-
         const campo =
             document.getElementById(
                 "data"
@@ -95,12 +91,6 @@
             const valor =
                 campo.value;
 
-
-            /*
-             * Caso o campo esteja no formato:
-             *
-             * YYYY-MM-DD
-             */
 
             const partes =
                 valor.split("-");
@@ -206,30 +196,421 @@
 
     /* =================================================
        IMPRIMIR CAPA NF-C
+       COMO IMAGEM EM JANELA EXCLUSIVA
        ================================================= */
 
-    function imprimirNfc() {
+    async function imprimirNfc() {
 
         try {
 
+            /*
+             * Garante que a capa exista.
+             */
+
             criarCapaNfc();
+
+
+            /*
+             * Atualiza a data.
+             */
 
             preencherDataNfc();
 
 
-            document.body.classList.add(
-                "imprimindo-nfc"
+            const elemento =
+                document.getElementById(
+                    "capaNfcImpressao"
+                );
+
+
+            if (!elemento) {
+
+                throw new Error(
+                    "Capa NF-C não encontrada."
+                );
+
+            }
+
+
+            /*
+             * Garante que o html2canvas
+             * esteja disponível.
+             */
+
+            if (
+                typeof html2canvas ===
+                "undefined"
+            ) {
+
+                throw new Error(
+                    "html2canvas não foi carregado."
+                );
+
+            }
+
+
+            /*
+             * =================================================
+             * GUARDA O ESTADO ORIGINAL
+             * =================================================
+             */
+
+            const estadoOriginal = {
+
+                display:
+                    elemento.style.display,
+
+                position:
+                    elemento.style.position,
+
+                left:
+                    elemento.style.left,
+
+                top:
+                    elemento.style.top,
+
+                width:
+                    elemento.style.width,
+
+                height:
+                    elemento.style.height,
+
+                zIndex:
+                    elemento.style.zIndex,
+
+                visibility:
+                    elemento.style.visibility
+
+            };
+
+
+            /*
+             * =================================================
+             * PREPARA A CAPA PARA CAPTURA
+             * =================================================
+             *
+             * A mesma lógica utilizada na Capa Caixa.
+             */
+
+            elemento.classList.add(
+                "capture-capa"
             );
 
 
-            setTimeout(
+            elemento.style.display =
+                "flex";
+
+            elemento.style.position =
+                "fixed";
+
+            elemento.style.left =
+                "-10000px";
+
+            elemento.style.top =
+                "0";
+
+            elemento.style.width =
+                "190mm";
+
+            elemento.style.height =
+                "65mm";
+
+            elemento.style.zIndex =
+                "-1";
+
+            elemento.style.visibility =
+                "visible";
+
+
+            /*
+             * =================================================
+             * ESPERA O LAYOUT TERMINAR
+             * =================================================
+             */
+
+            await new Promise(
+                function (resolve) {
+
+                    requestAnimationFrame(
+                        function () {
+
+                            requestAnimationFrame(
+                                resolve
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+
+            /*
+             * =================================================
+             * ESPERA A LOGO CARREGAR
+             * =================================================
+             */
+
+            const imagens =
+                elemento.querySelectorAll(
+                    "img"
+                );
+
+
+            await Promise.all(
+
+                Array.from(
+                    imagens
+                ).map(
+
+                    function (img) {
+
+                        if (
+                            img.complete
+                        ) {
+
+                            return Promise.resolve();
+
+                        }
+
+
+                        return new Promise(
+                            function (resolve) {
+
+                                img.onload =
+                                    resolve;
+
+                                img.onerror =
+                                    resolve;
+
+                            }
+                        );
+
+                    }
+
+                )
+
+            );
+
+
+            /*
+             * =================================================
+             * GERA A IMAGEM
+             * =================================================
+             */
+
+            const canvas =
+                await html2canvas(
+                    elemento,
+                    {
+
+                        scale: 3,
+
+                        backgroundColor:
+                            "#ffffff",
+
+                        useCORS:
+                            true,
+
+                        logging:
+                            false
+
+                    }
+                );
+
+
+            const imagem =
+                canvas.toDataURL(
+                    "image/png"
+                );
+
+
+            /*
+             * =================================================
+             * RESTAURA A CAPA ORIGINAL
+             * =================================================
+             */
+
+            elemento.style.display =
+                estadoOriginal.display;
+
+            elemento.style.position =
+                estadoOriginal.position;
+
+            elemento.style.left =
+                estadoOriginal.left;
+
+            elemento.style.top =
+                estadoOriginal.top;
+
+            elemento.style.width =
+                estadoOriginal.width;
+
+            elemento.style.height =
+                estadoOriginal.height;
+
+            elemento.style.zIndex =
+                estadoOriginal.zIndex;
+
+            elemento.style.visibility =
+                estadoOriginal.visibility;
+
+            elemento.classList.remove(
+                "capture-capa"
+            );
+
+
+            /*
+             * =================================================
+             * ABRE JANELA EXCLUSIVA
+             * =================================================
+             */
+
+            const janela =
+                window.open(
+                    "",
+                    "_blank"
+                );
+
+
+            if (!janela) {
+
+                alert(
+                    "O navegador bloqueou a janela de impressão. Permita pop-ups para este site."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * =================================================
+             * DOCUMENTO EXCLUSIVO DE IMPRESSÃO
+             * ================================================= */
+
+            janela.document.open();
+
+
+            janela.document.write(`
+
+                <!DOCTYPE html>
+
+                <html lang="pt-BR">
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                    <title>
+                        Capa NF-C
+                    </title>
+
+
+                    <style>
+
+                        @page {
+
+                            size: A4 portrait;
+
+                            margin: 0;
+
+                        }
+
+
+                        html,
+                        body {
+
+                            width:
+                                210mm;
+
+                            height:
+                                297mm;
+
+                            margin:
+                                0;
+
+                            padding:
+                                0;
+
+                            background:
+                                #ffffff;
+
+                        }
+
+
+                        body {
+
+                            position:
+                                relative;
+
+                        }
+
+
+                        img {
+
+                            position:
+                                absolute;
+
+                            left:
+                                10mm;
+
+                            bottom:
+                                8mm;
+
+                            width:
+                                190mm;
+
+                            height:
+                                65mm;
+
+                            display:
+                                block;
+
+                        }
+
+                    </style>
+
+                </head>
+
+
+                <body>
+
+                    <img
+                        src="${imagem}"
+                        alt="Capa NF-C"
+                    >
+
+                </body>
+
+                </html>
+
+            `);
+
+
+            janela.document.close();
+
+
+            /*
+             * =================================================
+             * AGUARDA A IMAGEM E IMPRIME
+             * ================================================= */
+
+            janela.onload =
                 function () {
 
-                    window.print();
+                    setTimeout(
+                        function () {
 
-                },
-                100
-            );
+                            janela.focus();
+
+                            janela.print();
+
+                        },
+                        300
+                    );
+
+                };
 
 
         } catch (erro) {
@@ -247,22 +628,6 @@
         }
 
     }
-
-
-    /* =================================================
-       APÓS A IMPRESSÃO
-       ================================================= */
-
-    window.addEventListener(
-        "afterprint",
-        function () {
-
-            document.body.classList.remove(
-                "imprimindo-nfc"
-            );
-
-        }
-    );
 
 
     /* =================================================

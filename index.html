@@ -317,9 +317,160 @@
 
 
 </style>
-<link rel="stylesheet" href="frnh.css">
-    <link rel="stylesheet" href="nfc.css">
+
 <style>
+
+/* =====================================================
+   CAPA CAIXA - CAPTURA PARA IMAGEM
+   ===================================================== */
+
+#capaCaixaImpressao.capture-capa {
+
+    display: flex !important;
+
+    width: 190mm !important;
+
+    height: 65mm !important;
+
+    box-sizing: border-box;
+
+    flex-direction: column;
+
+    background: #ffffff;
+
+    border: 0.6mm solid #bfc8c1;
+
+    border-radius: 3mm;
+
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #202020;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-titulo {
+
+    width: 100%;
+
+    height: 15mm;
+
+    min-height: 15mm;
+
+    box-sizing: border-box;
+
+    background: #198754;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 7mm;
+
+    font-size: 15pt;
+
+    font-weight: 700;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-conteudo {
+
+    position: relative;
+
+    flex: 1;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 3mm 15mm;
+
+    background: #ffffff;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-logo {
+
+    position: absolute;
+
+    right: 7mm;
+
+    top: 5mm;
+
+    width: 21mm;
+
+    height: auto;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-numero {
+
+    text-align: center;
+
+    font-size: 11pt;
+
+    font-weight: 700;
+
+    font-style: italic;
+
+    color: #4d554f;
+
+    margin-bottom: 2.5mm;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-funcionario {
+
+    text-align: center;
+
+    font-size: 20pt;
+
+    font-weight: 800;
+
+    color: #202020;
+
+    margin-bottom: 2mm;
+
+}
+
+
+#capaCaixaImpressao.capture-capa
+.capa-caixa-data {
+
+    text-align: center;
+
+    font-size: 18pt;
+
+    font-weight: 700;
+
+    color: #202020;
+
+}
+
+</style>
+
+<link rel="stylesheet" href="frnh.css">
 
 /* =====================================================
    LISTA DE SUGESTÕES DE QUARTOS
@@ -1856,7 +2007,8 @@ SCRIPTS
 
 <!-- =====================================================
 CAPA CAIXA
-====================================================== -->
+IMPRESSÃO COMO IMAGEM
+===================================================== -->
 
 <script>
 
@@ -1865,34 +2017,22 @@ CAPA CAIXA
     "use strict";
 
 
-    /*
-     * =====================================================
-     * CONFIGURAÇÃO
-     * =====================================================
-     */
-
     const STORAGE_CAIXA =
         "logbook_numero_caixa";
 
 
-    /*
-     * =====================================================
-     * CARREGAR ÚLTIMO CAIXA
-     * =====================================================
-     */
+    /* =====================================================
+       CARREGAR ÚLTIMO CAIXA
+       ===================================================== */
 
     function carregarNumeroCaixa() {
 
         const campo =
-            document.getElementById(
-                "numeroCaixa"
-            );
+            document.getElementById("numeroCaixa");
 
 
         if (!campo) {
-
             return;
-
         }
 
 
@@ -1904,8 +2044,7 @@ CAPA CAIXA
 
         if (salvo) {
 
-            campo.value =
-                salvo;
+            campo.value = salvo;
 
         }
 
@@ -1925,20 +2064,14 @@ CAPA CAIXA
     }
 
 
-    /*
-     * =====================================================
-     * FORMATAR DATA
-     * =====================================================
-     */
+    /* =====================================================
+       FORMATAR DATA
+       ===================================================== */
 
-    function formatarDataCapa(
-        data
-    ) {
+    function formatarDataCapa(data) {
 
         if (!data) {
-
             return "";
-
         }
 
 
@@ -1946,43 +2079,347 @@ CAPA CAIXA
             data.split("-");
 
 
-        if (
-            partes.length !== 3
-        ) {
-
+        if (partes.length !== 3) {
             return data;
-
         }
 
 
         return (
-
             partes[2] +
             "/" +
             partes[1] +
             "/" +
             partes[0]
-
         );
 
     }
 
 
-    /*
-     * =====================================================
-     * IMPRIMIR CAPA CAIXA
-     * =====================================================
-     */
+    /* =====================================================
+       IMPRIMIR ELEMENTO COMO IMAGEM
+       ===================================================== */
+
+    async function imprimirElementoComoImagem(elemento) {
+
+        if (!elemento) {
+
+            alert(
+                "Não foi possível encontrar a capa para impressão."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Guarda o estado original
+         */
+
+        const estadoOriginal = {
+
+            display:
+                elemento.style.display,
+
+            position:
+                elemento.style.position,
+
+            left:
+                elemento.style.left,
+
+            top:
+                elemento.style.top,
+
+            width:
+                elemento.style.width,
+
+            height:
+                elemento.style.height,
+
+            zIndex:
+                elemento.style.zIndex,
+
+            visibility:
+                elemento.style.visibility
+
+        };
+
+
+        /*
+         * Coloca a capa temporariamente
+         * fora da tela para gerar a imagem.
+         */
+
+        elemento.classList.add("capture-capa");
+        elemento.style.display =
+    estadoOriginal.display;
+
+        elemento.style.position = "fixed";
+
+        elemento.style.left = "-10000px";
+
+        elemento.style.top = "0";
+
+        elemento.style.width = "190mm";
+
+        elemento.style.height = "65mm";
+
+        elemento.style.zIndex = "-1";
+
+        elemento.style.visibility = "visible";
+
+
+        /*
+         * Força o navegador a terminar
+         * o layout antes da captura.
+         */
+
+        await new Promise(function (resolve) {
+
+            requestAnimationFrame(function () {
+
+                requestAnimationFrame(resolve);
+
+            });
+
+        });
+
+
+        /*
+         * Espera a logo carregar.
+         */
+
+        const imagens =
+            elemento.querySelectorAll("img");
+
+
+        await Promise.all(
+
+            Array.from(imagens).map(
+
+                function (img) {
+
+                    if (img.complete) {
+
+                        return Promise.resolve();
+
+                    }
+
+
+                    return new Promise(
+
+                        function (resolve) {
+
+                            img.onload = resolve;
+
+                            img.onerror = resolve;
+
+                        }
+
+                    );
+
+                }
+
+            )
+
+        );
+
+
+        /*
+         * GERA A IMAGEM
+         */
+
+        const canvas =
+            await html2canvas(
+                elemento,
+                {
+                    scale: 3,
+
+                    backgroundColor:
+                        "#ffffff",
+
+                    useCORS: true,
+
+                    logging: false
+                }
+            );
+
+
+        const imagem =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+
+        /*
+         * RESTAURA A CAPA ORIGINAL
+         */
+
+        elemento.style.display =
+            estadoOriginal.display;
+
+        elemento.style.position =
+            estadoOriginal.position;
+
+        elemento.style.left =
+            estadoOriginal.left;
+
+        elemento.style.top =
+            estadoOriginal.top;
+
+        elemento.style.width =
+            estadoOriginal.width;
+
+        elemento.style.height =
+            estadoOriginal.height;
+
+        elemento.style.zIndex =
+            estadoOriginal.zIndex;
+
+        elemento.style.visibility =
+            estadoOriginal.visibility;
+
+
+        /*
+         * CRIA UMA JANELA EXCLUSIVA
+         * PARA IMPRESSÃO
+         */
+
+        const janela =
+            window.open(
+                "",
+                "_blank"
+            );
+
+
+        if (!janela) {
+
+            alert(
+                "O navegador bloqueou a janela de impressão. Permita pop-ups para este site."
+            );
+
+            return;
+
+        }
+
+
+        janela.document.open();
+
+
+        janela.document.write(`
+
+            <!DOCTYPE html>
+
+            <html lang="pt-BR">
+
+            <head>
+
+                <meta charset="UTF-8">
+
+                <title>Capa Caixa</title>
+
+                <style>
+
+                    @page {
+
+                        size: A4 portrait;
+
+                        margin: 0;
+
+                    }
+
+
+                    html,
+                    body {
+
+                        width: 210mm;
+
+                        height: 297mm;
+
+                        margin: 0;
+
+                        padding: 0;
+
+                        background: #ffffff;
+
+                    }
+
+
+                    body {
+
+                        position: relative;
+
+                    }
+
+
+                    img {
+
+                        position: absolute;
+
+                        left: 10mm;
+
+                        bottom: 8mm;
+
+                        width: 190mm;
+
+                        height: 65mm;
+
+                        display: block;
+
+                    }
+
+                </style>
+
+            </head>
+
+
+            <body>
+
+                <img
+                    src="${imagem}"
+                    alt="Capa Caixa">
+
+            </body>
+
+            </html>
+
+        `);
+
+
+        /*
+ * Aguarda a imagem aparecer
+ * antes de imprimir.
+ */
+
+janela.onload = function () {
+
+    setTimeout(function () {
+
+        janela.focus();
+
+        janela.print();
+
+    }, 500);
+
+};
+
+janela.document.close();
+            function () {
+
+                janela.close();
+
+            };
+
+    }
+
+
+    /* =====================================================
+       FUNÇÃO PÚBLICA
+       ===================================================== */
 
     window.imprimirCapaCaixa =
-        function () {
+        async function () {
 
-
-            /*
-             * ---------------------------------------------
-             * CAPTURA DATA
-             * ---------------------------------------------
-             */
 
             const dataElemento =
                 document.getElementById(
@@ -1990,23 +2427,11 @@ CAPA CAIXA
                 );
 
 
-            /*
-             * ---------------------------------------------
-             * CAPTURA FUNCIONÁRIO
-             * ---------------------------------------------
-             */
-
             const funcionarioElemento =
                 document.getElementById(
                     "funcionario"
                 );
 
-
-            /*
-             * ---------------------------------------------
-             * CAPTURA CAIXA
-             * ---------------------------------------------
-             */
 
             const caixaElemento =
                 document.getElementById(
@@ -2032,11 +2457,9 @@ CAPA CAIXA
                     : "";
 
 
-            /*
-             * ---------------------------------------------
-             * VALIDA DATA
-             * ---------------------------------------------
-             */
+            /* ---------------------------------------------
+               VALIDAÇÕES
+               --------------------------------------------- */
 
             if (!data) {
 
@@ -2049,12 +2472,6 @@ CAPA CAIXA
             }
 
 
-            /*
-             * ---------------------------------------------
-             * VALIDA FUNCIONÁRIO
-             * ---------------------------------------------
-             */
-
             if (!funcionario) {
 
                 alert(
@@ -2065,12 +2482,6 @@ CAPA CAIXA
 
             }
 
-
-            /*
-             * ---------------------------------------------
-             * VALIDA CAIXA
-             * ---------------------------------------------
-             */
 
             if (!caixa) {
 
@@ -2091,11 +2502,15 @@ CAPA CAIXA
             }
 
 
-            /*
-             * ---------------------------------------------
-             * PREENCHE A CAPA
-             * ---------------------------------------------
-             */
+            /* ---------------------------------------------
+               ELEMENTOS DA CAPA
+               --------------------------------------------- */
+
+            const capa =
+                document.getElementById(
+                    "capaCaixaImpressao"
+                );
+
 
             const numeroCapa =
                 document.getElementById(
@@ -2115,6 +2530,26 @@ CAPA CAIXA
                 );
 
 
+            if (
+                !capa ||
+                !numeroCapa ||
+                !funcionarioCapa ||
+                !dataCapa
+            ) {
+
+                alert(
+                    "Elementos da Capa Caixa não encontrados."
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               PREENCHE A CAPA
+               --------------------------------------------- */
+
             numeroCapa.textContent =
                 "CAIXA - " + caixa;
 
@@ -2124,16 +2559,12 @@ CAPA CAIXA
 
 
             dataCapa.textContent =
-                formatarDataCapa(
-                    data
-                );
+                formatarDataCapa(data);
 
 
-            /*
-             * ---------------------------------------------
-             * SALVA ÚLTIMO NÚMERO DE CAIXA
-             * ---------------------------------------------
-             */
+            /* ---------------------------------------------
+               SALVA O CAIXA
+               --------------------------------------------- */
 
             localStorage.setItem(
                 STORAGE_CAIXA,
@@ -2141,45 +2572,38 @@ CAPA CAIXA
             );
 
 
-            /*
-             * ---------------------------------------------
-             * ATIVA MODO DE IMPRESSÃO DA CAPA CAIXA
-             * ---------------------------------------------
-             */
+            /* ---------------------------------------------
+               GERA E IMPRIME A IMAGEM
+               --------------------------------------------- */
 
-            document.body.classList.remove(
-                "imprimindo-frnh",
-                "imprimindo-nfc"
-            );
+            try {
 
-            document.body.classList.add(
-                "imprimindo-caixa"
-            );
+                await imprimirElementoComoImagem(
+                    capa
+                );
+
+            }
+
+            catch (erro) {
+
+                console.error(
+                    "Erro ao gerar Capa Caixa:",
+                    erro
+                );
 
 
-            /*
-             * ---------------------------------------------
-             * IMPRIME
-             * ---------------------------------------------
-             */
+                alert(
+                    "Não foi possível gerar a Capa Caixa para impressão."
+                );
 
-            setTimeout(
-                function () {
-
-                    window.print();
-
-                },
-                100
-            );
+            }
 
         };
 
 
-    /*
-     * =====================================================
-     * INICIALIZAÇÃO
-     * =====================================================
-     */
+    /* =====================================================
+       INICIALIZAÇÃO
+       ===================================================== */
 
     document.addEventListener(
         "DOMContentLoaded",

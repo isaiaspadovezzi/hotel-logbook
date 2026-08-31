@@ -19,194 +19,6 @@ const REPORTS_CONFIG = {
 
 
 // =====================================================
-// ESTILO ESPECIAL - MUDANÇA DE QUARTO
-// =====================================================
-
-(function () {
-
-    const estilo =
-        document.createElement("style");
-
-    estilo.textContent = `
-
-        .mudanca-quarto-report {
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-
-        .mudanca-quarto-main {
-
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr 2fr;
-
-            gap: 12px;
-
-            width: 100%;
-
-            min-height: 150px;
-
-            box-sizing: border-box;
-
-        }
-
-
-        .mudanca-quarto-box,
-        .mudanca-quarto-descricao {
-
-            border:
-                2px solid #555;
-
-            background:
-                #ffffff;
-
-            box-sizing:
-                border-box;
-
-        }
-
-
-        .mudanca-quarto-box {
-
-            display: flex;
-
-            flex-direction:
-                column;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-            text-align:
-                center;
-
-            padding:
-                12px;
-
-        }
-
-
-        .mudanca-quarto-atual {
-
-            border-left:
-                6px solid #e68100;
-
-            background:
-                #e1e5df;
-
-        }
-
-
-        .mudanca-quarto-label {
-
-            font-size:
-                13px;
-
-            font-weight:
-                700;
-
-            letter-spacing:
-                0.5px;
-
-            color:
-                #666;
-
-            margin-bottom:
-                5px;
-
-        }
-
-
-        .mudanca-quarto-numero {
-
-            font-size:
-                42px;
-
-            line-height:
-                1;
-
-            font-weight:
-                700;
-
-            color:
-                #202020;
-
-        }
-
-
-        .mudanca-quarto-tipo {
-
-            margin-top:
-                7px;
-
-            font-size:
-                18px;
-
-            line-height:
-                1;
-
-            font-weight:
-                600;
-
-            color:
-                #6c757d;
-
-            letter-spacing:
-                0.5px;
-
-        }
-
-
-        .mudanca-quarto-descricao {
-
-            padding:
-                14px;
-
-            display:
-                flex;
-
-            flex-direction:
-                column;
-
-            overflow:
-                hidden;
-
-        }
-
-
-        .mudanca-quarto-descricao-texto {
-
-            margin-top:
-                10px;
-
-            font-size:
-                17px;
-
-            line-height:
-                1.35;
-
-            color:
-                #333;
-
-            overflow-wrap:
-                anywhere;
-
-        }
-
-    `;
-
-    document.head.appendChild(
-        estilo
-    );
-
-})();
-
-
-// =====================================================
 // OBTER TIPO DO QUARTO
 // =====================================================
 
@@ -216,66 +28,41 @@ function obterTipoQuartoReport(registro) {
         return "";
     }
 
-
-    // -------------------------------------------------
-    // 1. TIPO SALVO NO REGISTRO
-    // -------------------------------------------------
-
+    // 1. Tipo já salvo no registro
     if (
         registro.tipoQuarto !== undefined &&
         registro.tipoQuarto !== null &&
-        String(
-            registro.tipoQuarto
-        ).trim() !== ""
+        String(registro.tipoQuarto).trim() !== ""
     ) {
-
-        return String(
-            registro.tipoQuarto
-        ).trim();
-
+        return String(registro.tipoQuarto).trim();
     }
 
-
     const numero =
-        String(
-            registro.quarto || ""
-        ).trim();
-
+        String(registro.quarto || "").trim();
 
     if (!numero) {
         return "";
     }
 
 
-    // -------------------------------------------------
-    // 2. TIPO ASSOCIADO AO CAMPO DE QUARTO
-    // -------------------------------------------------
+    // 2. Tipo atualmente associado ao campo de quarto
 
     const campoQuarto =
-        document.getElementById(
-            "quarto"
-        );
-
+        document.getElementById("quarto");
 
     if (
         campoQuarto &&
-        String(
-            campoQuarto.value || ""
-        ).trim() === numero &&
+        String(campoQuarto.value || "").trim() === numero &&
         campoQuarto.dataset &&
         campoQuarto.dataset.tipo
     ) {
-
         return String(
             campoQuarto.dataset.tipo
         ).trim();
-
     }
 
 
-    // -------------------------------------------------
-    // 3. TABELAS DE QUARTOS
-    // -------------------------------------------------
+    // 3. Tabela carregada pelo quartos.js
 
     const fontes = [
 
@@ -287,16 +74,12 @@ function obterTipoQuartoReport(registro) {
 
         window.dadosQuartos,
 
-        window.quartosHotel,
-
-        window.QUARTOS_HOTEL
+        window.quartosHotel
 
     ];
 
 
-    for (
-        const fonte of fontes
-    ) {
+    for (const fonte of fontes) {
 
         if (!fonte) {
             continue;
@@ -318,9 +101,7 @@ function obterTipoQuartoReport(registro) {
                 fonte[numero];
 
 
-            if (
-                typeof valor === "string"
-            ) {
+            if (typeof valor === "string") {
 
                 return valor.trim();
 
@@ -341,9 +122,7 @@ function obterTipoQuartoReport(registro) {
 
 
                 if (
-                    String(
-                        tipo
-                    ).trim() !== ""
+                    String(tipo).trim() !== ""
                 ) {
 
                     return String(
@@ -360,28 +139,24 @@ function obterTipoQuartoReport(registro) {
         // -------------------------------------------------
         // FORMATO:
         // [
-        //   {
-        //      numero: "456",
-        //      tipo: "DBC"
-        //   }
+        //     {
+        //         numero: 456,
+        //         tipo: "DBC"
+        //     }
         // ]
         // -------------------------------------------------
 
-        if (
-            Array.isArray(fonte)
-        ) {
+        if (Array.isArray(fonte)) {
 
             const item =
                 fonte.find(
-                    function (item) {
+                    function(item) {
 
                         if (
                             !item ||
                             typeof item !== "object"
                         ) {
-
                             return false;
-
                         }
 
 
@@ -413,9 +188,7 @@ function obterTipoQuartoReport(registro) {
 
 
                 if (
-                    String(
-                        tipo
-                    ).trim() !== ""
+                    String(tipo).trim() !== ""
                 ) {
 
                     return String(
@@ -437,19 +210,14 @@ function obterTipoQuartoReport(registro) {
 
 
 // =====================================================
-// HTML DO QUARTO NORMAL
+// HTML DO QUARTO NO CARD
 // =====================================================
 
-function htmlQuartoReport(
-    registro
-) {
+function htmlQuartoReport(registro) {
 
     const numero =
-        registro &&
-        registro.quarto
-            ? String(
-                registro.quarto
-            )
+        registro && registro.quarto
+            ? String(registro.quarto)
             : "-";
 
 
@@ -489,27 +257,23 @@ function htmlQuartoReport(
 
                 ${
                     tipo
-
                         ? `
 
-                            <span
-                                style="
-                                    display: block;
-                                    width: 100%;
-                                    margin-top: 6px;
-                                    font-size: 13px;
-                                    line-height: 1;
-                                    font-weight: 600;
-                                    color: #6c757d;
-                                    letter-spacing: 0.5px;
-                                    text-align: center;
-                                "
-                            >
-                                ${tipo}
-                            </span>
+                        <span style="
+                            display: block;
+                            width: 100%;
+                            margin-top: 6px;
+                            font-size: 13px;
+                            line-height: 1;
+                            font-weight: 600;
+                            color: #6c757d;
+                            letter-spacing: 0.5px;
+                            text-align: center;
+                        ">
+                            ${tipo}
+                        </span>
 
-                          `
-
+                        `
                         : ""
                 }
 
@@ -523,7 +287,327 @@ function htmlQuartoReport(
 
 
 // =====================================================
-// HTML ESPECIAL - MUDANÇA DE QUARTO
+// ESTILO - MUDANÇA DE QUARTO
+// =====================================================
+
+(function () {
+
+    const estilo =
+        document.createElement("style");
+
+    estilo.textContent = `
+
+        /* =================================================
+           REPORT DE MUDANÇA DE QUARTO
+           ================================================= */
+
+        .report-main.report-main-mudanca {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+
+        .report-main.report-main-mudanca
+        > .mudanca-quarto-report {
+
+            display: block !important;
+
+            width: 100% !important;
+
+            max-width: 100% !important;
+
+            min-width: 0 !important;
+
+            box-sizing: border-box !important;
+
+        }
+
+
+        /* =================================================
+           TRÊS COLUNAS
+           QUARTO ATUAL | NOVO QUARTO | DESCRIÇÃO
+           ================================================= */
+
+        .mudanca-quarto-main {
+
+            display: grid !important;
+
+            grid-template-columns:
+                1fr
+                1fr
+                2fr !important;
+
+            gap: 12px !important;
+
+            width: 100% !important;
+
+            max-width: 100% !important;
+
+            min-width: 0 !important;
+
+            box-sizing: border-box !important;
+
+        }
+
+
+        /* =================================================
+           CAIXAS
+           ================================================= */
+
+        .mudanca-quarto-box,
+        .mudanca-quarto-descricao {
+
+            min-width: 0 !important;
+
+            box-sizing: border-box !important;
+
+            border:
+                2px solid
+                #d2d6d3 !important;
+
+            background:
+                #ffffff !important;
+
+        }
+
+
+        /* =================================================
+           QUARTOS
+           ================================================= */
+
+        .mudanca-quarto-box {
+
+            min-height:
+                150px !important;
+
+            display:
+                flex !important;
+
+            flex-direction:
+                column !important;
+
+            align-items:
+                center !important;
+
+            justify-content:
+                center !important;
+
+            text-align:
+                center !important;
+
+            padding:
+                14px !important;
+
+        }
+
+
+        /* =================================================
+           QUARTO ATUAL
+           ================================================= */
+
+        .mudanca-quarto-atual {
+
+            border-left:
+                6px solid
+                #e68100 !important;
+
+            background:
+                #e1e5df !important;
+
+        }
+
+
+        /* =================================================
+           NOVO QUARTO
+           ================================================= */
+
+        .mudanca-quarto-novo {
+
+            border-left:
+                6px solid
+                #63C132 !important;
+
+            background:
+                #f7faf5 !important;
+
+        }
+
+
+        /* =================================================
+           LABEL
+           ================================================= */
+
+        .mudanca-quarto-label {
+
+            display:
+                block !important;
+
+            margin:
+                0 0 7px 0 !important;
+
+            font-size:
+                13px !important;
+
+            line-height:
+                1.1 !important;
+
+            font-weight:
+                700 !important;
+
+            letter-spacing:
+                .7px !important;
+
+            color:
+                #666 !important;
+
+            text-transform:
+                uppercase !important;
+
+        }
+
+
+        /* =================================================
+           NÚMERO
+           ================================================= */
+
+        .mudanca-quarto-numero {
+
+            display:
+                block !important;
+
+            font-size:
+                42px !important;
+
+            line-height:
+                1 !important;
+
+            font-weight:
+                700 !important;
+
+            color:
+                #202020 !important;
+
+        }
+
+
+        /* =================================================
+           TIPO
+           ================================================= */
+
+        .mudanca-quarto-tipo {
+
+            display:
+                block !important;
+
+            margin-top:
+                8px !important;
+
+            font-size:
+                18px !important;
+
+            line-height:
+                1 !important;
+
+            font-weight:
+                600 !important;
+
+            color:
+                #6c757d !important;
+
+            letter-spacing:
+                .5px !important;
+
+        }
+
+
+        /* =================================================
+           DESCRIÇÃO
+           ================================================= */
+
+        .mudanca-quarto-descricao {
+
+            min-height:
+                150px !important;
+
+            width:
+                100% !important;
+
+            display:
+                flex !important;
+
+            flex-direction:
+                column !important;
+
+            justify-content:
+                flex-start !important;
+
+            padding:
+                16px !important;
+
+            overflow:
+                hidden !important;
+
+        }
+
+
+        .mudanca-quarto-descricao-texto {
+
+            width:
+                100% !important;
+
+            min-width:
+                0 !important;
+
+            margin-top:
+                8px !important;
+
+            font-size:
+                16px !important;
+
+            line-height:
+                1.4 !important;
+
+            color:
+                #333 !important;
+
+            overflow-wrap:
+                anywhere !important;
+
+            word-break:
+                break-word !important;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVO
+           ================================================= */
+
+        @media (max-width: 700px) {
+
+            .mudanca-quarto-main {
+
+                grid-template-columns:
+                    1fr !important;
+
+            }
+
+        }
+
+    `;
+
+    document.head.appendChild(
+        estilo
+    );
+
+})();
+
+
+// =====================================================
+// HTML - MUDANÇA DE QUARTO
 // =====================================================
 
 function htmlMudancaQuartoReport(
@@ -531,20 +615,14 @@ function htmlMudancaQuartoReport(
 ) {
 
     const quartoAtual =
-        registro &&
-        registro.quarto
-            ? String(
-                registro.quarto
-            )
+        registro && registro.quarto
+            ? String(registro.quarto)
             : "-";
 
 
     const quartoNovo =
-        registro &&
-        registro.quartoDestino
-            ? String(
-                registro.quartoDestino
-            )
+        registro && registro.quartoDestino
+            ? String(registro.quartoDestino)
             : "-";
 
 
@@ -557,33 +635,27 @@ function htmlMudancaQuartoReport(
     const tipoNovo =
         quartoNovo !== "-"
             ? obterTipoQuartoReport({
-
-                quarto:
-                    quartoNovo
-
-              })
+                quarto: quartoNovo
+            })
             : "";
 
 
     const descricao =
-        registro &&
-        registro.descricao
+        registro && registro.descricao
             ? registro.descricao
             : "-";
 
 
     return `
 
-        <div
-            class="mudanca-quarto-report"
-        >
+        <div class="mudanca-quarto-report">
 
-            <div
-                class="mudanca-quarto-main"
-            >
+            <div class="mudanca-quarto-main">
 
 
-                <!-- QUARTO ATUAL -->
+                <!-- ======================================
+                     QUARTO ATUAL
+                     ====================================== -->
 
                 <div
                     class="
@@ -593,18 +665,14 @@ function htmlMudancaQuartoReport(
                 >
 
                     <span
-                        class="
-                            mudanca-quarto-label
-                        "
+                        class="mudanca-quarto-label"
                     >
                         QUARTO
                     </span>
 
 
                     <strong
-                        class="
-                            mudanca-quarto-numero
-                        "
+                        class="mudanca-quarto-numero"
                     >
                         ${quartoAtual}
                     </strong>
@@ -612,7 +680,6 @@ function htmlMudancaQuartoReport(
 
                     ${
                         tipoAtual
-
                             ? `
 
                                 <span
@@ -624,14 +691,15 @@ function htmlMudancaQuartoReport(
                                 </span>
 
                               `
-
                             : ""
                     }
 
                 </div>
 
 
-                <!-- NOVO QUARTO -->
+                <!-- ======================================
+                     NOVO QUARTO
+                     ====================================== -->
 
                 <div
                     class="
@@ -641,18 +709,14 @@ function htmlMudancaQuartoReport(
                 >
 
                     <span
-                        class="
-                            mudanca-quarto-label
-                        "
+                        class="mudanca-quarto-label"
                     >
                         NOVO QUARTO
                     </span>
 
 
                     <strong
-                        class="
-                            mudanca-quarto-numero
-                        "
+                        class="mudanca-quarto-numero"
                     >
                         ${quartoNovo}
                     </strong>
@@ -660,7 +724,6 @@ function htmlMudancaQuartoReport(
 
                     ${
                         tipoNovo
-
                             ? `
 
                                 <span
@@ -672,25 +735,22 @@ function htmlMudancaQuartoReport(
                                 </span>
 
                               `
-
                             : ""
                     }
 
                 </div>
 
 
-                <!-- DESCRIÇÃO -->
+                <!-- ======================================
+                     DESCRIÇÃO
+                     ====================================== -->
 
                 <div
-                    class="
-                        mudanca-quarto-descricao
-                    "
+                    class="mudanca-quarto-descricao"
                 >
 
                     <span
-                        class="
-                            mudanca-quarto-label
-                        "
+                        class="mudanca-quarto-label"
                     >
                         DESCRIÇÃO
                     </span>
@@ -701,14 +761,125 @@ function htmlMudancaQuartoReport(
                             mudanca-quarto-descricao-texto
                         "
                     >
-
                         ${descricao}
-
                     </div>
 
                 </div>
 
+
             </div>
+
+        </div>
+
+    `;
+
+}
+
+
+// =====================================================
+// CONTEÚDO PRINCIPAL DO REPORT
+// =====================================================
+
+function htmlConteudoReport(
+    registro,
+    descricaoOverride
+) {
+
+    const descricao =
+        descricaoOverride !== undefined
+            ? descricaoOverride
+            : (
+                registro &&
+                registro.descricao
+                    ? registro.descricao
+                    : "-"
+              );
+
+
+    const ehMudanca =
+        registro.atividade ===
+            "Mudança de Quarto" ||
+
+        registro.atividade ===
+            "Troca de Quarto";
+
+
+    // =================================================
+    // MUDANÇA DE QUARTO
+    // =================================================
+
+    if (ehMudanca) {
+
+        const registroReport = {
+
+            ...registro,
+
+            descricao:
+                descricao
+
+        };
+
+
+        return htmlMudancaQuartoReport(
+            registroReport
+        );
+
+    }
+
+
+    // =================================================
+    // PROCEDIMENTOS / CONFERÊNCIA
+    // =================================================
+
+    if (
+        registro.atividade ===
+            "Procedimentos" ||
+
+        registro.atividade ===
+            "Conferência"
+    ) {
+
+        return `
+
+            <div
+                class="
+                    report-description
+                    report-description-full
+                "
+                style="
+                    width: 100% !important;
+                    max-width: none !important;
+                    min-width: 0 !important;
+                    min-height: 90px !important;
+                    box-sizing: border-box !important;
+                    display: block !important;
+                    flex: 1 1 100% !important;
+                    grid-column: 1 / -1 !important;
+                    margin: 0 !important;
+                    padding: 20px !important;
+                    font-size: 20px !important;
+                    line-height: 1.4 !important;
+                "
+            >
+                ${descricao}
+            </div>
+
+        `;
+
+    }
+
+
+    // =================================================
+    // REPORT NORMAL
+    // =================================================
+
+    return `
+
+        ${htmlQuartoReport(registro)}
+
+        <div class="report-description">
+
+            ${descricao}
 
         </div>
 
@@ -767,7 +938,7 @@ async function reportarRegistro(
 
 
     // =================================================
-    // CARD TEMPORÁRIO
+    // CRIAR CARD TEMPORÁRIO
     // =================================================
 
     const container =
@@ -779,19 +950,18 @@ async function reportarRegistro(
     container.style.position =
         "fixed";
 
+
     container.style.left =
         "-10000px";
+
 
     container.style.top =
         "0";
 
+
     container.style.background =
         "transparent";
 
-
-    // =================================================
-    // MONTA O CARD
-    // =================================================
 
     container.innerHTML = `
 
@@ -804,24 +974,18 @@ async function reportarRegistro(
             "
         >
 
-            <!-- CABEÇALHO -->
-
             <div class="report-header">
 
                 <div
-                    class="
-                        report-header-title
-                    "
+                    class="report-header-title"
                 >
 
                     ${iconeAtividadeReport(
                         registro.atividade
                     )}
 
-                    ${
-                        registro.atividade ||
-                        "OCORRÊNCIA"
-                    }
+                    ${registro.atividade ||
+                        "OCORRÊNCIA"}
 
                 </div>
 
@@ -835,162 +999,73 @@ async function reportarRegistro(
             </div>
 
 
-            <!-- CORPO -->
-
             <div class="report-body">
 
-                <!-- ÁREA PRINCIPAL -->
 
-                <div class="report-main">
-
-                    ${
-                        (
+                <div
+                    class="
+                        report-main${
                             registro.atividade ===
-                                "Procedimentos" ||
-
+                                "Mudança de Quarto" ||
                             registro.atividade ===
-                                "Conferência"
-                        )
+                                "Troca de Quarto"
+                                ? " report-main-mudanca"
+                                : ""
+                        }
+                    "
+                >
 
-                            ? `
-
-                                <div
-                                    class="
-                                        report-description
-                                        report-description-full
-                                    "
-                                    style="
-                                        width: 100% !important;
-                                        max-width: none !important;
-                                        min-width: 0 !important;
-                                        min-height: 90px !important;
-                                        box-sizing: border-box !important;
-                                        display: block !important;
-                                        flex: 1 1 100% !important;
-                                        grid-column: 1 / -1 !important;
-                                        margin: 0 !important;
-                                        padding: 20px !important;
-                                        font-size: 20px !important;
-                                        line-height: 1.4 !important;
-                                    "
-                                >
-
-                                    ${
-                                        registro.descricao ||
-                                        "-"
-                                    }
-
-                                </div>
-
-                              `
-
-                            :
-
-                            (
-                                registro.atividade ===
-                                    "Mudança de Quarto" ||
-
-                                registro.atividade ===
-                                    "Troca de Quarto"
-                            )
-
-                                ? htmlMudancaQuartoReport(
-                                    registro
-                                )
-
-                                : `
-
-                                    ${htmlQuartoReport(
-                                        registro
-                                    )}
-
-
-                                    <div
-                                        class="
-                                            report-description
-                                        "
-                                    >
-
-                                        ${
-                                            registro.descricao ||
-                                            "-"
-                                        }
-
-                                    </div>
-
-                                  `
-                    }
+                    ${htmlConteudoReport(
+                        registro
+                    )}
 
                 </div>
 
-
-                <!-- INFORMAÇÕES -->
 
                 <div class="report-info">
 
 
                     <div
-                        class="
-                            report-info-item
-                        "
+                        class="report-info-item"
                     >
 
                         <span
-                            class="
-                                report-info-label
-                            "
+                            class="report-info-label"
                         >
                             Funcionário
                         </span>
 
-                        ${
-                            funcionario ||
-                            "-"
-                        }
+                        ${funcionario || "-"}
 
                     </div>
 
 
                     <div
-                        class="
-                            report-info-item
-                        "
+                        class="report-info-item"
                     >
 
                         <span
-                            class="
-                                report-info-label
-                            "
+                            class="report-info-label"
                         >
                             Data
                         </span>
 
-                        ${
-                            data ||
-                            "-"
-                        }
+                        ${data || "-"}
 
                     </div>
 
 
                     <div
-                        class="
-                            report-info-item
-                        "
+                        class="report-info-item"
                     >
 
                         <span
-                            class="
-                                report-info-label
-                            "
+                            class="report-info-label"
                         >
                             Hora
                         </span>
 
-                        ${
-                            registro.hora ||
-                            "-"
-                        }
+                        ${registro.hora || "-"}
 
                     </div>
 
@@ -999,8 +1074,6 @@ async function reportarRegistro(
 
             </div>
 
-
-            <!-- RODAPÉ -->
 
             <div class="report-footer">
 
@@ -1044,22 +1117,23 @@ async function reportarRegistro(
 
                     scale: 2,
 
-                    backgroundColor:
-                        null,
+                    backgroundColor: null,
 
-                    useCORS:
-                        true,
+                    useCORS: true,
 
-                    logging:
-                        false
+                    logging: false
 
                 }
             );
 
 
+        // =================================================
+        // COPIAR IMAGEM
+        // =================================================
+
         const blob =
             await new Promise(
-                function (resolve) {
+                function(resolve) {
 
                     canvas.toBlob(
 
@@ -1109,9 +1183,7 @@ async function reportarRegistro(
 
             botao.innerHTML = `
 
-                <i
-                    class="bi bi-check-lg"
-                ></i>
+                <i class="bi bi-check-lg"></i>
 
                 <span>
                     Copiado
@@ -1121,14 +1193,12 @@ async function reportarRegistro(
 
 
             setTimeout(
-                function () {
+                function() {
 
                     botao.innerHTML = `
 
                         <i
-                            class="
-                                bi bi-clipboard
-                            "
+                            class="bi bi-clipboard"
                         ></i>
 
                         <span>
@@ -1165,7 +1235,7 @@ async function reportarRegistro(
 
 
 // =====================================================
-// FORMATAR DATA
+// FORMATA DATA
 // =====================================================
 
 function formatarDataReport(
@@ -1183,9 +1253,7 @@ function formatarDataReport(
         data.split("-");
 
 
-    if (
-        partes.length !== 3
-    ) {
+    if (partes.length !== 3) {
 
         return data;
 
@@ -1195,9 +1263,13 @@ function formatarDataReport(
     return (
 
         partes[2] +
+
         "/" +
+
         partes[1] +
+
         "/" +
+
         partes[0]
 
     );
@@ -1206,7 +1278,16 @@ function formatarDataReport(
 
 
 // =====================================================
-// CLASSE DA ATIVIDADE
+// INICIALIZAÇÃO
+// =====================================================
+
+console.log(
+    "Módulo Reports v1.3 carregado."
+);
+
+
+// =====================================================
+// CLASSE DE COR DO REPORT
 // =====================================================
 
 function classeAtividadeReport(
@@ -1267,7 +1348,7 @@ function classeAtividadeReport(
 
 
 // =====================================================
-// ÍCONE DA ATIVIDADE
+// ÍCONE DA ATIVIDADE NO CARD
 // =====================================================
 
 function iconeAtividadeReport(
@@ -1276,14 +1357,15 @@ function iconeAtividadeReport(
 
     switch (atividade) {
 
-
         case "Check-in":
 
             return `
 
                 <i
                     class="bi bi-person-check"
-                    style="margin-right: 6px;"
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1294,8 +1376,13 @@ function iconeAtividadeReport(
             return `
 
                 <i
-                    class="bi bi-box-arrow-right"
-                    style="margin-right: 6px;"
+                    class="
+                        bi
+                        bi-box-arrow-right
+                    "
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1307,7 +1394,9 @@ function iconeAtividadeReport(
 
                 <i
                     class="bi bi-tools"
-                    style="margin-right: 6px;"
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1320,8 +1409,13 @@ function iconeAtividadeReport(
             return `
 
                 <i
-                    class="bi bi-door-open"
-                    style="margin-right: 6px;"
+                    class="
+                        bi
+                        bi-door-open
+                    "
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1333,7 +1427,9 @@ function iconeAtividadeReport(
 
                 <i
                     class="bi bi-stars"
-                    style="margin-right: 6px;"
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1344,8 +1440,13 @@ function iconeAtividadeReport(
             return `
 
                 <i
-                    class="bi bi-clipboard-check"
-                    style="margin-right: 6px;"
+                    class="
+                        bi
+                        bi-clipboard-check
+                    "
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1356,8 +1457,13 @@ function iconeAtividadeReport(
             return `
 
                 <i
-                    class="bi bi-info-circle"
-                    style="margin-right: 6px;"
+                    class="
+                        bi
+                        bi-info-circle
+                    "
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1368,8 +1474,13 @@ function iconeAtividadeReport(
             return `
 
                 <i
-                    class="bi bi-exclamation-circle"
-                    style="margin-right: 6px;"
+                    class="
+                        bi
+                        bi-exclamation-circle
+                    "
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1381,7 +1492,9 @@ function iconeAtividadeReport(
 
                 <i
                     class="bi bi-clipboard"
-                    style="margin-right: 6px;"
+                    style="
+                        margin-right: 6px;
+                    "
                 ></i>
 
             `;
@@ -1398,6 +1511,34 @@ function iconeAtividadeReport(
 function abrirPreviewReport(
     registro
 ) {
+
+    // ============================================
+    // INFORMAÇÃO DO NOVO QUARTO
+    // ============================================
+
+    let descricaoReport =
+        registro.descricao || "";
+
+
+    /*
+     * IMPORTANTE:
+     * Para mudança de quarto o novo quarto
+     * é mostrado pelo layout próprio.
+     *
+     * Portanto NÃO adicionamos aqui
+     * "Novo quarto: XXX" novamente.
+     */
+
+
+    if (
+        !descricaoReport ||
+        descricaoReport.trim() === ""
+    ) {
+
+        descricaoReport = "-";
+
+    }
+
 
     const funcionarioElemento =
         document.getElementById(
@@ -1437,6 +1578,10 @@ function abrirPreviewReport(
             : "";
 
 
+    // =================================================
+    // REMOVE PRÉVIA ANTERIOR
+    // =================================================
+
     const anterior =
         document.getElementById(
             "reportPreview"
@@ -1449,6 +1594,10 @@ function abrirPreviewReport(
 
     }
 
+
+    // =================================================
+    // CRIA JANELA
+    // =================================================
 
     const overlay =
         document.createElement(
@@ -1467,15 +1616,11 @@ function abrirPreviewReport(
     overlay.innerHTML = `
 
         <div
-            class="
-                report-preview-modal
-            "
+            class="report-preview-modal"
         >
 
             <div
-                class="
-                    report-preview-header
-                "
+                class="report-preview-header"
             >
 
                 <strong>
@@ -1492,7 +1637,9 @@ function abrirPreviewReport(
                         fecharPreviewReport()
                     "
                 >
+
                     ×
+
                 </button>
 
             </div>
@@ -1504,6 +1651,7 @@ function abrirPreviewReport(
                 "
             >
 
+
                 <div
                     class="
                         report-card
@@ -1513,9 +1661,14 @@ function abrirPreviewReport(
                     "
                 >
 
-                    <!-- CABEÇALHO -->
 
-                    <div class="report-header">
+                    <!-- =================================
+                         CABEÇALHO
+                         ================================= -->
+
+                    <div
+                        class="report-header"
+                    >
 
                         <div
                             class="
@@ -1527,10 +1680,8 @@ function abrirPreviewReport(
                                 registro.atividade
                             )}
 
-                            ${
-                                registro.atividade ||
-                                "OCORRÊNCIA"
-                            }
+                            ${registro.atividade ||
+                                "OCORRÊNCIA"}
 
                         </div>
 
@@ -1544,89 +1695,57 @@ function abrirPreviewReport(
                     </div>
 
 
-                    <!-- CORPO -->
+                    <!-- =================================
+                         CONTEÚDO
+                         ================================= -->
 
-                    <div class="report-body">
-
-                        <div class="report-main">
-
-                            ${
-                                (
-                                    registro.atividade ===
-                                        "Procedimentos" ||
-
-                                    registro.atividade ===
-                                        "Conferência"
-                                )
-
-                                    ? `
-
-                                        <div
-                                            class="
-                                                report-description
-                                            "
-                                            style="
-                                                width: 100%;
-                                                max-width: 100%;
-                                                flex: 1 1 100%;
-                                                box-sizing: border-box;
-                                                grid-column: 1 / -1;
-                                                min-height: 80px;
-                                            "
-                                        >
-
-                                            ${
-                                                registro.descricao ||
-                                                "-"
-                                            }
-
-                                        </div>
-
-                                      `
-
-                                    :
-
-                                    (
-                                        registro.atividade ===
-                                            "Mudança de Quarto" ||
-
-                                        registro.atividade ===
-                                            "Troca de Quarto"
-                                    )
-
-                                        ? htmlMudancaQuartoReport(
-                                            registro
-                                        )
-
-                                        : `
-
-                                            ${htmlQuartoReport(
-                                                registro
-                                            )}
+                    <div
+                        class="report-body"
+                    >
 
 
-                                            <div
-                                                class="
-                                                    report-description
-                                                "
-                                            >
+                        <div
+                            class="report-type"
+                        >
 
-                                                ${
-                                                    registro.descricao ||
-                                                    "-"
-                                                }
-
-                                            </div>
-
-                                          `
-                            }
+                            ${registro.atividade ||
+                                "OCORRÊNCIA"}
 
                         </div>
 
 
-                        <!-- INFORMAÇÕES -->
+                        <!-- =============================
+                             QUARTO + DESCRIÇÃO
+                             ============================= -->
 
-                        <div class="report-info">
+                        <div
+                            class="
+                                report-main${
+                                    registro.atividade ===
+                                        "Mudança de Quarto" ||
+                                    registro.atividade ===
+                                        "Troca de Quarto"
+                                        ? " report-main-mudanca"
+                                        : ""
+                                }
+                            "
+                        >
+
+                            ${htmlConteudoReport(
+                                registro,
+                                descricaoReport
+                            )}
+
+                        </div>
+
+
+                        <!-- =============================
+                             INFORMAÇÕES
+                             ============================= -->
+
+                        <div
+                            class="report-info"
+                        >
 
 
                             <div
@@ -1643,10 +1762,8 @@ function abrirPreviewReport(
                                     Funcionário
                                 </span>
 
-                                ${
-                                    funcionario ||
-                                    "-"
-                                }
+                                ${funcionario ||
+                                    "-"}
 
                             </div>
 
@@ -1665,10 +1782,7 @@ function abrirPreviewReport(
                                     Data
                                 </span>
 
-                                ${
-                                    data ||
-                                    "-"
-                                }
+                                ${data || "-"}
 
                             </div>
 
@@ -1687,21 +1801,24 @@ function abrirPreviewReport(
                                     Hora
                                 </span>
 
-                                ${
-                                    registro.hora ||
-                                    "-"
-                                }
+                                ${registro.hora ||
+                                    "-"}
 
                             </div>
+
 
                         </div>
 
                     </div>
 
 
-                    <!-- RODAPÉ -->
+                    <!-- =================================
+                         RODAPÉ
+                         ================================= -->
 
-                    <div class="report-footer">
+                    <div
+                        class="report-footer"
+                    >
 
                         <span>
                             ibis Styles
@@ -1714,8 +1831,13 @@ function abrirPreviewReport(
 
                     </div>
 
+
                 </div>
 
+
+                <!-- =================================
+                     BOTÕES
+                     ================================= -->
 
                 <div
                     class="
@@ -1725,7 +1847,10 @@ function abrirPreviewReport(
 
                     <button
                         type="button"
-                        class="btn btn-secondary"
+                        class="
+                            btn
+                            btn-secondary
+                        "
                         onclick="
                             fecharPreviewReport()
                         "
@@ -1738,7 +1863,10 @@ function abrirPreviewReport(
 
                     <button
                         type="button"
-                        class="btn btn-success"
+                        class="
+                            btn
+                            btn-success
+                        "
                         onclick="
                             gerarCardReport()
                         "
@@ -1753,6 +1881,7 @@ function abrirPreviewReport(
                     </button>
 
                 </div>
+
 
             </div>
 
@@ -1833,8 +1962,7 @@ async function gerarCardReport() {
                 card,
                 {
 
-                    scale:
-                        2,
+                    scale: 2,
 
                     backgroundColor:
                         null,
@@ -1849,9 +1977,21 @@ async function gerarCardReport() {
             );
 
 
+        // Guarda a imagem para os outros botões
+
         window.reportCardCanvas =
             canvas;
 
+
+        // Converte para PNG
+
+        const imagem =
+            canvas.toDataURL(
+                "image/png"
+            );
+
+
+        // Remove botões antigos
 
         const botoesAntigos =
             document.getElementById(
@@ -1865,6 +2005,10 @@ async function gerarCardReport() {
 
         }
 
+
+        // =================================================
+        // CRIA BOTÕES
+        // =================================================
 
         const acoes =
             document.createElement(
@@ -1884,7 +2028,10 @@ async function gerarCardReport() {
 
             <button
                 type="button"
-                class="btn btn-outline-success"
+                class="
+                    btn
+                    btn-outline-success
+                "
                 onclick="
                     baixarCardReport()
                 "
@@ -1902,7 +2049,10 @@ async function gerarCardReport() {
             <button
                 type="button"
                 id="btnCopiarCardReport"
-                class="btn btn-success"
+                class="
+                    btn
+                    btn-success
+                "
                 onclick="
                     copiarCardReport()
                 "
@@ -1920,6 +2070,8 @@ async function gerarCardReport() {
 
         `;
 
+
+        // Coloca os botões depois do card
 
         card.parentElement.appendChild(
             acoes
@@ -1985,6 +2137,11 @@ function baixarCardReport() {
 
     link.click();
 
+
+    console.log(
+        "Card baixado."
+    );
+
 }
 
 
@@ -2021,7 +2178,7 @@ async function copiarCardReport() {
 
         const blob =
             await new Promise(
-                function (resolve) {
+                function(resolve) {
 
                     canvas.toBlob(
 
@@ -2072,14 +2229,16 @@ async function copiarCardReport() {
         ]);
 
 
+        // ============================================
+        // RETORNO VISUAL NO BOTÃO
+        // ============================================
+
         if (botao) {
 
             botao.innerHTML = `
 
                 <i
-                    class="
-                        bi bi-check-lg
-                    "
+                    class="bi bi-check-lg"
                 ></i>
 
                 <span>
@@ -2101,17 +2260,24 @@ async function copiarCardReport() {
         }
 
 
+        console.log(
+            "Card copiado para a área de transferência."
+        );
+
+
+        // =================================================
+        // VOLTA AO ESTADO ORIGINAL
+        // =================================================
+
         setTimeout(
-            function () {
+            function() {
 
                 if (botao) {
 
                     botao.innerHTML = `
 
                         <i
-                            class="
-                                bi bi-clipboard
-                            "
+                            class="bi bi-clipboard"
                         ></i>
 
                         <span>
@@ -2152,12 +2318,3 @@ async function copiarCardReport() {
     }
 
 }
-
-
-// =====================================================
-// INICIALIZAÇÃO
-// =====================================================
-
-console.log(
-    "Módulo Reports v1.2 carregado."
-);

@@ -16,8 +16,10 @@ const REPORTS_CONFIG = {
     nomeHotel: "ibis Styles"
 
 };
+
+
 // =====================================================
-// ESTILO DO REPORT DE MUDANÇA DE QUARTO
+// ESTILO ESPECIAL - MUDANÇA DE QUARTO
 // =====================================================
 
 (function () {
@@ -27,13 +29,12 @@ const REPORTS_CONFIG = {
 
     estilo.textContent = `
 
-        .report-card-mudanca-quarto {
+        .mudanca-quarto-report {
             width: 100%;
-            height: 100%;
+            box-sizing: border-box;
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-main {
 
             display: grid;
@@ -47,13 +48,12 @@ const REPORTS_CONFIG = {
 
             min-height: 150px;
 
+            box-sizing: border-box;
+
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-box,
-
-        .report-card-mudanca-quarto
         .mudanca-quarto-descricao {
 
             border:
@@ -68,7 +68,6 @@ const REPORTS_CONFIG = {
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-box {
 
             display: flex;
@@ -91,7 +90,6 @@ const REPORTS_CONFIG = {
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-atual {
 
             border-left:
@@ -103,7 +101,6 @@ const REPORTS_CONFIG = {
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-label {
 
             font-size:
@@ -124,7 +121,6 @@ const REPORTS_CONFIG = {
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-numero {
 
             font-size:
@@ -142,7 +138,6 @@ const REPORTS_CONFIG = {
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-tipo {
 
             margin-top:
@@ -166,7 +161,6 @@ const REPORTS_CONFIG = {
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-descricao {
 
             padding:
@@ -184,7 +178,6 @@ const REPORTS_CONFIG = {
         }
 
 
-        .report-card-mudanca-quarto
         .mudanca-quarto-descricao-texto {
 
             margin-top:
@@ -206,12 +199,12 @@ const REPORTS_CONFIG = {
 
     `;
 
-
     document.head.appendChild(
         estilo
     );
 
 })();
+
 
 // =====================================================
 // OBTER TIPO DO QUARTO
@@ -223,41 +216,66 @@ function obterTipoQuartoReport(registro) {
         return "";
     }
 
-    // 1. Tipo já salvo no registro
+
+    // -------------------------------------------------
+    // 1. TIPO SALVO NO REGISTRO
+    // -------------------------------------------------
+
     if (
         registro.tipoQuarto !== undefined &&
         registro.tipoQuarto !== null &&
-        String(registro.tipoQuarto).trim() !== ""
+        String(
+            registro.tipoQuarto
+        ).trim() !== ""
     ) {
-        return String(registro.tipoQuarto).trim();
+
+        return String(
+            registro.tipoQuarto
+        ).trim();
+
     }
 
+
     const numero =
-        String(registro.quarto || "").trim();
+        String(
+            registro.quarto || ""
+        ).trim();
+
 
     if (!numero) {
         return "";
     }
 
 
-    // 2. Tipo atualmente associado ao campo de quarto
+    // -------------------------------------------------
+    // 2. TIPO ASSOCIADO AO CAMPO DE QUARTO
+    // -------------------------------------------------
 
     const campoQuarto =
-        document.getElementById("quarto");
+        document.getElementById(
+            "quarto"
+        );
+
 
     if (
         campoQuarto &&
-        String(campoQuarto.value || "").trim() === numero &&
+        String(
+            campoQuarto.value || ""
+        ).trim() === numero &&
         campoQuarto.dataset &&
         campoQuarto.dataset.tipo
     ) {
+
         return String(
             campoQuarto.dataset.tipo
         ).trim();
+
     }
 
 
-    // 3. Tabela carregada pelo quartos.js
+    // -------------------------------------------------
+    // 3. TABELAS DE QUARTOS
+    // -------------------------------------------------
 
     const fontes = [
 
@@ -269,12 +287,16 @@ function obterTipoQuartoReport(registro) {
 
         window.dadosQuartos,
 
-        window.quartosHotel
+        window.quartosHotel,
+
+        window.QUARTOS_HOTEL
 
     ];
 
 
-    for (const fonte of fontes) {
+    for (
+        const fonte of fontes
+    ) {
 
         if (!fonte) {
             continue;
@@ -296,7 +318,9 @@ function obterTipoQuartoReport(registro) {
                 fonte[numero];
 
 
-            if (typeof valor === "string") {
+            if (
+                typeof valor === "string"
+            ) {
 
                 return valor.trim();
 
@@ -317,7 +341,9 @@ function obterTipoQuartoReport(registro) {
 
 
                 if (
-                    String(tipo).trim() !== ""
+                    String(
+                        tipo
+                    ).trim() !== ""
                 ) {
 
                     return String(
@@ -334,24 +360,28 @@ function obterTipoQuartoReport(registro) {
         // -------------------------------------------------
         // FORMATO:
         // [
-        //     {
-        //         numero: 456,
-        //         tipo: "DBC"
-        //     }
+        //   {
+        //      numero: "456",
+        //      tipo: "DBC"
+        //   }
         // ]
         // -------------------------------------------------
 
-        if (Array.isArray(fonte)) {
+        if (
+            Array.isArray(fonte)
+        ) {
 
             const item =
                 fonte.find(
-                    function(item) {
+                    function (item) {
 
                         if (
                             !item ||
                             typeof item !== "object"
                         ) {
+
                             return false;
+
                         }
 
 
@@ -383,7 +413,9 @@ function obterTipoQuartoReport(registro) {
 
 
                 if (
-                    String(tipo).trim() !== ""
+                    String(
+                        tipo
+                    ).trim() !== ""
                 ) {
 
                     return String(
@@ -405,14 +437,19 @@ function obterTipoQuartoReport(registro) {
 
 
 // =====================================================
-// HTML DO QUARTO NO CARD
+// HTML DO QUARTO NORMAL
 // =====================================================
 
-function htmlQuartoReport(registro) {
+function htmlQuartoReport(
+    registro
+) {
 
     const numero =
-        registro && registro.quarto
-            ? String(registro.quarto)
+        registro &&
+        registro.quarto
+            ? String(
+                registro.quarto
+            )
             : "-";
 
 
@@ -452,23 +489,27 @@ function htmlQuartoReport(registro) {
 
                 ${
                     tipo
+
                         ? `
 
-                        <span style="
-    display: block;
-    width: 100%;
-    margin-top: 6px;
-    font-size: 13px;
-    line-height: 1;
-    font-weight: 600;
-    color: #6c757d;
-    letter-spacing: 0.5px;
-    text-align: center;
-">
-    ${tipo}
-</span>
+                            <span
+                                style="
+                                    display: block;
+                                    width: 100%;
+                                    margin-top: 6px;
+                                    font-size: 13px;
+                                    line-height: 1;
+                                    font-weight: 600;
+                                    color: #6c757d;
+                                    letter-spacing: 0.5px;
+                                    text-align: center;
+                                "
+                            >
+                                ${tipo}
+                            </span>
 
-                        `
+                          `
+
                         : ""
                 }
 
@@ -482,15 +523,207 @@ function htmlQuartoReport(registro) {
 
 
 // =====================================================
+// HTML ESPECIAL - MUDANÇA DE QUARTO
+// =====================================================
+
+function htmlMudancaQuartoReport(
+    registro
+) {
+
+    const quartoAtual =
+        registro &&
+        registro.quarto
+            ? String(
+                registro.quarto
+            )
+            : "-";
+
+
+    const quartoNovo =
+        registro &&
+        registro.quartoDestino
+            ? String(
+                registro.quartoDestino
+            )
+            : "-";
+
+
+    const tipoAtual =
+        obterTipoQuartoReport(
+            registro
+        );
+
+
+    const tipoNovo =
+        quartoNovo !== "-"
+            ? obterTipoQuartoReport({
+
+                quarto:
+                    quartoNovo
+
+              })
+            : "";
+
+
+    const descricao =
+        registro &&
+        registro.descricao
+            ? registro.descricao
+            : "-";
+
+
+    return `
+
+        <div
+            class="mudanca-quarto-report"
+        >
+
+            <div
+                class="mudanca-quarto-main"
+            >
+
+
+                <!-- QUARTO ATUAL -->
+
+                <div
+                    class="
+                        mudanca-quarto-box
+                        mudanca-quarto-atual
+                    "
+                >
+
+                    <span
+                        class="
+                            mudanca-quarto-label
+                        "
+                    >
+                        QUARTO
+                    </span>
+
+
+                    <strong
+                        class="
+                            mudanca-quarto-numero
+                        "
+                    >
+                        ${quartoAtual}
+                    </strong>
+
+
+                    ${
+                        tipoAtual
+
+                            ? `
+
+                                <span
+                                    class="
+                                        mudanca-quarto-tipo
+                                    "
+                                >
+                                    ${tipoAtual}
+                                </span>
+
+                              `
+
+                            : ""
+                    }
+
+                </div>
+
+
+                <!-- NOVO QUARTO -->
+
+                <div
+                    class="
+                        mudanca-quarto-box
+                        mudanca-quarto-novo
+                    "
+                >
+
+                    <span
+                        class="
+                            mudanca-quarto-label
+                        "
+                    >
+                        NOVO QUARTO
+                    </span>
+
+
+                    <strong
+                        class="
+                            mudanca-quarto-numero
+                        "
+                    >
+                        ${quartoNovo}
+                    </strong>
+
+
+                    ${
+                        tipoNovo
+
+                            ? `
+
+                                <span
+                                    class="
+                                        mudanca-quarto-tipo
+                                    "
+                                >
+                                    ${tipoNovo}
+                                </span>
+
+                              `
+
+                            : ""
+                    }
+
+                </div>
+
+
+                <!-- DESCRIÇÃO -->
+
+                <div
+                    class="
+                        mudanca-quarto-descricao
+                    "
+                >
+
+                    <span
+                        class="
+                            mudanca-quarto-label
+                        "
+                    >
+                        DESCRIÇÃO
+                    </span>
+
+
+                    <div
+                        class="
+                            mudanca-quarto-descricao-texto
+                        "
+                    >
+
+                        ${descricao}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+// =====================================================
 // REPORTAR REGISTRO
 // =====================================================
 
-
-// =====================================================
-// REPORTAR / COPIAR CARD DIRETAMENTE
-// =====================================================
-
-async function reportarRegistro(indice) {
+async function reportarRegistro(
+    indice
+) {
 
     const registro =
         registros[indice];
@@ -534,7 +767,7 @@ async function reportarRegistro(indice) {
 
 
     // =================================================
-    // CRIAR CARD TEMPORÁRIO
+    // CARD TEMPORÁRIO
     // =================================================
 
     const container =
@@ -556,21 +789,39 @@ async function reportarRegistro(indice) {
         "transparent";
 
 
+    // =================================================
+    // MONTA O CARD
+    // =================================================
+
     container.innerHTML = `
 
         <div
-            class="report-card report-card-${classeAtividadeReport(registro.atividade)}"
+            class="
+                report-card
+                report-card-${classeAtividadeReport(
+                    registro.atividade
+                )}
+            "
         >
+
+            <!-- CABEÇALHO -->
 
             <div class="report-header">
 
-                <div class="report-header-title">
+                <div
+                    class="
+                        report-header-title
+                    "
+                >
 
                     ${iconeAtividadeReport(
                         registro.atividade
                     )}
 
-                    ${registro.atividade || "OCORRÊNCIA"}
+                    ${
+                        registro.atividade ||
+                        "OCORRÊNCIA"
+                    }
 
                 </div>
 
@@ -584,135 +835,172 @@ async function reportarRegistro(indice) {
             </div>
 
 
+            <!-- CORPO -->
+
             <div class="report-body">
+
+                <!-- ÁREA PRINCIPAL -->
 
                 <div class="report-main">
 
                     ${
-                        registro.atividade === "Procedimentos" ||
-                        registro.atividade === "Conferência"
+                        (
+                            registro.atividade ===
+                                "Procedimentos" ||
 
-                        ? `
+                            registro.atividade ===
+                                "Conferência"
+                        )
 
-                            <div
-                                class="report-description report-description-full"
-                                style="
-                                    width: 100% !important;
-                                    max-width: none !important;
-                                    min-width: 0 !important;
-                                    min-height: 90px !important;
-                                    box-sizing: border-box !important;
-                                    display: block !important;
-                                    flex: 1 1 100% !important;
-                                    grid-column: 1 / -1 !important;
-                                    margin: 0 !important;
-                                    padding: 20px !important;
-                                    font-size: 20px !important;
-                                    line-height: 1.4 !important;
-                                "
-                            >
+                            ? `
 
-                                ${registro.descricao || "-"}
+                                <div
+                                    class="
+                                        report-description
+                                        report-description-full
+                                    "
+                                    style="
+                                        width: 100% !important;
+                                        max-width: none !important;
+                                        min-width: 0 !important;
+                                        min-height: 90px !important;
+                                        box-sizing: border-box !important;
+                                        display: block !important;
+                                        flex: 1 1 100% !important;
+                                        grid-column: 1 / -1 !important;
+                                        margin: 0 !important;
+                                        padding: 20px !important;
+                                        font-size: 20px !important;
+                                        line-height: 1.4 !important;
+                                    "
+                                >
 
-                            </div>
+                                    ${
+                                        registro.descricao ||
+                                        "-"
+                                    }
 
-                        `
+                                </div>
 
-                        : `
-                        registro.atividade === "Mudança de Quarto" ||
-registro.atividade === "Troca de Quarto"
+                              `
 
-                            ${htmlQuartoReport(
-                                registro
-                            )}
+                            :
 
+                            (
+                                registro.atividade ===
+                                    "Mudança de Quarto" ||
 
-                            <div class="report-description">
+                                registro.atividade ===
+                                    "Troca de Quarto"
+                            )
 
-                                ${
-                                    registro.descricao
-                                        ? registro.descricao
-                                        : ""
-                                }
+                                ? htmlMudancaQuartoReport(
+                                    registro
+                                )
 
+                                : `
 
-                                ${
-                                    registro.quartoDestino &&
-                                    (
-                                        registro.atividade === "Mudança de Quarto" ||
-                                        registro.atividade === "Troca de Quarto"
-                                    )
-
-                                        ? `
-
-                                            <br><br>
-
-                                            <strong>
-                                                Novo quarto:
-                                                ${registro.quartoDestino}
-                                            </strong>
-
-                                          `
-
-                                        : ""
-                                }
+                                    ${htmlQuartoReport(
+                                        registro
+                                    )}
 
 
-                                ${
-                                    !registro.descricao &&
-                                    !registro.quartoDestino
+                                    <div
+                                        class="
+                                            report-description
+                                        "
+                                    >
 
-                                        ? "-"
+                                        ${
+                                            registro.descricao ||
+                                            "-"
+                                        }
 
-                                        : ""
-                                }
+                                    </div>
 
-                            </div>
-
-                        `
+                                  `
                     }
 
                 </div>
 
 
+                <!-- INFORMAÇÕES -->
+
                 <div class="report-info">
 
-                    <div class="report-info-item">
 
-                        <span class="report-info-label">
+                    <div
+                        class="
+                            report-info-item
+                        "
+                    >
+
+                        <span
+                            class="
+                                report-info-label
+                            "
+                        >
                             Funcionário
                         </span>
 
-                        ${funcionario || "-"}
+                        ${
+                            funcionario ||
+                            "-"
+                        }
 
                     </div>
 
 
-                    <div class="report-info-item">
+                    <div
+                        class="
+                            report-info-item
+                        "
+                    >
 
-                        <span class="report-info-label">
+                        <span
+                            class="
+                                report-info-label
+                            "
+                        >
                             Data
                         </span>
 
-                        ${data || "-"}
+                        ${
+                            data ||
+                            "-"
+                        }
 
                     </div>
 
 
-                    <div class="report-info-item">
+                    <div
+                        class="
+                            report-info-item
+                        "
+                    >
 
-                        <span class="report-info-label">
+                        <span
+                            class="
+                                report-info-label
+                            "
+                        >
                             Hora
                         </span>
 
-                        ${registro.hora || "-"}
+                        ${
+                            registro.hora ||
+                            "-"
+                        }
 
                     </div>
+
 
                 </div>
 
             </div>
 
+
+            <!-- RODAPÉ -->
 
             <div class="report-footer">
 
@@ -756,23 +1044,22 @@ registro.atividade === "Troca de Quarto"
 
                     scale: 2,
 
-                    backgroundColor: null,
+                    backgroundColor:
+                        null,
 
-                    useCORS: true,
+                    useCORS:
+                        true,
 
-                    logging: false
+                    logging:
+                        false
 
                 }
             );
 
 
-        // =================================================
-        // COPIAR IMAGEM
-        // =================================================
-
         const blob =
             await new Promise(
-                function(resolve) {
+                function (resolve) {
 
                     canvas.toBlob(
 
@@ -798,7 +1085,8 @@ registro.atividade === "Troca de Quarto"
         const item =
             new ClipboardItem({
 
-                "image/png": blob
+                "image/png":
+                    blob
 
             });
 
@@ -821,19 +1109,27 @@ registro.atividade === "Troca de Quarto"
 
             botao.innerHTML = `
 
-                <i class="bi bi-check-lg"></i>
+                <i
+                    class="bi bi-check-lg"
+                ></i>
 
-                <span>Copiado</span>
+                <span>
+                    Copiado
+                </span>
 
             `;
 
 
             setTimeout(
-                function() {
+                function () {
 
                     botao.innerHTML = `
 
-                        <i class="bi bi-clipboard"></i>
+                        <i
+                            class="
+                                bi bi-clipboard
+                            "
+                        ></i>
 
                         <span>
                             Copiar Card
@@ -869,10 +1165,12 @@ registro.atividade === "Troca de Quarto"
 
 
 // =====================================================
-// FORMATA DATA
+// FORMATAR DATA
 // =====================================================
 
-function formatarDataReport(data) {
+function formatarDataReport(
+    data
+) {
 
     if (!data) {
 
@@ -885,7 +1183,9 @@ function formatarDataReport(data) {
         data.split("-");
 
 
-    if (partes.length !== 3) {
+    if (
+        partes.length !== 3
+    ) {
 
         return data;
 
@@ -895,13 +1195,9 @@ function formatarDataReport(data) {
     return (
 
         partes[2] +
-
         "/" +
-
         partes[1] +
-
         "/" +
-
         partes[0]
 
     );
@@ -910,16 +1206,7 @@ function formatarDataReport(data) {
 
 
 // =====================================================
-// INICIALIZAÇÃO
-// =====================================================
-
-console.log(
-    "Módulo Reports v1.1 carregado."
-);
-
-
-// =====================================================
-// CLASSE DE COR DO REPORT
+// CLASSE DA ATIVIDADE
 // =====================================================
 
 function classeAtividadeReport(
@@ -980,7 +1267,7 @@ function classeAtividadeReport(
 
 
 // =====================================================
-// ÍCONE DA ATIVIDADE NO CARD
+// ÍCONE DA ATIVIDADE
 // =====================================================
 
 function iconeAtividadeReport(
@@ -988,6 +1275,7 @@ function iconeAtividadeReport(
 ) {
 
     switch (atividade) {
+
 
         case "Check-in":
 
@@ -1111,61 +1399,6 @@ function abrirPreviewReport(
     registro
 ) {
 
-    // ============================================
-    // INFORMAÇÃO DO NOVO QUARTO
-    // ============================================
-
-    let descricaoReport =
-        registro.descricao || "";
-
-
-    if (
-        registro.quartoDestino &&
-        (
-            registro.atividade === "Mudança de Quarto" ||
-            registro.atividade === "Troca de Quarto"
-        )
-    ) {
-
-        if (
-            descricaoReport.trim() !== ""
-        ) {
-
-            descricaoReport +=
-
-                "<br><br>" +
-
-                "<strong>Novo quarto: " +
-
-                registro.quartoDestino +
-
-                "</strong>";
-
-        } else {
-
-            descricaoReport =
-
-                "<strong>Novo quarto: " +
-
-                registro.quartoDestino +
-
-                "</strong>";
-
-        }
-
-    }
-
-
-    if (
-        !descricaoReport ||
-        descricaoReport.trim() === ""
-    ) {
-
-        descricaoReport = "-";
-
-    }
-
-
     const funcionarioElemento =
         document.getElementById(
             "funcionario"
@@ -1204,8 +1437,6 @@ function abrirPreviewReport(
             : "";
 
 
-    // Remove uma prévia anterior
-
     const anterior =
         document.getElementById(
             "reportPreview"
@@ -1218,8 +1449,6 @@ function abrirPreviewReport(
 
     }
 
-
-    // Cria a janela
 
     const overlay =
         document.createElement(
@@ -1237,9 +1466,17 @@ function abrirPreviewReport(
 
     overlay.innerHTML = `
 
-        <div class="report-preview-modal">
+        <div
+            class="
+                report-preview-modal
+            "
+        >
 
-            <div class="report-preview-header">
+            <div
+                class="
+                    report-preview-header
+                "
+            >
 
                 <strong>
                     Prévia do Report
@@ -1248,30 +1485,52 @@ function abrirPreviewReport(
 
                 <button
                     type="button"
-                    class="report-preview-close"
-                    onclick="fecharPreviewReport()"
+                    class="
+                        report-preview-close
+                    "
+                    onclick="
+                        fecharPreviewReport()
+                    "
                 >
-
                     ×
-
                 </button>
 
             </div>
 
 
-            <div class="report-preview-content">
+            <div
+                class="
+                    report-preview-content
+                "
+            >
 
                 <div
-                    class="report-card report-card-${classeAtividadeReport(registro.atividade)}"
+                    class="
+                        report-card
+                        report-card-${classeAtividadeReport(
+                            registro.atividade
+                        )}
+                    "
                 >
 
                     <!-- CABEÇALHO -->
 
                     <div class="report-header">
 
-                        <div class="report-header-title">
+                        <div
+                            class="
+                                report-header-title
+                            "
+                        >
 
-                            REGISTRO DE TURNO
+                            ${iconeAtividadeReport(
+                                registro.atividade
+                            )}
+
+                            ${
+                                registro.atividade ||
+                                "OCORRÊNCIA"
+                            }
 
                         </div>
 
@@ -1285,59 +1544,81 @@ function abrirPreviewReport(
                     </div>
 
 
-                    <!-- CONTEÚDO -->
+                    <!-- CORPO -->
 
                     <div class="report-body">
-
-                        <div class="report-type">
-
-                            ${registro.atividade || "OCORRÊNCIA"}
-
-                        </div>
-
-
-                        <!-- QUARTO + DESCRIÇÃO -->
 
                         <div class="report-main">
 
                             ${
-                                registro.atividade === "Procedimentos" ||
-                                registro.atividade === "Conferência"
+                                (
+                                    registro.atividade ===
+                                        "Procedimentos" ||
 
-                                ? `
+                                    registro.atividade ===
+                                        "Conferência"
+                                )
 
-                                    <div
-                                        class="report-description"
-                                        style="
-                                            width: 100%;
-                                            max-width: 100%;
-                                            flex: 1 1 100%;
-                                            box-sizing: border-box;
-                                            grid-column: 1 / -1;
-                                            min-height: 80px;
-                                        "
-                                    >
+                                    ? `
 
-                                        ${descricaoReport}
+                                        <div
+                                            class="
+                                                report-description
+                                            "
+                                            style="
+                                                width: 100%;
+                                                max-width: 100%;
+                                                flex: 1 1 100%;
+                                                box-sizing: border-box;
+                                                grid-column: 1 / -1;
+                                                min-height: 80px;
+                                            "
+                                        >
 
-                                    </div>
+                                            ${
+                                                registro.descricao ||
+                                                "-"
+                                            }
 
-                                `
+                                        </div>
 
-                                : `
+                                      `
 
-                                    ${htmlQuartoReport(
-                                        registro
-                                    )}
+                                    :
+
+                                    (
+                                        registro.atividade ===
+                                            "Mudança de Quarto" ||
+
+                                        registro.atividade ===
+                                            "Troca de Quarto"
+                                    )
+
+                                        ? htmlMudancaQuartoReport(
+                                            registro
+                                        )
+
+                                        : `
+
+                                            ${htmlQuartoReport(
+                                                registro
+                                            )}
 
 
-                                    <div class="report-description">
+                                            <div
+                                                class="
+                                                    report-description
+                                                "
+                                            >
 
-                                        ${descricaoReport}
+                                                ${
+                                                    registro.descricao ||
+                                                    "-"
+                                                }
 
-                                    </div>
+                                            </div>
 
-                                `
+                                          `
                             }
 
                         </div>
@@ -1347,35 +1628,69 @@ function abrirPreviewReport(
 
                         <div class="report-info">
 
-                            <div class="report-info-item">
 
-                                <span class="report-info-label">
+                            <div
+                                class="
+                                    report-info-item
+                                "
+                            >
+
+                                <span
+                                    class="
+                                        report-info-label
+                                    "
+                                >
                                     Funcionário
                                 </span>
 
-                                ${funcionario || "-"}
+                                ${
+                                    funcionario ||
+                                    "-"
+                                }
 
                             </div>
 
 
-                            <div class="report-info-item">
+                            <div
+                                class="
+                                    report-info-item
+                                "
+                            >
 
-                                <span class="report-info-label">
+                                <span
+                                    class="
+                                        report-info-label
+                                    "
+                                >
                                     Data
                                 </span>
 
-                                ${data || "-"}
+                                ${
+                                    data ||
+                                    "-"
+                                }
 
                             </div>
 
 
-                            <div class="report-info-item">
+                            <div
+                                class="
+                                    report-info-item
+                                "
+                            >
 
-                                <span class="report-info-label">
+                                <span
+                                    class="
+                                        report-info-label
+                                    "
+                                >
                                     Hora
                                 </span>
 
-                                ${registro.hora || "-"}
+                                ${
+                                    registro.hora ||
+                                    "-"
+                                }
 
                             </div>
 
@@ -1402,12 +1717,18 @@ function abrirPreviewReport(
                 </div>
 
 
-                <div class="report-preview-footer">
+                <div
+                    class="
+                        report-preview-footer
+                    "
+                >
 
                     <button
                         type="button"
                         class="btn btn-secondary"
-                        onclick="fecharPreviewReport()"
+                        onclick="
+                            fecharPreviewReport()
+                        "
                     >
 
                         Cancelar
@@ -1418,10 +1739,14 @@ function abrirPreviewReport(
                     <button
                         type="button"
                         class="btn btn-success"
-                        onclick="gerarCardReport()"
+                        onclick="
+                            gerarCardReport()
+                        "
                     >
 
-                        <i class="bi bi-save"></i>
+                        <i
+                            class="bi bi-save"
+                        ></i>
 
                         Gerar Card
 
@@ -1508,33 +1833,25 @@ async function gerarCardReport() {
                 card,
                 {
 
-                    scale: 2,
+                    scale:
+                        2,
 
-                    backgroundColor: null,
+                    backgroundColor:
+                        null,
 
-                    useCORS: true,
+                    useCORS:
+                        true,
 
-                    logging: false
+                    logging:
+                        false
 
                 }
             );
 
 
-        // Guarda a imagem para os outros botões
-
         window.reportCardCanvas =
             canvas;
 
-
-        // Converte para PNG
-
-        const imagem =
-            canvas.toDataURL(
-                "image/png"
-            );
-
-
-        // Remove botões antigos
 
         const botoesAntigos =
             document.getElementById(
@@ -1548,8 +1865,6 @@ async function gerarCardReport() {
 
         }
 
-
-        // Cria os novos botões
 
         const acoes =
             document.createElement(
@@ -1570,10 +1885,14 @@ async function gerarCardReport() {
             <button
                 type="button"
                 class="btn btn-outline-success"
-                onclick="baixarCardReport()"
+                onclick="
+                    baixarCardReport()
+                "
             >
 
-                <i class="bi bi-download"></i>
+                <i
+                    class="bi bi-download"
+                ></i>
 
                 Baixar Card
 
@@ -1584,10 +1903,14 @@ async function gerarCardReport() {
                 type="button"
                 id="btnCopiarCardReport"
                 class="btn btn-success"
-                onclick="copiarCardReport()"
+                onclick="
+                    copiarCardReport()
+                "
             >
 
-                <i class="bi bi-clipboard"></i>
+                <i
+                    class="bi bi-clipboard"
+                ></i>
 
                 <span>
                     Copiar Card
@@ -1597,8 +1920,6 @@ async function gerarCardReport() {
 
         `;
 
-
-        // Coloca os botões depois do card
 
         card.parentElement.appendChild(
             acoes
@@ -1664,11 +1985,6 @@ function baixarCardReport() {
 
     link.click();
 
-
-    console.log(
-        "Card baixado."
-    );
-
 }
 
 
@@ -1705,7 +2021,7 @@ async function copiarCardReport() {
 
         const blob =
             await new Promise(
-                function(resolve) {
+                function (resolve) {
 
                     canvas.toBlob(
 
@@ -1745,7 +2061,8 @@ async function copiarCardReport() {
         const item =
             new ClipboardItem({
 
-                "image/png": blob
+                "image/png":
+                    blob
 
             });
 
@@ -1755,15 +2072,15 @@ async function copiarCardReport() {
         ]);
 
 
-        // ============================================
-        // RETORNO VISUAL NO BOTÃO
-        // ============================================
-
         if (botao) {
 
             botao.innerHTML = `
 
-                <i class="bi bi-check-lg"></i>
+                <i
+                    class="
+                        bi bi-check-lg
+                    "
+                ></i>
 
                 <span>
                     Copiado
@@ -1784,21 +2101,18 @@ async function copiarCardReport() {
         }
 
 
-        console.log(
-            "Card copiado para a área de transferência."
-        );
-
-
-        // Volta ao estado original depois de 2 segundos
-
         setTimeout(
-            function() {
+            function () {
 
                 if (botao) {
 
                     botao.innerHTML = `
 
-                        <i class="bi bi-clipboard"></i>
+                        <i
+                            class="
+                                bi bi-clipboard
+                            "
+                        ></i>
 
                         <span>
                             Copiar Card
@@ -1838,3 +2152,12 @@ async function copiarCardReport() {
     }
 
 }
+
+
+// =====================================================
+// INICIALIZAÇÃO
+// =====================================================
+
+console.log(
+    "Módulo Reports v1.2 carregado."
+);

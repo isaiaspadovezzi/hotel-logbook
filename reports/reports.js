@@ -16,7 +16,202 @@ const REPORTS_CONFIG = {
     nomeHotel: "ibis Styles"
 
 };
+// =====================================================
+// ESTILO DO REPORT DE MUDANÇA DE QUARTO
+// =====================================================
 
+(function () {
+
+    const estilo =
+        document.createElement("style");
+
+    estilo.textContent = `
+
+        .report-card-mudanca-quarto {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-main {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr 2fr;
+
+            gap: 12px;
+
+            width: 100%;
+
+            min-height: 150px;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-box,
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-descricao {
+
+            border:
+                2px solid #555;
+
+            background:
+                #ffffff;
+
+            box-sizing:
+                border-box;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-box {
+
+            display: flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            text-align:
+                center;
+
+            padding:
+                12px;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-atual {
+
+            border-left:
+                6px solid #e68100;
+
+            background:
+                #e1e5df;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-label {
+
+            font-size:
+                13px;
+
+            font-weight:
+                700;
+
+            letter-spacing:
+                0.5px;
+
+            color:
+                #666;
+
+            margin-bottom:
+                5px;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-numero {
+
+            font-size:
+                42px;
+
+            line-height:
+                1;
+
+            font-weight:
+                700;
+
+            color:
+                #202020;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-tipo {
+
+            margin-top:
+                7px;
+
+            font-size:
+                18px;
+
+            line-height:
+                1;
+
+            font-weight:
+                600;
+
+            color:
+                #6c757d;
+
+            letter-spacing:
+                0.5px;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-descricao {
+
+            padding:
+                14px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .report-card-mudanca-quarto
+        .mudanca-quarto-descricao-texto {
+
+            margin-top:
+                10px;
+
+            font-size:
+                17px;
+
+            line-height:
+                1.35;
+
+            color:
+                #333;
+
+            overflow-wrap:
+                anywhere;
+
+        }
+
+    `;
+
+
+    document.head.appendChild(
+        estilo
+    );
+
+})();
 
 // =====================================================
 // OBTER TIPO DO QUARTO
@@ -424,6 +619,8 @@ async function reportarRegistro(indice) {
                         `
 
                         : `
+                        registro.atividade === "Mudança de Quarto" ||
+registro.atividade === "Troca de Quarto"
 
                             ${htmlQuartoReport(
                                 registro
